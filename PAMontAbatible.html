@@ -813,9 +813,11 @@
 </div><!-- /informes-wrapper -->
 <div id="botones-accion-informes">
 <button id="btn-volver" onclick="ocultarInformes()" class="btn">⪡ Atrás</button>
-<button id="btn-pdf" onclick="alert('🚧 Módulo PDF en construcción')" class="btn">Imprimir / PDF</button>
+<button id="btn-pdf-con" onclick="generarPDFAbatible(true)"  class="btn">📄 PDF con precios</button>
+<button id="btn-pdf-sin" onclick="generarPDFAbatible(false)" class="btn">📄 PDF sin precios</button>
 <button id="btn-nueva-config" onclick="limpiarTodo()" class="btn">Nueva Configuración</button>
 </div>
+<BR></BR>
 
 
 
@@ -2280,5 +2282,11 @@ async function generarInformesConPrecios() {
   }
 
   </script>
+
+<!-- Librerías PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/SalidaPDF-Abatible.js"></script>
+
 </body>
 </html>
