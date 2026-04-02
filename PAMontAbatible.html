@@ -1,0 +1,2284 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script>
+    // ⚙️ CONFIGURACIÓN GLOBAL — Cambiar aquí si se cambia el host
+    const RutaImagen = "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/";
+  </script>
+
+  <title>Adinor PA Vidrio montado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --color-primario: #2563eb;
+      --borde: #d1d5db;
+      --borde-hover: #9ca3af;
+      --fondo: #ffffff;
+      --fondo-hover: #f9fafb;
+      --radio: 12px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #1a2b6f;
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      font-size: 15px;
+      /*margin-bottom: 30px; */
+      margin: 10px 0 0;       /* margen superior 4px, sin margen inferior */
+      text-align: center;  /* centra el texto horizontalmente */
+    }
+
+    #form1 h3 {
+      font-size: 14px;
+      /*margin-bottom: 30px; */
+      margin: 4px 0 0;       /* margen superior 4px, sin margen inferior */
+      text-align: center;  /* centra el texto horizontalmente */
+    }
+
+    .formulario {                /* Este lo traigo de PAMontada  para ocultar los forms al principio */
+      display: none;
+    }
+
+    .formulario.active {        
+      display: block;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin: 20px;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    /* Body de página completa */
+    html, body {
+    height: 100%;
+    }
+
+    .form {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    #form1 .opciones-imagenes, #form2 .opciones-imagenes, #form4 .opciones-imagenes, #form5 .opciones-imagenes {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    #form1 .opcion, #form2 .opcion, #form4 .opcion, #form5 .opcion {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .paso-titulo { margin: 0 0 16px; font-size: 1.25rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+      margin-left: 200px;   /* 👈  margin-left: 48px;   /* 👈 más margen a la izquierda */
+      margin-right: 200px;  /* equilibrio opcional */
+    }
+
+    #form5 .grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    /*   &&&&&&&&&&&&&    Formulario 1    &&&&&&&&&&&&&&&& */
+  
+    /* Tarjeta accesible: <label> con <input> (oculto) + <div.visual> */
+    .card { display: block; cursor: pointer; }
+
+    .card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* 3. El contenido visual debe estar detrás */
+    .visual {
+      /*height: 100%;  */
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 8px;
+      padding: 12px;    /* Espacio al borde  */
+      border: 2px solid var(--borde);
+      border-radius: var(--radio);
+      background: var(--fondo);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    #form1 .visual {
+      gap: 2px;  /*  Espacio entre elementos*/
+      padding: 5px;    /* Espacio interno al borde  */
+    }
+
+    .visual:hover {
+      border-color: var(--borde-hover);
+      background: var(--fondo-hover);
+    }
+
+    /* Contorno al seleccionar  */
+    .card input:checked + .visual {
+      border-color: var(--color-primario);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Contorno al enfocar con teclado   */
+    .card input:focus + .visual {
+      outline: 3px solid rgba(37, 99, 235, 0.6);
+      outline-offset: 2px;
+    }    
+
+    .visual img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      justify-self: center;   /* centra horizontalmente en la grid */
+    }
+
+    #form4 .visual img {
+      width: 200px;
+      height: 160px;
+    }
+    
+    #form5 .visual img {
+      width: 110px;
+      height: 220px;
+      object-fit: contain;  /* Contain se ajusta a cuadro que tengamos es un zoom mas ajustado */
+    }
+
+    .visual p { margin: 0; font-size: 0.9rem; color: #4b5563; } 
+
+    .acciones {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start; /* 👈 Ahora se alinean a la izquierda  justify-content: flex-start; /* 👈 Ahora se alinean a la izquierda */
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      min-width: 120px;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .resumen-lista {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    /* ----------  FORMULARIO 6 ----------- */
+    /* Estilos para campos de medidas pequeños (4 dígitos) */
+    .campo-medida {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .caracteristicas {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      text-align: left;
+      color: #4d07cf;  /* Azul para indicar que es clickeable */
+      /*color: #000000;                /* Texto negro */
+      background-color: transparent;  /* Fondo transparente */
+      border: none;                   /* Sin borde */
+      outline: none;                  /* Sin outline al hacer foco */
+      box-shadow: none;               /* Sin sombra */
+      box-sizing: border-box;
+      -webkit-appearance: none;       /* Elimina estilos de navegador webkit */
+      -moz-appearance: none;          /* Elimina estilos de navegador firefox */
+      appearance: none;               /* Elimina estilos nativos */
+      cursor: pointer;  /* Manita */
+      text-decoration: underline dotted;  /* Subrayado punteado como hint */
+    }
+
+    .caracteristicas:hover {
+    background: #c6eed3 !important;
+    color: rgb(99, 3, 10) !important;
+    cursor: pointer !important;
+    }
+
+    select#AcabadoAluminio,
+    select#ColorVidrio {
+    background-color: #ffffff !important; /* o el color que quieras */
+    }
+
+    .label-medida {
+      flex: 1;
+      text-align: center;
+    } */
+
+    /* Clase para ocultar elementos */
+    .label-medida.oculto {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    /* CSS INFORMES */
+    .pagina-informe{display:none;width:210mm;min-height:297mm;padding:15mm;box-sizing:border-box;background:white!important;margin:20px auto;page-break-after:always}
+    @media print{
+      body{margin:0;background:white!important;}
+      .formulario,.formulario.active{display:none!important;}
+      #botones-accion-informes{display:none!important;}
+      .pagina-informe{display:none;}
+      .pagina-informe.active{display:block!important;margin:0;box-shadow:none;}
+      #informes-wrapper{display:flex!important;flex-direction:column!important;}
+      @page{size:A4 portrait;margin:0;}
+    }
+    .pagina-informe.active{display:block}
+    .informe-header{margin-bottom:15px;padding-bottom:10px}
+    .informe-header h1{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:bold;margin:0 0 15px 0;color:#1a2b6f;text-align:left;letter-spacing:1px}
+    .linea-principal{display:flex;gap:20px;margin-bottom:8px;align-items:center}
+    .linea-comentarios{margin-bottom:8px}
+    .linea-resumen{background:#f0f0f0;padding:6px 12px;border-radius:4px;font-weight:bold;font-size:14px;color:#1a2b6f;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+    .linea-resumen .texto-resumen{flex:1;text-align:center}
+    .linea-resumen .paginacion{font-size:14px;font-weight:bold;color:#1a2b6f;white-space:nowrap}
+    .campo-informe{display:flex;align-items:center;gap:8px;min-width:0}
+    .campo-informe label{font-weight:bold;font-size:12px;white-space:nowrap;flex-shrink:0;color:#555}
+    .campo-informe span{flex:1 1 auto;padding:2px 8px;border-bottom:1px solid #999;font-size:12px;min-width:0}
+    .campo-informe-full{display:flex;align-items:center;gap:8px;width:100%}
+    .campo-informe-full label{font-weight:bold;font-size:12px;color:#555;flex-shrink:0}
+    .campo-informe-full span{flex:1;padding:2px 8px;border-bottom:1px solid #999;font-size:12px}
+    .titulo-elemento{color:black;padding:8px 15px;font-weight:bold;font-size:16px;margin:15px 0 12px 0;border-radius:4px;text-align:left;line-height:1.4;border:2px solid #000;background:transparent}
+    .titulo-elemento .elemento-principal{font-size:14px;display:block;margin-bottom:3px}
+    .titulo-elemento .elemento-detalle{font-size:11px;font-weight:normal;display:block}
+    .bloque-fabricacion,.bloque-pedido{margin-bottom:15px}
+    .bloque-titulo{background:#a8a8a8;color:white;padding:6px 12px;font-weight:bold;font-size:13px;margin-bottom:8px;text-align:center}
+    .seccion-titulo{font-weight:bold;font-size:11px;margin:8px 0 4px 0;color:#333}
+    .seccion-sub-titulo{background:#e8eaf6;color:#1a2b6f;padding:5px 12px;font-weight:bold;font-size:11px;margin:10px 0 4px 0;border-left:3px solid #1a2b6f;letter-spacing:0.3px}
+    .tabla-informe{width:calc(100% - 200px);border-collapse:collapse;margin:5px auto 15px auto;font-size:11px}
+    .tabla-informe th,.tabla-informe td{border:1px solid #999;padding:4px 6px;text-align:center}
+    .tabla-informe th{background:#e5e7eb;font-weight:bold;font-size:10px}
+    .tabla-informe .imagen-perfil{width:50px}
+    .tabla-informe td img{width:40px;height:40px;object-fit:contain}
+    .tabla-informe .texto-izq{text-align:left!important}
+    .tabla-informe .texto-Der{text-align:right!important}
+    #botones-accion-informes{display:none;text-align:center;margin:20px 0;gap:10px}
+    #botones-accion-informes button{min-width:150px}
+
+    /* ============================================================
+       FORM 1.5 — CONFIGURACIÓN DE MANO Y POSICIÓN
+    ============================================================ */
+    #form15 .zona-elementos-f15 {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+    #form15 .bloque-f15 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    #form15 .bloque-label-f15 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    #form15 .fijo-label-f15   { color: #2563eb; }
+    #form15 .puerta-label-f15 { color: #dc2626; }
+    #form15 .img-alzado-f15 {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    #form15 .separador-vistas-f15 {
+      width: 100%;
+      height: 6px;
+    }
+    #form15 .img-planta-f15 {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    #form15 .zona-controles-f15 {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    #form15 .control-grupo-f15 { display: flex; flex-direction: column; gap: 10px; }
+    #form15 .control-grupo-f15 > label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    #form15 .radio-grupo-f15 { display: flex; gap: 10px; }
+    #form15 .radio-card-f15 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      min-width: 160px;
+      border: 2px solid var(--borde);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+      background: white;
+      user-select: none;
+      white-space: nowrap;
+    }
+    #form15 .radio-card-f15:hover { border-color: var(--color-primario); background: #eff6ff; }
+    #form15 .radio-card-f15 input { display: none; }
+    #form15 .radio-card-f15.seleccionado {
+      border-color: var(--color-primario);
+      background: #eff6ff;
+      color: var(--color-primario);
+      font-weight: 600;
+    }
+    #form15 .info-fija-f15 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #0369a1;
+    }
+
+  </style>
+
+</head>
+<body>
+
+
+<!-- Formulario 1 -->
+<form id="form1" class="formulario active">
+  <h2>Sistemas con puertas abatibles</h2>
+
+    <div class="grid" aria-live="polite">
+      <!-- 1 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op1">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible01.png">
+          <h3>1 Puerta</h3>
+        </div>
+      </label>
+      <!-- 2 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op2">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible02.png">
+          <h3>1 Puerta y 1 Fijo</h3>
+        </div>
+      </label>
+      <!-- 3 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op3">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible03.png">
+           <h3>1 Puerta y 2 Fijos</h3>
+        </div>
+      </label>
+      <!-- 4 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op4">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible04.png">
+          <h3>2 Puertas (doble)</h3>
+        </div>
+      </label>
+      <!-- 5 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op5">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible05.png">
+          <h3>2 Puertas (doble) y 1 fijo</h3>
+        </div>
+      </label>
+      <!-- 6 -->
+      <label class="card">
+        <input type="radio" name="opcion" value="op6">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible06.png">
+          <h3>2 Puertas (doble) y 2 fijos</h3>
+        </div>
+      </label>
+    </div>   
+    <br>
+  <!--  margin: 10px 20px 30px 40px; arriba 10, derecha 20, abajo 30, izquierda 40 -->
+    <p style="margin: 20px 0 0 0;">Los marcos de puerta y los bastidores de los fijos estan incluidos en los diseños.</p>
+    <p style="margin: 5px 0;">Seleccionar al menos una opción antes de continuar</p>
+
+    <div class="acciones">
+      <button type="button" onclick="volverAlInicio()" class="btn">⪡ Atrás</button>
+      <button type="button" onclick="if(validarFormulario(1)) { cambiarFormulario(1,15); }" class="btn">Siguiente ⪢</button>
+    </div>
+     <br><br>
+</form>
+
+<!-- Formulario 1.5 — Mano y posición -->
+<form id="form15" class="formulario">
+  <h2>Configuración de Apertura</h2>
+  <div style="display:flex; gap:16px; align-items:flex-start;">
+
+    <!-- Columna izquierda: controles -->
+    <div style="flex:0 0 300px; display:flex; flex-direction:column; gap:24px; padding-top:10px;">
+      <div class="zona-controles-f15" id="f15-zona-controles"></div>
+      <div class="acciones" style="margin-top:10px;">
+        <button type="button" onclick="cambiarFormulario(15,1)" class="btn">⪡ Atrás</button>
+        <button type="button" onclick="cambiarFormulario(15,2)" class="btn">Siguiente ⪢</button>
+      </div>
+    </div>
+
+    <!-- Columna derecha: imágenes -->
+    <div style="flex:1;">
+      <div class="zona-elementos-f15" id="f15-zona-elementos"></div>
+    </div>
+
+  </div>
+</form>
+
+<!-- Formulario 2 -->
+<form id="form2" class="formulario">
+    <h2>Tipo de cierre</h2>
+      <div class="grid" aria-live="polite">
+        <!-- 1 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="op1" checked>
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/CierreMagnetico.png">
+            <h3>Cierre Magnético</h3>
+          </div>
+        </label>
+        <!-- 2 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="op2">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/CierreCerradura.png">
+            <h3>Cierre Cerradura</h3>
+          </div>
+        </label>
+      </div>
+      <br>
+      <p>Seleccionar una opción antes de continuar</p>
+      <div class="acciones">
+        <button type="button" onclick="cambiarFormulario(2,15)" class="btn">⪡ Atrás</button>
+        <button type="button" onclick="if(validarFormulario(2)) { cambiarFormulario(2,6); }" class="btn">Siguiente ⪢</button>
+      </div>
+  </form>
+
+ <!-- Formulario 4 -->
+ <form id="form4" class="formulario">
+    <h2>Tipología de Fijo</h2>
+      <div class="grid" aria-live="polite">
+        <!-- 1 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="0">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3.png">
+            <h3>3 Paredes</h3>
+          </div>
+        </label>
+        <!-- 2 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="A">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3U.png">
+            <h3>3 Paredes U</h3>
+          </div>
+        </label>
+      </div> 
+      <br>
+      <p>Seleccionar una opción antes de continuar</p>
+      <div class="acciones">
+        <button type="button" onclick="if(validarFormulario(4)) { cambiarFormulario(4,6); }" class="btn">Siguiente ⪢</button>
+
+      </div>
+  </form>
+
+  <!-- Formulario 5    DIVISIONES   -->
+  <form id="form5" class="formulario">
+    <h2>Divisiones Adhesivas 13x3</h2>
+
+      <div class="grid" aria-live="polite">
+        <!-- 1 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="0">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_0.png">
+            <h3>Sin embellecedor</h3>
+          </div>
+        </label>
+        <!-- 2 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="2">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_1.png">
+            <h3>Modelo A</h3>
+          </div>
+        </label>
+        <!-- 3 -->
+        <label class="card">
+          <input type="radio" name="opcion" value="4">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_2.png">
+            <h3>Modelo B</h3>
+          </div>
+        </label>
+
+        <label class="card">
+          <input type="radio" name="opcion" value="6">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3.png">
+            <h3>Modelo C</h3>
+          </div>
+        </label>
+
+        <label class="card">
+          <input type="radio" name="opcion" value="D">
+          <div class="visual">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3_Plus.png">
+            <h3>Modelo D</h3>
+          </div>
+        </label>
+      </div>
+      <br>
+      <p>Seleccionar una opción antes de continuar</p>
+      <div class="acciones">
+        <!--  <button type="button" onclick="cambiarFormulario(5,6)" class="btn">Selección ⪢</button>   -->
+        <button type="button" onclick="if(validarFormulario(5)) { cambiarFormulario(5,6); }" class="btn">Siguiente ⪢</button>
+      </div>
+  </form>
+
+
+<!-- Formulario 6 -->
+<form id="form6" class="formulario">
+  <h2>Medidas de Instalación</h2>
+  
+  <div style="display: flex; gap: 20px; align-items: flex-start; margin-left: 60px">
+    
+    <!-- Columna izquierda: Imagen y campos debajo -->
+    <div style="flex: 0 0 33%; display: flex; flex-direction: column; gap: 15px;">
+      <!-- Imagen -->
+      <div style="width: 100%;">
+        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles01.png" 
+            alt="Imagen de referencia" 
+            class="imagen-referencia"
+            style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      </div>
+      
+      <!-- Campos dinámicos: todos alineados arriba -->
+      <div id="contenedor-campos-medidas" style="display: flex; gap: 8px; align-items: flex-start;">
+        <!-- Los campos se crearán con JavaScript -->
+      </div>
+    </div>
+
+    <!-- Columna derecha: resto del formulario -->
+    <div style="flex: 1;">
+      <!-- Primera fila: Alto, Acabado y Color -->
+      <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 5px;">
+        <div style="width: 200px;">
+          <label for="Alto">Alto de hueco (mm)<br>
+            <input type="number" id="Alto" name="Alto" required min="1" style="width: 100%; box-sizing: border-box; padding: 8px;">
+          </label>
+        </div>
+        <div style="width: 200px;">
+          <label for="AcabadoAluminio">Acabado Aluminio<br>
+            <select id="AcabadoAluminio" name="AcabadoAluminio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
+              <option value="Blanco mate 9003">Blanco mate 9003</option>
+              <option value="Negro mate texturado">Negro mate texturado</option>
+              <option value="Acero corten">Acero corten</option>
+              <option value="Chapa roble barnizada">Chapa roble barnizada</option>
+              <option value="Chapa nogal barnizada">Chapa nogal barnizada</option>
+              <option value="Acabado Especial">Acabado Especial</option>
+            </select><br>
+          </label>
+        </div>
+        <div style="width: 200px;">
+          <label for="ColorVidrio">Color de vidrio<br>
+            <select id="ColorVidrio" name="ColorVidrio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
+              <option value="TRANSPARENTE">Transparente</option>
+              <option value="MATE">Mate</option>
+              <option value="BRONCE">Bronce</option>
+              <option value="GRIS">Gris</option>
+              <option value="GRIS OSCURO">Gris oscuro</option>
+              <option value="ESPECIAL">Especial</option>
+            </select><br>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Segunda fila: Ancho con texto explicativo -->
+      <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 10px; align-items: center;">
+        <div style="width: 200px;">
+          <label for="Ancho">Ancho de hueco (mm)<br>
+            <input type="number" id="Ancho" name="Ancho" required min="1" 
+            readonly style="width: 100%; box-sizing: border-box; padding: 8px; background-color: #e9ecef;"><br><br>  
+          </label>
+        </div>
+        <div style="width: 450px; font-size: 14px; color: #3e3d3d; font-style: italic;">
+          (Es la suma de los anchos de los elementos del conjunto en mm)
+        </div>
+      </div>
+
+      <!-- Tercera fila: Cliente y Nº Pedido -->
+      <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 30px;">
+        <label style="width: 450px;">
+          Cliente<br>
+          <input type="text" name="cliente" 
+          style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
+        </label>
+        <label style="width: 200px;">
+          Nº Pedido<br>
+          <input type="text" name="numPedido" 
+          style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
+        </label>
+      </div>
+      
+      <!-- Cuarta fila: Comentarios -->
+      <div style="display: flex; justify-content: center;">
+        <label style="width: 700px;">
+          Comentarios<br>
+          <textarea name="comentarios" rows="2" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px; resize: vertical; font-family: inherit;"></textarea>
+        </label>
+      </div>
+      <br>
+      
+      <!-- Quinta fila: Nº de conjuntos + Tipo de cierre -->
+      <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px;">
+        <label style="width: 200px;">
+          Nº de conjuntos a fabricar<br>
+          <input type="number" name="conjuntos" required min="1" value="1" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px;">
+        </label>
+        <label style="width: 200px;">
+          Tipo de cierre<br>
+          <input type="text" id="infoCierre" readonly
+            style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px; background-color: #e9ecef; font-style: italic; color: #555;">
+        </label>
+        <div style="width: 200px;"></div>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+  <div style="background:#fef9c3; border-left:4px solid #ca8a04; border-radius:6px; padding:10px 16px; font-size:13px; color:#713f12; max-width:700px;">
+    ⚠️ La medida de <strong>puerta</strong> debe incluir el <strong>marco</strong>, y la de <strong>fijo</strong> debe incluir el <strong>bastidor</strong> (medidas en mm).
+  </div>
+  <p>Seleccionar una opción antes de continuar</p>
+  <div class="acciones" style="margin-top: 20px;">
+    <button type="button" onclick="cambiarFormulario(6,2)" class="btn">⪡ Atrás</button> 
+    <button type="button" onclick="if(validarFormulario(6)) generarInformesConPrecios()" class="btn">Generar Informes ⪢</button>
+  </div>
+</form>
+
+<!-- PAGINAS DE INFORMES -->
+<div id="informes-wrapper" style="display:flex;flex-direction:column;">
+<div id="pagina-fijo1" class="pagina-informe">
+<div class="informe-header"><h1>PA vidrio montado - Abatible</h1>
+<div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="fijo1-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="fijo1-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="fijo1-fecha"></span></div></div>
+<div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="fijo1-comentarios"></span></div></div>
+<div class="linea-resumen"><span class="texto-resumen" id="fijo1-resumen-config"></span><span class="paginacion" id="fijo1-paginacion"></span></div></div>
+<div class="titulo-elemento"><span class="elemento-principal">FIJO 1</span><span class="elemento-detalle" id="fijo1-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="seccion-titulo">Perfiles Acabado: <span id="fijo1-acabado"></span></div>
+<table class="tabla-informe"><thead><tr><th class="imagen-perfil">🔧</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-perfiles"></tbody></table>
+<table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-embellecedor"></tbody></table>
+<div class="seccion-titulo">Medidas de Cristales - Color: <span id="fijo1-color-vidrio"></span></div>
+<table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-cristales"></tbody></table></div>
+<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
+<tbody>
+<tr><td id="fijo1-cod-fijo" class="texto-izq"></td><td class="texto-izq">Fijo</td><td id="fijo1-tipo-fijo" class="texto-izq"></td><td id="fijo1-cant-fijo" class="texto-Der"></td><td id="fijo1-precio-fijo" class="texto-Der"></td></tr>
+<tr><td></td><td class="texto-izq">Acabado</td><td id="fijo1-acabado-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr><td></td><td class="texto-izq">Color Vidrio</td><td id="fijo1-color-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr><td></td><td class="texto-izq">Medidas</td><td class="texto-izq"><span id="fijo1-alto-precio"></span> alto x <span id="fijo1-ancho-precio"></span> ancho</td><td></td><td></td></tr>
+<tr><td id="fijo1-cod-emb" class="texto-izq"></td><td class="texto-izq">Embellecedor</td><td id="fijo1-emb-precio" class="texto-izq"></td><td id="fijo1-cant-emb" class="texto-Der"></td><td id="fijo1-precio-emb" class="texto-Der"></td></tr>
+<tr><td id="fijo1-cod-bast" class="texto-izq"></td><td class="texto-izq">Bastidor</td><td id="fijo1-bast-precio" class="texto-izq"></td><td id="fijo1-cant-bast" class="texto-Der"></td><td id="fijo1-precio-bast" class="texto-Der"></td></tr>
+</tbody></table></div></div>
+
+<div id="pagina-puerta1" class="pagina-informe">
+<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="puerta1-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="puerta1-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="puerta1-fecha"></span></div></div>
+<div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="puerta1-comentarios"></span></div></div>
+<div class="linea-resumen"><span class="texto-resumen" id="puerta1-resumen-config"></span><span class="paginacion" id="puerta1-paginacion"></span></div></div>
+<div class="titulo-elemento"><span class="elemento-principal">PUERTA 1</span><span class="elemento-detalle" id="puerta1-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="seccion-titulo">Perfiles Acabado: <span id="puerta1-acabado"></span></div>
+<div class="seccion-sub-titulo" id="puerta1-subtitulo">PUERTA 1</div>
+<table class="tabla-informe"><thead><tr><th class="imagen-perfil">&#x1F527;</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-perfiles"></tbody></table>
+<table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-embellecedor"></tbody></table>
+<div class="seccion-titulo">Cristales P1 - Color: <span id="puerta1-color-vidrio"></span></div>
+<table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-cristales"></tbody></table>
+<div id="puerta1-seccion-p2" style="display:none;">
+  <div class="seccion-sub-titulo">PUERTA 2 &mdash; MANO DERECHA</div>
+  <table class="tabla-informe"><thead><tr><th class="imagen-perfil">&#x1F527;</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-perfiles-p2"></tbody></table>
+  <table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-embellecedor-p2"></tbody></table>
+  <div class="seccion-titulo">Cristales P2 - Color: <span id="puerta1-color-vidrio-p2"></span></div>
+  <table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-cristales-p2"></tbody></table>
+</div>
+</div></div>
+
+<!-- pagina-puerta2 eliminada; su contenido se integra en pagina-puerta1 (doble) y pagina-marco -->
+
+<div id="pagina-marco" class="pagina-informe">
+<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="marco-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="marco-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="marco-fecha"></span></div></div>
+<div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="marco-comentarios"></span></div></div>
+<div class="linea-resumen"><span class="texto-resumen" id="marco-resumen-config"></span><span class="paginacion" id="marco-paginacion"></span></div></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="seccion-titulo">Perfiles Acabado: <span id="marco-acabado"></span></div>
+<div class="seccion-sub-titulo" id="marco-subtitulo">MARCO</div>
+<table class="tabla-informe"><thead><tr><th class="imagen-perfil">&#x1F527;</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="marco-tabla-perfiles"></tbody></table>
+</div>
+<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
+<tbody>
+<tr><td id="marco-cod-puerta" class="texto-izq"></td><td class="texto-izq" id="marco-label-puerta">Puerta</td><td id="marco-tipo-puerta" class="texto-izq"></td><td id="marco-cant-puerta" class="texto-Der"></td><td id="marco-precio-puerta" class="texto-Der"></td></tr>
+<tr><td></td><td class="texto-izq">Acabado</td><td id="marco-acabado-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr><td></td><td class="texto-izq">Color Vidrio</td><td id="marco-color-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr id="marco-fila-medidas-s"><td></td><td class="texto-izq">Medidas</td><td class="texto-izq"><span id="marco-alto-precio"></span> alto x <span id="marco-ancho-precio"></span> ancho</td><td></td><td></td></tr>
+<tr id="marco-fila-medidas-d" style="display:none;"><td></td><td class="texto-izq">Medidas</td><td class="texto-izq"><span id="marco-alto-precio-d"></span> alto x (<span id="marco-ancho1-precio"></span> + <span id="marco-ancho2-precio"></span>) ancho</td><td></td><td></td></tr>
+<tr><td id="marco-cod-emb1" class="texto-izq"></td><td class="texto-izq" id="marco-label-emb1">Embellecedor</td><td id="marco-emb1-precio" class="texto-izq"></td><td id="marco-cant-emb1" class="texto-Der"></td><td id="marco-precio-emb1" class="texto-Der"></td></tr>
+<tr id="marco-fila-emb2" style="display:none;"><td id="marco-cod-emb2" class="texto-izq"></td><td class="texto-izq">Embellecedor P2</td><td id="marco-emb2-precio" class="texto-izq"></td><td id="marco-cant-emb2" class="texto-Der"></td><td id="marco-precio-emb2" class="texto-Der"></td></tr>
+</tbody></table></div></div>
+
+<div id="pagina-fijo2" class="pagina-informe">
+<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="fijo2-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="fijo2-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="fijo2-fecha"></span></div></div>
+<div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="fijo2-comentarios"></span></div></div>
+<div class="linea-resumen"><span class="texto-resumen" id="fijo2-resumen-config"></span><span class="paginacion" id="fijo2-paginacion"></span></div></div>
+<div class="titulo-elemento"><span class="elemento-principal">FIJO 2</span><span class="elemento-detalle" id="fijo2-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="seccion-titulo">Perfiles Acabado: <span id="fijo2-acabado"></span></div>
+<table class="tabla-informe"><thead><tr><th class="imagen-perfil">🔧</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-perfiles"></tbody></table>
+<table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-embellecedor"></tbody></table>
+<div class="seccion-titulo">Medidas de Cristales - Color: <span id="fijo2-color-vidrio"></span></div>
+<table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-cristales"></tbody></table></div>
+<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
+<tbody>
+<tr><td id="fijo2-cod-fijo" class="texto-izq"></td><td class="texto-izq">Fijo</td><td id="fijo2-tipo-fijo" class="texto-izq"></td><td id="fijo2-cant-fijo" class="texto-Der"></td><td id="fijo2-precio-fijo" class="texto-Der"></td></tr>
+<tr><td></td><td class="texto-izq">Acabado</td><td id="fijo2-acabado-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr><td></td><td class="texto-izq">Color Vidrio</td><td id="fijo2-color-precio" class="texto-izq"></td><td></td><td></td></tr>
+<tr><td></td><td class="texto-izq">Medidas</td><td class="texto-izq"><span id="fijo2-alto-precio"></span> alto x <span id="fijo2-ancho-precio"></span> ancho</td><td></td><td></td></tr>
+<tr><td id="fijo2-cod-emb" class="texto-izq"></td><td class="texto-izq">Embellecedor</td><td id="fijo2-emb-precio" class="texto-izq"></td><td id="fijo2-cant-emb" class="texto-Der"></td><td id="fijo2-precio-emb" class="texto-Der"></td></tr>
+<tr><td id="fijo2-cod-bast" class="texto-izq"></td><td class="texto-izq">Bastidor</td><td id="fijo2-bast-precio" class="texto-izq"></td><td id="fijo2-cant-bast" class="texto-Der"></td><td id="fijo2-precio-bast" class="texto-Der"></td></tr>
+</tbody></table></div></div>
+
+</div><!-- /informes-wrapper -->
+<div id="botones-accion-informes">
+<button id="btn-volver" onclick="ocultarInformes()" class="btn">⪡ Atrás</button>
+<button id="btn-pdf" onclick="alert('🚧 Módulo PDF en construcción')" class="btn">Imprimir / PDF</button>
+<button id="btn-nueva-config" onclick="limpiarTodo()" class="btn">Nueva Configuración</button>
+</div>
+
+
+
+
+<!-- ********************   JAVA SCRIPT   *******************************  -->
+<!-- ********************   JAVA SCRIPT   *******************************  --> 
+<!-- ********************   JAVA SCRIPT   *******************************  -->
+
+  <script>
+
+  const flujoSeleccionado = localStorage.getItem('flujoSeleccionado');
+  const datosGuardados = JSON.parse(localStorage.getItem('datosFormularios') || '{}');
+
+  console.log('Flujo seleccionado:', flujoSeleccionado); // '2' o '5'
+  console.log('Datos del formulario anterior:', datosGuardados);
+
+  if (flujoSeleccionado === '2') {
+    console.log('✅ Puerta Abatible - Frente completo');
+  } else if (flujoSeleccionado === '5') {
+    console.log('✅ Puerta Abatible - Elemento independiente');
+  }
+
+
+  function volverAlInicio() {
+    // Opcional: limpiar el localStorage
+    // localStorage.removeItem('flujoSeleccionado');
+    // localStorage.removeItem('datosFormularios');
+    
+    window.location.href = 'PAMontada.html'; // o el nombre de tu HTML principal
+    }
+
+
+  function cambiarFormulario(actual, destino) {
+    if (actual === 4 || actual === 5) {
+      guardarSeleccionIndividual(actual);
+    }
+    if (actual === 15) {
+      guardarEstadoForm15();
+    }
+    
+    guardarDatosFormulario(actual);
+    
+    const formActual = document.getElementById(`form${actual}`);
+    const formDestino = document.getElementById(`form${destino}`);
+    
+    if (formActual && formDestino) {
+      formActual.classList.remove('active');
+      
+      if (destino === 15) {
+        formDestino.classList.add('active');
+        renderForm15();
+      } else if (destino === 4 || destino === 5) {
+        formDestino.classList.add('active');
+        actualizarTituloFormulario(destino);
+        preseleccionarOpcion(destino);
+      } else {
+        formDestino.classList.add('active');
+      }
+      
+      if (destino === 6) {
+        cargarImagenFormulario6(actual);
+        // Mostrar tipo de cierre seleccionado en Form2
+        const campoCierre = document.getElementById('infoCierre');
+        if (campoCierre) {
+          const opCierre = SelOpcion.form2?.opcion;
+          campoCierre.value = opCierre === 'op2' ? 'Cierre Cerradura' : 'Cierre Magnético';
+        }
+      }
+    }
+  }
+
+
+  // Función para resetear todas las configuraciones individuales
+  function resetearConfiguracionesIndividuales() {
+    configuracionesIndividuales.embellecedorFijo1 = null;
+    configuracionesIndividuales.embellecedorPuerta1 = null;
+    configuracionesIndividuales.embellecedorPuerta2 = null;
+    configuracionesIndividuales.embellecedorFijo2 = null;
+    configuracionesIndividuales.bastidorFijo1 = null;
+    configuracionesIndividuales.bastidorFijo2 = null;
+    campoEnConfiguracion = null;
+  }
+
+
+  // Variable global para tracking de campo en configuración Form6
+  let campoEnConfiguracion = null;
+
+  // Objeto para guardar configuraciones individuales Form6
+  const configuracionesIndividuales = {
+    embellecedorFijo1: null,
+    embellecedorPuerta1: null,
+    embellecedorPuerta2: null,
+    embellecedorFijo2: null,
+    bastidorFijo1: null,
+    bastidorFijo2: null
+  };
+
+  // PARA FORM6 -- Mapeo completo de opciones con imagen, composición y elementos
+  const mapaOpciones = {
+    "op1": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles01.png",
+      composicion: ["Puerta1"],
+      tieneFijo: false,
+      tieneFijo1: false,
+      tieneFijo2: false,
+      numPuertas: 1,
+      numFijos: 0
+    },
+    "op2": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles02.png",
+      composicion: ["Fijo1", "Puerta1"],
+      tieneFijo: true,
+      tieneFijo1: true,
+      tieneFijo2: false,
+      numPuertas: 1,
+      numFijos: 1
+    },
+    "op3": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles03.png",
+      composicion: ["Fijo1", "Puerta1", "Fijo2"],
+      tieneFijo: true,
+      tieneFijo1: true,
+      tieneFijo2: true,
+      numPuertas: 1,
+      numFijos: 2
+    },
+    "op4": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles02.png",
+      composicion: ["Puerta1", "Puerta2"],
+      tieneFijo: false,
+      tieneFijo1: false,
+      tieneFijo2: false,
+      numPuertas: 2,
+      numFijos: 0
+    },
+    "op5": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles03.png",
+      composicion: ["Fijo1", "Puerta1", "Puerta2"],
+      tieneFijo: true,
+      tieneFijo1: true,
+      tieneFijo2: false,
+      numPuertas: 2,
+      numFijos: 1
+    },
+    "op6": {
+      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles04.png",
+      composicion: ["Fijo1", "Puerta1", "Puerta2", "Fijo2"],
+      tieneFijo: true,
+      tieneFijo1: true,
+      tieneFijo2: true,
+      numPuertas: 2,
+      numFijos: 2
+    }
+  };
+
+  // Mapeos de valores a textos descriptivos
+  const mapaBastidor = {
+    "0": "3 Paredes",
+    "A": "3 Paredes U",
+    "B": "4 Paredes"
+  };
+
+  const mapaEmbellecedor = {
+    "0": "Sin embellecedor",
+    "2": "Modelo A",
+    "4": "Modelo B",
+    "6": "Modelo C",
+    "D": "Modelo D"
+  };
+
+
+  // Mapeo de nombres de campos a títulos amigables
+  const mapaTitulosCampos = {
+    embellecedorFijo1: "Fijo 1",
+    embellecedorPuerta1: "Puerta 1",
+    embellecedorPuerta2: "Puerta 2",
+    embellecedorFijo2: "Fijo 2",
+    bastidorFijo1: "Fijo 1",
+    bastidorFijo2: "Fijo 2"
+  };
+
+
+  // Función para poblar los campos de embellecedor y bastidor
+
+function poblarCaracteristicasForm6() {
+  const campos = [
+    'embellecedorFijo1', 'embellecedorPuerta1', 'embellecedorPuerta2', 'embellecedorFijo2',
+    'bastidorFijo1', 'bastidorFijo2'
+  ];
+  
+  campos.forEach(nombreCampo => {
+    const campo = document.querySelector(`input[name="${nombreCampo}"]`);
+    const valorGuardado = configuracionesIndividuales[nombreCampo];
+    
+    if (campo && valorGuardado) {
+      campo.value = valorGuardado; // ✅ Guarda texto directo
+    }
+  });
+}
+
+
+function restaurarMedidasForm6() {
+  const f6 = SelOpcion.form6;
+  if (!f6) return;
+
+  const campos = ['AnchoFijo1', 'AnchoPuerta1', 'AnchoPuerta2', 'AnchoFijo2'];
+  campos.forEach(nombre => {
+    const campo = document.querySelector(`input[name="${nombre}"]`);
+    if (campo && f6[nombre]) campo.value = f6[nombre];
+  });
+
+  // Recalcular el ancho total
+  sumarAnchosVisibles();
+}
+
+
+function cargarImagenFormulario6(origenFormulario) {
+  const opcionSeleccionada = SelOpcion['form1']?.opcion;
+  if (!opcionSeleccionada) return;
+  
+  const infoOpcion = mapaOpciones[opcionSeleccionada];
+  if (!infoOpcion) return;
+  
+  const opcionAnterior = window.opcionForm1Anterior;
+  const cambioDeModelo = opcionAnterior && opcionAnterior !== opcionSeleccionada;
+  const vieneDeConfiguracion = (origenFormulario === 4 || origenFormulario === 5);
+  
+  // Resetear SOLO si cambió modelo Y no venimos de config
+  if (cambioDeModelo && !vieneDeConfiguracion) {
+    resetearCamposFormulario6();
+    resetearConfiguracionesIndividuales();
+  }
+  
+  window.opcionForm1Anterior = opcionSeleccionada;
+  
+  // Actualizar imagen SIEMPRE
+  const imagenElement = document.querySelector('#form6 .imagen-referencia');
+  imagenElement.src = infoOpcion.imagen;
+  imagenElement.alt = `Configuración ${opcionSeleccionada}`;
+  
+  // Re-crear campos SOLO si no venimos de config
+  if (!vieneDeConfiguracion) {
+    configurarCamposFormulario6(infoOpcion);
+    agregarEventListenersSuma();
+    restaurarMedidasForm6();
+  }
+  
+  // ✅ ESTO ES CLAVE: Siempre restaurar selecciones
+  poblarCaracteristicasForm6();
+  hacerCamposClickeables();
+}
+
+
+
+
+// FORM 4 y 5
+// Función para actualizar el título del formulario con el elemento en configuración
+function actualizarTituloFormulario(numeroFormulario) {
+  if (!campoEnConfiguracion) return;
+  
+  const form = document.getElementById(`form${numeroFormulario}`);
+  if (!form) return;
+  
+  const h2 = form.querySelector('h2');
+  if (!h2) return;
+  
+  const tituloElemento = mapaTitulosCampos[campoEnConfiguracion] || '';
+  
+  if (numeroFormulario === 4) {
+    // Form4 - Bastidor
+    h2.textContent = tituloElemento ? `Tipología de Fijo - ${tituloElemento}` : 'Tipología de Fijo';
+  } else if (numeroFormulario === 5) {
+    // Form5 - Embellecedor
+    h2.textContent = tituloElemento ? `Divisiones Adhesivas 13x3 - ${tituloElemento}` : 'Divisiones Adhesivas 13x3';
+  }
+}
+
+
+// Función para crear los campos de medidas según la composición
+function configurarCamposFormulario6(infoOpcion) {
+  const contenedor = document.getElementById('contenedor-campos-medidas');
+  if (!contenedor) return;
+  contenedor.innerHTML = '';
+
+  // Leer mano y posición guardadas en Form15
+  const mano = SelOpcion.form15?.mano || 'Derecha';
+  const posicionFijo = SelOpcion.form15?.posicionFijo || 'izquierda';
+
+  // Reordenar composición si hay un solo fijo y se cambió la posición
+  let composicion = [...infoOpcion.composicion];
+  if (infoOpcion.numFijos === 1 && infoOpcion.numPuertas >= 1) {
+    if (posicionFijo === 'derecha') {
+      // Sacar el fijo y ponerlo al final
+      composicion = composicion.filter(e => !e.startsWith('Fijo'));
+      composicion.push('Fijo1');
+    } else {
+      // Fijo al principio (orden natural ya es correcto)
+      composicion = composicion.filter(e => !e.startsWith('Fijo'));
+      composicion.unshift('Fijo1');
+    }
+  }
+
+  composicion.forEach(elemento => {
+    const label = document.createElement('label');
+    label.style.flex = '1';
+    label.style.textAlign = 'center';
+    let html = '';
+
+    switch(elemento) {
+      case 'Fijo1':
+        label.style.color = 'blue';
+        html = `
+          Fijo 1<br>
+          <span style="font-size:11px; color:transparent;">—</span><br>
+          <input type="number" name="AnchoFijo1" maxlength="4" class="campo-medida"><br>
+          <input type="text" name="embellecedorFijo1" placeholder="embellecedor" readonly class="caracteristicas"><br>
+          <input type="text" name="bastidorFijo1" placeholder="bastidor" readonly class="caracteristicas">
+        `;
+        break;
+
+      case 'Puerta1': {
+        label.style.color = 'red';
+        const manoP1 = infoOpcion.numPuertas === 2 ? 'Izq' : (mano === 'Derecha' ? 'Der' : 'Izq');
+        html = `
+          Puerta 1<br>
+          <span style="font-size:11px; color:red;">Mano ${manoP1 === 'Der' ? 'derecha' : 'izquierda'}</span><br>
+          <input type="number" name="AnchoPuerta1" maxlength="4" class="campo-medida"><br>
+          <input type="text" name="embellecedorPuerta1" placeholder="embellecedor" readonly class="caracteristicas"><br>
+          <span style="display:inline-block; height:20px;"></span>
+        `;
+        break;
+      }
+
+      case 'Puerta2': {
+        label.style.color = 'red';
+        const manoP2 = infoOpcion.numPuertas === 2 ? 'Der' : (mano === 'Derecha' ? 'Der' : 'Izq');
+        html = `
+          Puerta 2<br>
+          <span style="font-size:11px; color:red;">Mano ${manoP2 === 'Der' ? 'derecha' : 'izquierda'}</span><br>
+          <input type="number" name="AnchoPuerta2" maxlength="4" class="campo-medida"><br>
+          <input type="text" name="embellecedorPuerta2" placeholder="embellecedor" readonly class="caracteristicas"><br>
+          <span style="display:inline-block; height:20px;"></span>
+        `;
+        break;
+      }
+
+      case 'Fijo2':
+        label.style.color = 'blue';
+        html = `
+          Fijo 2<br>
+          <span style="font-size:11px; color:transparent;">—</span><br>
+          <input type="number" name="AnchoFijo2" maxlength="4" class="campo-medida"><br>
+          <input type="text" name="embellecedorFijo2" placeholder="embellecedor" readonly class="caracteristicas"><br>
+          <input type="text" name="bastidorFijo2" placeholder="bastidor" readonly class="caracteristicas">
+        `;
+        break;
+    }
+
+    label.innerHTML = html;
+    contenedor.appendChild(label);
+  });
+}
+
+// FORM 6
+// Función para sumar los anchos visibles
+function sumarAnchosVisibles() {
+  let total = 0;
+  
+  const campoFijo1 = document.querySelector('input[name="AnchoFijo1"]');
+  const campoPuerta1 = document.querySelector('input[name="AnchoPuerta1"]');
+  const campoPuerta2 = document.querySelector('input[name="AnchoPuerta2"]');
+  const campoFijo2 = document.querySelector('input[name="AnchoFijo2"]');
+  
+  // Sumar solo los campos que existen (si no existen, es null)
+  if (campoFijo1) {
+    total += parseFloat(campoFijo1.value) || 0;
+  }
+  if (campoPuerta1) {
+    total += parseFloat(campoPuerta1.value) || 0;
+  }
+  if (campoPuerta2) {
+    total += parseFloat(campoPuerta2.value) || 0;
+  }
+  if (campoFijo2) {
+    total += parseFloat(campoFijo2.value) || 0;
+  }
+  
+  // Actualizar el campo Ancho
+  const campoAncho = document.querySelector('input[name="Ancho"]');
+  if (campoAncho) {
+    campoAncho.value = total;
+  }
+}
+
+// Añadir event listeners a los campos DESPUÉS de crearlos
+function agregarEventListenersSuma() {
+  const campos = [
+    document.querySelector('input[name="AnchoFijo1"]'),
+    document.querySelector('input[name="AnchoPuerta1"]'),
+    document.querySelector('input[name="AnchoPuerta2"]'),
+    document.querySelector('input[name="AnchoFijo2"]')
+  ];
+  
+  campos.forEach(campo => {
+    if (campo) {
+      campo.addEventListener('input', sumarAnchosVisibles);
+      campo.addEventListener('change', sumarAnchosVisibles);
+    }
+  });
+}
+
+
+// Función para hacer los campos de características clickeables
+  function hacerCamposClickeables() {
+    // Campos de embellecedor abren form5
+    const camposEmbellecedor = document.querySelectorAll('input[name^="embellecedor"]');
+    
+    camposEmbellecedor.forEach(campo => {
+      if (campo) {
+        campo.style.cursor = 'pointer';
+        campo.addEventListener('click', () => {
+          campoEnConfiguracion = campo.name;  // Guardamos qué campo estamos configurando
+          cambiarFormulario(6, 5);
+        });
+      }
+    });
+    
+    // Campos de bastidor abren form4
+    const camposBastidor = document.querySelectorAll('input[name^="bastidor"]');
+    
+    camposBastidor.forEach(campo => {
+      if (campo) {
+        campo.style.cursor = 'pointer';
+        campo.addEventListener('click', () => {
+          campoEnConfiguracion = campo.name;  // Guardamos qué campo estamos configurando
+          cambiarFormulario(6, 4);
+        });
+      }
+    });
+  }
+
+
+  function preseleccionarOpcion(numeroFormulario) {
+    if (!campoEnConfiguracion) return;
+    
+    const valorPrevio = configuracionesIndividuales[campoEnConfiguracion];
+    
+    if (!valorPrevio) return;
+    
+    const form = document.getElementById(`form${numeroFormulario}`);
+    if (!form) return;
+    
+    // Buscar el radio button con ese valor
+    const radios = form.querySelectorAll('input[type="radio"][name="opcion"]');
+    radios.forEach(radio => {
+      if (radio.value === valorPrevio) {
+        radio.checked = true;
+      }
+    });
+  }
+
+  // Función para guardar la selección individual al salir de Form4/Form5
+  function guardarSeleccionIndividual(numeroFormulario) {
+    if (!campoEnConfiguracion) return;
+    
+    const form = document.getElementById(`form${numeroFormulario}`);
+    if (!form) return;
+    
+    const radioSeleccionado = form.querySelector('input[type="radio"][name="opcion"]:checked');
+    
+    if (radioSeleccionado) {
+      const esEmbellecedor = campoEnConfiguracion.includes('embellecedor');
+      const mapa = esEmbellecedor ? mapaEmbellecedor : mapaBastidor;
+      
+      // ✅ Guarda el TEXTO descriptivo, no el value
+      configuracionesIndividuales[campoEnConfiguracion] = mapa[radioSeleccionado.value];
+    }
+  }
+
+
+
+
+
+  // Función para resetear los campos del formulario 6
+  function resetearCamposFormulario6() {
+    const campoFijo1 = document.querySelector('input[name="AnchoFijo1"]');
+    const campoPuerta1 = document.querySelector('input[name="AnchoPuerta1"]');
+    const campoPuerta2 = document.querySelector('input[name="AnchoPuerta2"]');
+    const campoFijo2 = document.querySelector('input[name="AnchoFijo2"]');
+    const campoAncho = document.querySelector('input[name="Ancho"]');
+    
+    if (campoFijo1) campoFijo1.value = '';
+    if (campoPuerta1) campoPuerta1.value = '';
+    if (campoPuerta2) campoPuerta2.value = '';
+    if (campoFijo2) campoFijo2.value = '';
+    if (campoAncho) campoAncho.value = '';
+
+      // resetear físicamente Form4 y Form5 al mismo tiempo
+
+    const form4 = document.getElementById('form4');
+    const form5 = document.getElementById('form5');
+    
+    if (form4) {
+      const radiosForm4 = form4.querySelectorAll('input[type="radio"]');
+      radiosForm4.forEach(radio => radio.checked = false);
+    }
+    
+    if (form5) {
+      const radiosForm5 = form5.querySelectorAll('input[type="radio"]');
+      radiosForm5.forEach(radio => radio.checked = false);
+    }
+  }
+
+
+    // Objeto global para almacenar opciones seleccionadas de todos los formularios
+  const SelOpcion = {};
+
+
+
+// Comportamiento exclusivo: 0 o 1 seleccionado
+document.querySelectorAll('#form1 input[name="opcion_extra"]').forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    if (this.checked) {
+      // Desmarcar el otro
+      document.querySelectorAll('#form1 input[name="opcion_extra"]').forEach(cb => {
+        if (cb !== this) cb.checked = false;
+      });
+    }
+    // Si se desmarca, no hace nada (permite 0 seleccionados)
+  });
+});
+
+
+
+  // Función única de validación para todos los formularios
+  function validarFormulario(numeroFormulario) {
+    const form = document.getElementById(`form${numeroFormulario}`);
+    if (!form) return false;
+    
+    // Form1: validar radio
+    if (numeroFormulario === 1) {
+      return form.querySelector('input[name="opcion"]:checked') ? true : alert('Selecciona una configuración.');
+    }
+    
+    // Form6: validación completa
+    if (numeroFormulario === 6) {
+      // Validar medidas
+      const medidas = form.querySelectorAll('input[name^="Ancho"]:not([name="Ancho"])');
+      for (let campo of medidas) {
+        if (campo.offsetParent && !parseFloat(campo.value)) {
+          alert('Completa todas las medidas.');
+          campo.focus();
+          return false;
+        }
+      }
+      
+      // Validar características
+      const caracteristicas = form.querySelectorAll('input.caracteristicas');
+      for (let campo of caracteristicas) {
+        if (campo.offsetParent && !campo.value) {
+          alert('Configura embellecedores y bastidores.');
+          campo.focus();
+          return false;
+        }
+      }
+      
+      // Validar otros campos obligatorios
+      const obligatorios = ['Alto', 'AcabadoAluminio', 'ColorVidrio', 'conjuntos'];
+      for (let name of obligatorios) {
+        const campo = form.querySelector(`[name="${name}"]`);
+        if (!campo.value) {
+          alert(`Completa el campo ${name}.`);
+          campo.focus();
+          return false;
+        }
+      }
+      
+      return true;
+    }
+    
+    // Otros formularios (4,5): validar radio si se intenta avanzar
+    const radio = form.querySelector('input[name="opcion"]:checked');
+    if (!radio) {
+      alert('Selecciona una opción.');
+      return false;
+    }
+    return true;
+}
+
+
+// Función para guardar datos de un formulario antes de cambiar
+function guardarDatosFormulario(numeroFormulario) {
+      const form = document.getElementById(`form${numeroFormulario}`);
+      
+      if (!form) {
+        console.warn('Formulario no encontrado:', numeroFormulario);
+        return false;
+      }
+      
+      // Crear objeto para este formulario si no existe
+      if (!SelOpcion[`form${numeroFormulario}`]) {
+        SelOpcion[`form${numeroFormulario}`] = {};
+      }
+      
+      // Obtener todos los campos del formulario
+      const formData = new FormData(form);
+      
+      // Guardar cada campo
+      for (let [name, value] of formData.entries()) {
+        SelOpcion[`form${numeroFormulario}`][name] = value;
+      }
+      
+      // También capturar radio buttons y checkboxes
+      const inputs = form.querySelectorAll('input, select, textarea');
+      inputs.forEach(input => {
+        if (input.type === 'radio' && input.checked) {
+          SelOpcion[`form${numeroFormulario}`][input.name] = input.value;
+        } else if (input.type === 'checkbox') {
+          SelOpcion[`form${numeroFormulario}`][input.name] = input.checked;
+        }
+      });
+      
+      console.log('Datos guardados del formulario', numeroFormulario, ':', SelOpcion[`form${numeroFormulario}`]);
+      return true;
+}
+
+
+
+// FUNCIONES DE CÁLCULO DE FABRICACIÓN
+function calcularPerfilesPuerta(numPuerta,config,medidas){const perfiles=[];const esMagnetico=(SelOpcion.form2?.opcion||'op1')==='op1';const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;const conjuntos=parseInt(medidas.conjuntos)||1;const rutaImg='https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';if(esMagnetico){perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Horizontal Iman',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}else{perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical Mec Cerradura',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}return perfiles}
+function calcularPerfilesFijo(tipoFijo,config,medidas){const perfiles=[];const tipoBastidor=SelOpcion.form4?.opcion||'0';const conjuntos=parseInt(medidas.conjuntos)||1;const altoReal=parseFloat(medidas.alto)-2;const anchoFijoNom=parseFloat(medidas[`ancho_${tipoFijo}`]);const anchoFijoReal=anchoFijoNom-1;const holguraFijo=2;const rutaImg='https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';if(tipoBastidor==='0'){const altoFijo=altoReal-19-19-holguraFijo;const anchoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil Base Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFB.jpg'});perfiles.push({tipo:'Perfil Clip Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFC.jpg'})}else{const altoElementoFijo=altoReal-8-8-holguraFijo;const anchoElementoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoElementoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoElementoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil U Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFU.jpg'})}return perfiles}
+
+function calcularPerfilesMarco(config, medidas) {
+  const perfiles = [];
+  const conjuntos = parseInt(medidas.conjuntos) || 1;
+  const altoReal = parseFloat(medidas.alto) - 2;
+  const anchoPuerta1 = parseFloat(medidas.ancho_p1) - 1;
+  const anchoPuerta2 = parseFloat(medidas.ancho_p2) - 1;
+  const rutaImg = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';
+  const esMagnetico = (SelOpcion.form2?.opcion || 'op1') === 'op1';
+  const esDoble = config.numPuertas === 2;
+
+  const nombrePerfil   = esMagnetico ? 'Perfil Marco'    : 'Perfil Marco Cerradura';
+  const nombrePletina  = esMagnetico ? 'Pletina Vertical' : 'Pletina Vertical Cerradura';
+  const nombreTubular  = esMagnetico
+    ? (esDoble ? 'Tubular 40x20 Doble Iman' : 'Tubular 40x20 Iman')
+    : 'Tubular 40x20';
+
+  perfiles.push({ tipo: nombrePerfil,        cantidad: 2*conjuntos, medida: Math.round(altoReal),                         imagen: rutaImg + 'MARCO.jpg'    });
+  perfiles.push({ tipo: nombrePletina,        cantidad: 2*conjuntos, medida: Math.round(altoReal),                         imagen: rutaImg + 'PLETINA.jpg'  });
+  perfiles.push({ tipo: 'Pletina Horizontal', cantidad: 1*conjuntos, medida: Math.round(anchoPuerta1 + anchoPuerta2 - 64), imagen: rutaImg + 'PLETINA.jpg'  });
+  perfiles.push({ tipo: nombreTubular,        cantidad: 1*conjuntos, medida: Math.round(anchoPuerta1 + anchoPuerta2 - 39), imagen: rutaImg + 'TUB40x20.jpg' });
+  return perfiles;
+}
+
+function calcularEmbellecedores(tipoElemento,modeloEmb,medidas,config){if(!modeloEmb||modeloEmb==='Sin embellecedor'){return[]}const embellecedores=[];const conjuntos=parseInt(medidas.conjuntos)||1;const esFijo=tipoElemento.includes('fijo');let anchoBase,altoBase;if(esFijo){const tipoBastidor=SelOpcion.form4?.opcion||'0';const altoReal=parseFloat(medidas.alto)-2;const anchoFijoReal=parseFloat(medidas[`ancho_${tipoElemento}`])-1;const holguraFijo=2;if(tipoBastidor==='0'){altoBase=altoReal-19-19-holguraFijo;anchoBase=anchoFijoReal-8-8-holguraFijo}else{altoBase=altoReal-8-8-holguraFijo;anchoBase=anchoFijoReal-8-8-holguraFijo}}else{const numPuerta=tipoElemento==='puerta1'?1:2;const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;altoBase=altoReal-11-20;anchoBase=anchoPuerta-44}switch(modeloEmb){case'Modelo A':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:2*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo B':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:4*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo C':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:6*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo D':embellecedores.push({tipo:'Pletina 13x3mm - Vertical',cantidad:2*conjuntos,medida:Math.round(altoBase-70)});embellecedores.push({tipo:'Pletina 13x3mm - Horizontal',cantidad:12*conjuntos,medida:Math.floor((anchoBase-24-13)/2)});break}return embellecedores}
+function calcularVidrios(tipoElemento,medidas,config){const vidrios=[];const conjuntos=parseInt(medidas.conjuntos)||1;const esFijo=tipoElemento.includes('fijo');if(esFijo){const tipoBastidor=SelOpcion.form4?.opcion||'0';const altoReal=parseFloat(medidas.alto)-2;const anchoFijoReal=parseFloat(medidas[`ancho_${tipoElemento}`])-1;const holguraFijo=2;let altoFijo,anchoFijo;if(tipoBastidor==='0'){altoFijo=altoReal-19-19-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}else{altoFijo=altoReal-8-8-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoFijo-58),ancho:Math.round(anchoFijo-10)})}else{const numPuerta=tipoElemento==='puerta1'?1:2;const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoPuerta-58),ancho:Math.round(anchoPuertaReal-10)})}return vidrios}
+
+
+function ocultarInformes(){document.querySelectorAll('.pagina-informe').forEach(p=>p.classList.remove('active'));document.getElementById('botones-accion-informes').style.display='none';document.getElementById('form6').classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function limpiarTodo(){if(confirm('¿Estás seguro? Se perderán todos los datos introducidos.')){location.reload()}}
+
+// CÓDIGO DE PRECIOS - VERSION MEJORADA CON LOGGING
+// CÓDIGO DE PRECIOS - VERSION FINAL
+
+const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/CodigoPrecio.csv';
+const URL_ARTICULOS = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ArticulosPAmont.csv';
+const URL_ELEMENTOS = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ElementosPrecio.csv';
+
+let tablasPrecios = {};
+let tablasPreciosCargadas = false;
+
+function csvToObj(text, delim = ';') {
+  const lines = text.trim().split(/\r?\n/);
+  const heads = lines[0].split(delim).map(h => h.trim());
+  return lines.slice(1).map(l => {
+    const vals = l.split(delim);
+    const obj = {};
+    heads.forEach((h, i) => {
+      const val = vals[i] || '';
+      obj[h] = val.trim().replace(/\r$/, '');
+    });
+    return obj;
+  }).filter(obj => Object.values(obj).some(v => v !== ''));
+}
+
+async function cargarTablasPrecios() {
+  if (tablasPreciosCargadas) return true;
+  
+  console.log('🔄 Cargando tablas de precios...');
+  try {
+    const [cp, art, el] = await Promise.all([
+      fetch(URL_CODIGO_PRECIO).then(r => r.text()).then(csvToObj),
+      fetch(URL_ARTICULOS).then(r => r.text()).then(csvToObj),
+      fetch(URL_ELEMENTOS).then(r => r.text()).then(csvToObj)
+    ]);
+    tablasPrecios.codPrecio = cp;
+    tablasPrecios.articulos = art;
+    tablasPrecios.elementos = el;
+    tablasPreciosCargadas = true;
+    console.log('✅ Tablas de precios cargadas');
+    return true;
+  } catch (error) {
+    console.error('❌ Error cargando tablas:', error);
+    return false;
+  }
+}
+
+const MAPA_ACABADOS = {
+  'Blanco mate 9003': 'L.BM03',
+  'Negro mate texturado': 'L.NMT',
+  'Acero corten': 'L.C',
+  'Chapa roble barnizada': 'C.RB',
+  'Chapa nogal barnizada': 'C.NG',
+  'Acabado Especial': 'ESP'
+};
+
+const MAPA_VIDRIOS = {
+  'TRANSPARENTE': '01',
+  'MATE': '02',
+  'BRONCE': '03',
+  'GRIS': '04',
+  'GRIS OSCURO': '05',
+  'ESPECIAL': '00'
+};
+
+const MAPA_EMBELLECEDORES = {
+  'Sin embellecedor': null,
+  'Modelo A': 'MA',
+  'Modelo B': 'MB',
+  'Modelo C': 'MC',
+  'Modelo D': 'MD'
+};
+
+const MAPA_BASTIDORES = {
+  '3 Paredes':   '0301',   // mapaBastidor value "0"
+  '3 Paredes U': '0302',   // mapaBastidor value "A"
+  '4 Paredes':   '0401'    // mapaBastidor value "B"
+};
+
+function ajustarMedidasPrecios(tipo, altoIn, anchoIn) {
+  const altoTabla = altoIn <= 2500 ? 2500 : 2700;
+  const ESCALAS_ANCHO = {
+    '01': [600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500],
+    '02': [500, 1000, 1500],
+    '05': [600, 700, 800, 900, 1000, 1100],
+    '15': [600, 700, 800, 900, 1000, 1100],
+    '06': [1200, 1400, 1600, 1800, 2000, 2200],
+    '07': [600, 700, 800, 900, 1000]
+  };
+  const escala = ESCALAS_ANCHO[tipo] || ESCALAS_ANCHO['01'];
+  for (const v of escala) if (v >= anchoIn) return { altoTabla, anchoTabla: v };
+  return { altoTabla, anchoTabla: escala[escala.length - 1] };
+}
+
+function buscarDenominacionYPrecio(codigo) {
+  const rowP = tablasPrecios.codPrecio.find(r => r.Codigo === codigo);
+  const precio = rowP ? parseFloat(rowP.Precio.replace(',', '.')) : 0;
+  const rowA = tablasPrecios.articulos.find(r => r.CODIGO === codigo);
+  const denom = rowA ? rowA.DENOMINACION : codigo;
+  return { codigo, denominacion: denom, precio };
+}
+
+function buscarPuertaPrecio(tipo, color, vidrio, altoTabla, anchoTabla) {
+  const codigo = `PAV.${tipo}${vidrio}.${color}`;
+  const rowArt = tablasPrecios.articulos.find(r => r.CODIGO === codigo);
+  const denom = rowArt ? rowArt.DENOMINACION : codigo;
+  
+  const COL_VIDRIOS = {
+    '01': 'TRANSPARENTE',
+    '02': 'MATE',
+    '03': 'BRONCE',
+    '04': 'GRIS',
+    '05': 'GRIS OSCURO',
+    '00': 'ESPECIAL'
+  };
+  const nomCol = COL_VIDRIOS[vidrio];
+  
+  const rowEl = tablasPrecios.elementos.find(r => 
+    r.TIPO === tipo && 
+    r.ALTOTABLA == altoTabla && 
+    r.COLOR === color && 
+    r.ANCHOTABLA == anchoTabla
+  );
+  
+  if (!rowEl) {
+    console.warn(`⚠️ Precio no encontrado: TIPO=${tipo}, ALTO=${altoTabla}, COLOR=${color}, ANCHO=${anchoTabla}`);
+    return { codigo, denominacion: denom, precio: 0 };
+  }
+  
+  const precStr = rowEl[nomCol] || '0';
+  const precioLimpio = precStr.replace(/\./g, '').replace(',', '.');
+  const precio = parseFloat(precioLimpio);
+  return { codigo, denominacion: denom, precio };
+}
+
+async function calcularPresupuestoElemento(data) {
+  await cargarTablasPrecios();
+  
+  let tipoReal = data.tipo;
+  if (data.tipo === '05' && data.tipoCierre === 'op2') {
+    tipoReal = '15';
+  }
+  
+  const {altoTabla, anchoTabla} = ajustarMedidasPrecios(tipoReal, data.altura, data.ancho);
+  const puerta = buscarPuertaPrecio(tipoReal, data.color, data.vidrio, altoTabla, anchoTabla);
+  
+  if (data.altura > 2700) {
+    puerta.precio = parseFloat((puerta.precio * 1.20).toFixed(3));
+  }
+  
+  const codEmb = data.modeloEmb ? `PAV.${data.modeloEmb}01.${data.color}` : null;
+  const emb = codEmb ? buscarDenominacionYPrecio(codEmb) : { codigo: '', denominacion: 'Sin embellecedor', precio: 0 };
+  
+  const codBast = data.bastidor ? `PAV.${data.bastidor}.${data.color}` : null;
+  const bast = codBast ? buscarDenominacionYPrecio(codBast) : { codigo: '', denominacion: '', precio: 0 };
+  
+  return {
+    puerta: {...puerta, obs: `Medidas reales: Alto ${data.altura} mm, Ancho ${data.ancho} mm`},
+    emb,
+    bast
+  };
+}
+
+// FUNCIÓN PARA RELLENAR PRECIOS EN LAS TABLAS DE INFORMES
+async function rellenarPreciosEnInforme(tipoElemento, config, datosComunes) {
+  const esFijo = tipoElemento.includes('fijo');
+  
+  // Preparar datos para calcular presupuesto
+  const data = {
+    tipo: esFijo ? '02' : (config.numPuertas === 2 ? '06' : '05'),
+    color: MAPA_ACABADOS[datosComunes.acabado] || 'L.BM03',
+    vidrio: MAPA_VIDRIOS[datosComunes.colorVidrio.toUpperCase()] || '01',
+    altura: parseInt(datosComunes.alto),
+    ancho: 0,
+    modeloEmb: null,
+    bastidor: null,
+    tipoCierre: SelOpcion.form2?.opcion || 'op1'
+  };
+  
+  // Obtener ancho del elemento
+  const nombreCampoAncho = `Ancho${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+  
+  // CORRECCIÓN: Para tipo 06 (2 puertas), sumar los anchos de ambas puertas
+  if (data.tipo === '06' && !esFijo) {
+    const ancho1 = parseInt(SelOpcion.form6?.AnchoPuerta1 || 0);
+    const ancho2 = parseInt(SelOpcion.form6?.AnchoPuerta2 || 0);
+    data.ancho = ancho1 + ancho2;
+    console.log(`📏 Tipo 06 - Sumando anchos: ${ancho1} + ${ancho2} = ${data.ancho}`);
+  } else {
+    data.ancho = parseInt(SelOpcion.form6?.[nombreCampoAncho] || 0);
+  }
+  
+  // Obtener embellecedor
+  const nombreCampoEmb = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+  const embText = configuracionesIndividuales[nombreCampoEmb];
+  data.modeloEmb = MAPA_EMBELLECEDORES[embText];
+  
+  // Obtener bastidor (solo para fijos)
+  if (esFijo) {
+    const nombreCampoBastidor = `bastidor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const bastidorText = configuracionesIndividuales[nombreCampoBastidor];
+    data.bastidor = MAPA_BASTIDORES[bastidorText] || null;
+  }
+  
+  try {
+    const resultado = await calcularPresupuestoElemento(data);
+    
+    // RELLENAR TABLA DE PRECIOS
+    const conjuntos = parseInt(datosComunes.conjuntos);
+    
+    // Fila principal (Puerta o Fijo)
+    const tipoPrincipal = esFijo ? 'Fijo' : 'Puerta';
+    const idCodPrincipal = esFijo ? `${tipoElemento}-cod-fijo` : `${tipoElemento}-cod-puerta`;
+    const idTipoPrincipal = esFijo ? `${tipoElemento}-tipo-fijo` : `${tipoElemento}-tipo-puerta`;
+    const idCantPrincipal = esFijo ? `${tipoElemento}-cant-fijo` : `${tipoElemento}-cant-puerta`;
+    const idPrecioPrincipal = esFijo ? `${tipoElemento}-precio-fijo` : `${tipoElemento}-precio-puerta`;
+    
+    // Solo rellenar si existen los elementos (pueden no existir en algunas configuraciones)
+    const elemCod = document.getElementById(idCodPrincipal);
+    const elemTipo = document.getElementById(idTipoPrincipal);
+    const elemCant = document.getElementById(idCantPrincipal);
+    const elemPrecio = document.getElementById(idPrecioPrincipal);
+    
+    if (elemCod) elemCod.textContent = resultado.puerta.codigo;
+    if (elemTipo) elemTipo.textContent = resultado.puerta.denominacion;
+    if (elemCant) elemCant.textContent = conjuntos;
+    if (elemPrecio) elemPrecio.textContent = resultado.puerta.precio.toFixed(2);
+    
+    // Embellecedor
+    const elemCodEmb = document.getElementById(`${tipoElemento}-cod-emb`);
+    const elemEmbPrecio = document.getElementById(`${tipoElemento}-emb-precio`);
+    const elemCantEmb = document.getElementById(`${tipoElemento}-cant-emb`);
+    const elemPrecioEmb = document.getElementById(`${tipoElemento}-precio-emb`);
+    
+    if (elemCodEmb) elemCodEmb.textContent = resultado.emb.codigo;
+    if (elemEmbPrecio) elemEmbPrecio.textContent = resultado.emb.denominacion;
+    if (elemCantEmb) elemCantEmb.textContent = resultado.emb.precio > 0 ? conjuntos : '';
+    if (elemPrecioEmb) elemPrecioEmb.textContent = resultado.emb.precio > 0 ? resultado.emb.precio.toFixed(2) : '';
+    
+    // Bastidor (solo fijos)
+    if (esFijo) {
+      const elemCodBast = document.getElementById(`${tipoElemento}-cod-bast`);
+      const elemBastPrecio = document.getElementById(`${tipoElemento}-bast-precio`);
+      const elemCantBast = document.getElementById(`${tipoElemento}-cant-bast`);
+      const elemPrecioBast = document.getElementById(`${tipoElemento}-precio-bast`);
+      
+      if (elemCodBast) elemCodBast.textContent = resultado.bast.codigo;
+      if (elemBastPrecio) elemBastPrecio.textContent = resultado.bast.denominacion;
+      if (elemCantBast) elemCantBast.textContent = resultado.bast.precio > 0 ? conjuntos : '';
+      if (elemPrecioBast) elemPrecioBast.textContent = resultado.bast.precio > 0 ? resultado.bast.precio.toFixed(2) : '';
+    }
+    
+    console.log(`✅ Precios rellenados para ${tipoElemento}`);
+    return resultado;
+    
+  } catch (error) {
+    console.error(`❌ Error calculando precios para ${tipoElemento}:`, error);
+    return null;
+  }
+}
+
+
+// VERSIÓN MEJORADA DE generarPaginaElemento CON PRECIOS
+
+// ============================================================
+// PÁGINA MARCO — fabricación marco + precios conjunto puertas
+// ============================================================
+async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
+  const pagina = document.getElementById('pagina-marco');
+  if (!pagina) { console.warn('pagina-marco no encontrada'); return; }
+  pagina.classList.add('active');
+
+  // Cabecera
+  document.getElementById('marco-cliente').textContent     = datosComunes.cliente;
+  document.getElementById('marco-pedido').textContent      = datosComunes.pedido;
+  document.getElementById('marco-fecha').textContent       = datosComunes.fecha;
+  document.getElementById('marco-comentarios').textContent = datosComunes.comentarios;
+
+  // Resumen
+  const numFijos = config.numFijos;
+  const numPuertas = config.numPuertas;
+  let textoResumen = '';
+  if (numPuertas > 0 && numFijos > 0)
+    textoResumen = `${numPuertas} ${numPuertas===1?'PUERTA':'PUERTAS'} Y ${numFijos} ${numFijos===1?'FIJO':'FIJOS'} (${datosComunes.conjuntos} ${datosComunes.conjuntos==='1'?'CONJUNTO':'CONJUNTOS'})`;
+  else
+    textoResumen = `${numPuertas} ${numPuertas===1?'PUERTA':'PUERTAS'} (${datosComunes.conjuntos} ${datosComunes.conjuntos==='1'?'CONJUNTO':'CONJUNTOS'})`;
+  document.getElementById('marco-resumen-config').textContent = textoResumen;
+  document.getElementById('marco-paginacion').textContent = `Pág ${indice + 1} / ${totalPaginas}`;
+
+  const esDoble = config.numPuertas === 2;
+  const manoF15  = SelOpcion.form15?.mano || 'Derecha';
+  const textoCierre = (SelOpcion.form2?.opcion || 'op1') === 'op1' ? 'Cierre Magnético' : 'Cierre Cerradura';
+  const manoTexto = esDoble ? 'IZQ + DER' : (manoF15 === 'Derecha' ? 'MANO DERECHA' : 'MANO IZQUIERDA');
+  const marcoSubtitulo = document.getElementById('marco-subtitulo');
+  if (marcoSubtitulo) marcoSubtitulo.textContent = `MARCO  –  ${manoTexto}  –  ${textoCierre}`;
+  document.getElementById('marco-acabado').textContent = datosComunes.acabado;
+
+  // Medidas marco
+  const medidas = {
+    alto:      datosComunes.alto,
+    conjuntos: datosComunes.conjuntos,
+    ancho_p1:  SelOpcion.form6?.AnchoPuerta1 || '0',
+    ancho_p2:  esDoble ? (SelOpcion.form6?.AnchoPuerta2 || '0') : '0'
+  };
+
+  // Tabla fabricación marco
+  const tablaMarco = document.getElementById('marco-tabla-perfiles');
+  tablaMarco.innerHTML = '';
+  calcularPerfilesMarco(config, medidas).forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><img src="${p.imagen}" width="40" height="40" style="object-fit:contain;"></td><td>${p.tipo}</td><td class="texto-Der">${p.medida}</td><td class="texto-Der">${p.cantidad}</td>`;
+    tablaMarco.appendChild(tr);
+  });
+
+  // Medidas fila precios
+  if (esDoble) {
+    document.getElementById('marco-fila-medidas-s').style.display = 'none';
+    document.getElementById('marco-fila-medidas-d').style.display = '';
+    document.getElementById('marco-alto-precio-d').textContent = datosComunes.alto;
+    document.getElementById('marco-ancho1-precio').textContent = SelOpcion.form6?.AnchoPuerta1 || '';
+    document.getElementById('marco-ancho2-precio').textContent = SelOpcion.form6?.AnchoPuerta2 || '';
+    document.getElementById('marco-label-puerta').textContent = 'Puerta Doble';
+    document.getElementById('marco-label-emb1').textContent   = 'Embellecedor P1';
+    document.getElementById('marco-fila-emb2').style.display  = '';
+  } else {
+    document.getElementById('marco-fila-medidas-s').style.display = '';
+    document.getElementById('marco-fila-medidas-d').style.display = 'none';
+    document.getElementById('marco-alto-precio').textContent   = datosComunes.alto;
+    document.getElementById('marco-ancho-precio').textContent  = SelOpcion.form6?.AnchoPuerta1 || '';
+    document.getElementById('marco-label-puerta').textContent  = 'Puerta';
+    document.getElementById('marco-label-emb1').textContent    = 'Embellecedor';
+    document.getElementById('marco-fila-emb2').style.display   = 'none';
+  }
+
+  document.getElementById('marco-acabado-precio').textContent = datosComunes.acabado;
+  document.getElementById('marco-color-precio').textContent   = datosComunes.colorVidrio;
+
+  // Precios
+  const color   = MAPA_ACABADOS[datosComunes.acabado] || 'L.BM03';
+  const vidrio  = MAPA_VIDRIOS[datosComunes.colorVidrio.toUpperCase()] || '01';
+  const ancho1  = parseInt(SelOpcion.form6?.AnchoPuerta1 || 0);
+  const ancho2  = esDoble ? parseInt(SelOpcion.form6?.AnchoPuerta2 || 0) : 0;
+  const anchoTotal = esDoble ? ancho1 + ancho2 : ancho1;
+  const altura  = parseInt(datosComunes.alto);
+  const conj    = parseInt(datosComunes.conjuntos);
+  const tipoCierre = SelOpcion.form2?.opcion || 'op1';
+
+  let tipoReal = esDoble ? '06' : '05';
+  if (!esDoble && tipoCierre === 'op2') tipoReal = '15';
+
+  const {altoTabla, anchoTabla} = ajustarMedidasPrecios(tipoReal, altura, anchoTotal);
+  const puerta = buscarPuertaPrecio(tipoReal, color, vidrio, altoTabla, anchoTabla);
+  if (altura > 2700) puerta.precio = parseFloat((puerta.precio * 1.20).toFixed(3));
+
+  document.getElementById('marco-cod-puerta').textContent    = puerta.codigo;
+  document.getElementById('marco-tipo-puerta').textContent   = puerta.denominacion;
+  document.getElementById('marco-cant-puerta').textContent   = conj;
+  document.getElementById('marco-precio-puerta').textContent = puerta.precio > 0 ? (puerta.precio * conj).toFixed(2) : '';
+
+  function fillEmb(embText, codId, descId, cantId, precId) {
+    const key = MAPA_EMBELLECEDORES[embText];
+    const cod = key ? `PAV.${key}01.${color}` : null;
+    const emb = cod ? buscarDenominacionYPrecio(cod) : { codigo: '', denominacion: 'Sin embellecedor', precio: 0 };
+    document.getElementById(codId).textContent  = emb.codigo;
+    document.getElementById(descId).textContent = emb.denominacion;
+    document.getElementById(cantId).textContent = emb.precio > 0 ? conj : '';
+    document.getElementById(precId).textContent = emb.precio > 0 ? (emb.precio * conj).toFixed(2) : '';
+  }
+
+  fillEmb(configuracionesIndividuales.embellecedorPuerta1, 'marco-cod-emb1', 'marco-emb1-precio', 'marco-cant-emb1', 'marco-precio-emb1');
+  if (esDoble) {
+    fillEmb(configuracionesIndividuales.embellecedorPuerta2, 'marco-cod-emb2', 'marco-emb2-precio', 'marco-cant-emb2', 'marco-precio-emb2');
+  }
+
+  console.log('pagina-marco generada');
+}
+
+async function generarPaginaElementoConPrecios(tipoElemento, datosComunes, config, indice, total) {
+  const paginaId = `pagina-${tipoElemento}`;
+  const pagina = document.getElementById(paginaId);
+  
+  if (!pagina) {
+    console.warn(`⚠️ Página ${paginaId} no encontrada`);
+    return;
+  }
+  
+  pagina.classList.add('active');
+  
+  // Rellenar cabecera
+  document.getElementById(`${tipoElemento}-cliente`).textContent = datosComunes.cliente;
+  document.getElementById(`${tipoElemento}-pedido`).textContent = datosComunes.pedido;
+  document.getElementById(`${tipoElemento}-fecha`).textContent = datosComunes.fecha;
+  document.getElementById(`${tipoElemento}-comentarios`).textContent = datosComunes.comentarios;
+  
+  // Resumen de configuración
+  const numPuertas = config.numPuertas;
+  const numFijos = config.numFijos;
+  let textoResumen = '';
+  if (numPuertas > 0 && numFijos > 0) {
+    textoResumen = `${numPuertas} ${numPuertas === 1 ? 'PUERTA' : 'PUERTAS'} Y ${numFijos} ${numFijos === 1 ? 'FIJO' : 'FIJOS'} (${datosComunes.conjuntos} ${datosComunes.conjuntos === '1' ? 'CONJUNTO' : 'CONJUNTOS'})`;
+  } else if (numPuertas > 0) {
+    textoResumen = `${numPuertas} ${numPuertas === 1 ? 'PUERTA' : 'PUERTAS'} (${datosComunes.conjuntos} ${datosComunes.conjuntos === '1' ? 'CONJUNTO' : 'CONJUNTOS'})`;
+  } else if (numFijos > 0) {
+    textoResumen = `${numFijos} ${numFijos === 1 ? 'FIJO' : 'FIJOS'} (${datosComunes.conjuntos} ${datosComunes.conjuntos === '1' ? 'CONJUNTO' : 'CONJUNTOS'})`;
+  }
+  document.getElementById(`${tipoElemento}-resumen-config`).textContent = textoResumen;
+  document.getElementById(`${tipoElemento}-paginacion`).textContent = `Pág ${indice + 1} / ${total}`;
+  
+  const esFijo = tipoElemento.includes('fijo');
+  if (esFijo) {
+    const nombreCampoBastidor = `bastidor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const bastidorSeleccionado = configuracionesIndividuales[nombreCampoBastidor] || 'Sin especificar';
+    const nombreCampoEmbFijo = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const embFijo = configuracionesIndividuales[nombreCampoEmbFijo] || 'Sin embellecedor';
+    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = tipoElemento.toUpperCase().replace(/(\d)/, ' $1');
+    document.getElementById(`${tipoElemento}-detalle-config`).textContent = `Bastidor ${bastidorSeleccionado}  -  Embellecedor ${embFijo}`;
+  } else {
+    const nombreCampoEmb = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const embSeleccionado = configuracionesIndividuales[nombreCampoEmb] || 'Sin especificar';
+    const manoF15 = SelOpcion.form15?.mano || 'Derecha';
+    let manoTexto;
+    if (config.numPuertas === 2) {
+      manoTexto = tipoElemento === 'puerta1' ? 'Mano Izquierda' : 'Mano Derecha';
+    } else {
+      manoTexto = manoF15 === 'Derecha' ? 'Mano Derecha' : 'Mano Izquierda';
+    }
+    // Bloque título: genérico PUERTA / PUERTAS, sin número ni embellecedor
+    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = config.numPuertas === 2 ? 'PUERTAS' : 'PUERTA';
+    document.getElementById(`${tipoElemento}-detalle-config`).textContent = '';
+    // Sub-título fabricación: mano + embellecedor (siempre visible)
+    const subtP1fab = document.getElementById('puerta1-subtitulo');
+    if (subtP1fab) {
+      subtP1fab.style.display = '';
+      subtP1fab.textContent = `PUERTA 1  \u2013  ${manoTexto}  \u2013  ${embSeleccionado}  \u2013  ${(SelOpcion.form2?.opcion||'op1')==='op1'?'Cierre Magnético':'Cierre Cerradura'}`;
+    }
+  }
+  
+  document.getElementById(`${tipoElemento}-acabado`).textContent = datosComunes.acabado;
+  document.getElementById(`${tipoElemento}-color-vidrio`).textContent = datosComunes.colorVidrio;
+  
+  const medidas = { alto: datosComunes.alto, conjuntos: datosComunes.conjuntos };
+  
+  if (esFijo) {
+    medidas[`ancho_${tipoElemento}`] = SelOpcion.form6?.[`Ancho${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`] || '0';
+  } else {
+    const numPuerta = tipoElemento === 'puerta1' ? 1 : 2;
+    medidas[`ancho_p${numPuerta}`] = SelOpcion.form6?.[`Ancho${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`] || '0';
+    if (config.numPuertas === 2 && numPuerta === 1) {
+      medidas.ancho_p2 = SelOpcion.form6?.AnchoPuerta2 || '0';
+    }
+  }
+  
+  // Calcular perfiles, embellecedores y vidrios
+  let perfiles = [];
+  let embellecedores = [];
+  let vidrios = [];
+  
+  if (esFijo) {
+    perfiles = calcularPerfilesFijo(tipoElemento, config, medidas);
+    const nombreCampoEmb = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const modeloEmb = configuracionesIndividuales[nombreCampoEmb];
+    embellecedores = calcularEmbellecedores(tipoElemento, modeloEmb, medidas, config);
+    vidrios = calcularVidrios(tipoElemento, medidas, config);
+  } else {
+    const numPuerta = tipoElemento === 'puerta1' ? 1 : 2;
+    perfiles = calcularPerfilesPuerta(numPuerta, config, medidas);
+    const nombreCampoEmb = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
+    const modeloEmb = configuracionesIndividuales[nombreCampoEmb];
+    embellecedores = calcularEmbellecedores(tipoElemento, modeloEmb, medidas, config);
+    vidrios = calcularVidrios(tipoElemento, medidas, config);
+  }
+  
+  // Rellenar tabla de perfiles
+  const tablaPerfiles = document.getElementById(`${tipoElemento}-tabla-perfiles`);
+  if (tablaPerfiles) {
+    tablaPerfiles.innerHTML = '';
+    perfiles.forEach(perfil => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><img src="${perfil.imagen}" width="40" height="40" style="object-fit:contain;"></td><td>${perfil.tipo}</td><td class="texto-Der">${perfil.medida}</td><td class="texto-Der">${perfil.cantidad}</td>`;
+      tablaPerfiles.appendChild(tr);
+    });
+  }
+  
+  // Rellenar tabla de embellecedores
+  const tablaEmb = document.getElementById(`${tipoElemento}-tabla-embellecedor`);
+  if (tablaEmb) {
+    tablaEmb.innerHTML = '';
+    if (embellecedores.length > 0) {
+      embellecedores.forEach(emb => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${emb.tipo}</td><td class="texto-Der">${emb.medida}</td><td class="texto-Der">${emb.cantidad}</td>`;
+        tablaEmb.appendChild(tr);
+      });
+    } else {
+      tablaEmb.innerHTML = '<tr><td colspan="3" style="text-align:center;">Sin embellecedor</td></tr>';
+    }
+  }
+  
+  // Rellenar tabla de cristales
+  const tablaCristales = document.getElementById(`${tipoElemento}-tabla-cristales`);
+  if (tablaCristales) {
+    tablaCristales.innerHTML = '';
+    vidrios.forEach(vidrio => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="texto-izq">${vidrio.tipo}</td><td class="texto-Der">${vidrio.alto}</td><td class="texto-Der">${vidrio.ancho}</td><td class="texto-Der">${vidrio.cantidad}</td>`;
+      tablaCristales.appendChild(tr);
+    });
+  }
+  
+  // Precios de puertas van en pagina-marco; solo rellenar campos de precio para fijos
+  if (esFijo) {
+    const anchoElemento = SelOpcion.form6?.[`Ancho${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`] || '0';
+    const elAcabado = document.getElementById(`${tipoElemento}-acabado-precio`);
+    const elColor   = document.getElementById(`${tipoElemento}-color-precio`);
+    const elAlto    = document.getElementById(`${tipoElemento}-alto-precio`);
+    const elAncho   = document.getElementById(`${tipoElemento}-ancho-precio`);
+    if (elAcabado) elAcabado.textContent = datosComunes.acabado;
+    if (elColor)   elColor.textContent   = datosComunes.colorVidrio;
+    if (elAlto)    elAlto.textContent    = datosComunes.alto;
+    if (elAncho)   elAncho.textContent   = anchoElemento;
+    await rellenarPreciosEnInforme(tipoElemento, config, datosComunes);
+  }
+  
+  // ── Puerta doble: rellenar sección P2 dentro de pagina-puerta1 ──
+  if (!esFijo && config.numPuertas === 2 && tipoElemento === 'puerta1') {
+    const secP2 = document.getElementById('puerta1-seccion-p2');
+    if (secP2) {
+      secP2.style.display = '';
+      // Sub-título P1 ya fue rellenado arriba con mano+emb
+      // Sub-título P2: rellenar dinámicamente con embellecedor P2
+      const subtP2 = secP2.querySelector('.seccion-sub-titulo');
+      const embP2 = configuracionesIndividuales.embellecedorPuerta2 || 'Sin especificar';
+      if (subtP2) subtP2.textContent = `PUERTA 2  \u2013  Mano Derecha  \u2013  ${embP2}  \u2013  ${(SelOpcion.form2?.opcion||'op1')==='op1'?'Cierre Magnético':'Cierre Cerradura'}`;
+      const medP2 = {
+        alto: datosComunes.alto, conjuntos: datosComunes.conjuntos,
+        ancho_p1: SelOpcion.form6?.AnchoPuerta1 || '0',
+        ancho_p2: SelOpcion.form6?.AnchoPuerta2 || '0'
+      };
+      const fillTbl2 = (tbodyId, rows, tipo) => {
+        const tb = document.getElementById(tbodyId);
+        if (!tb) return;
+        tb.innerHTML = '';
+        rows.forEach(r => {
+          const tr = document.createElement('tr');
+          if (tipo === 'perf') tr.innerHTML = `<td><img src="${r.imagen}" width="40" height="40" style="object-fit:contain;"></td><td>${r.tipo}</td><td class="texto-Der">${r.medida}</td><td class="texto-Der">${r.cantidad}</td>`;
+          else if (tipo === 'emb') tr.innerHTML = `<td>${r.tipo}</td><td class="texto-Der">${r.medida}</td><td class="texto-Der">${r.cantidad}</td>`;
+          else tr.innerHTML = `<td class="texto-izq">${r.tipo}</td><td class="texto-Der">${r.alto}</td><td class="texto-Der">${r.ancho}</td><td class="texto-Der">${r.cantidad}</td>`;
+          tb.appendChild(tr);
+        });
+        if (tipo === 'emb' && rows.length === 0) tb.innerHTML = '<tr><td colspan="3" style="text-align:center;">Sin embellecedor</td></tr>';
+      };
+      fillTbl2('puerta1-tabla-perfiles-p2',     calcularPerfilesPuerta(2, config, medP2), 'perf');
+      fillTbl2('puerta1-tabla-embellecedor-p2',  calcularEmbellecedores('puerta2', configuracionesIndividuales.embellecedorPuerta2, medP2, config), 'emb');
+      document.getElementById('puerta1-color-vidrio-p2').textContent = datosComunes.colorVidrio;
+      fillTbl2('puerta1-tabla-cristales-p2',     calcularVidrios('puerta2', medP2, config), 'cris');
+    }
+  } else if (!esFijo && config.numPuertas === 1) {
+    const secP2 = document.getElementById('puerta1-seccion-p2');
+    if (secP2) secP2.style.display = 'none';
+    // sub-titulo P1 ya rellenado arriba, siempre visible
+  }
+
+  console.log(`Pagina ${tipoElemento} generada`);
+}
+
+// MODIFICAR generarInformes para que sea async y use la nueva función
+async function generarInformesConPrecios() {
+  console.log('Generando informes con precios...');
+  
+  guardarDatosFormulario(6);
+  await cargarTablasPrecios();
+  
+  document.querySelectorAll('.pagina-informe').forEach(p => p.classList.remove('active'));
+  
+  const opcionForm1 = SelOpcion.form1?.opcion;
+  if (!opcionForm1) { alert('Error: No se encontró la configuración seleccionada'); return; }
+  
+  const config = mapaOpciones[opcionForm1];
+  if (!config) { alert('Error: Configuración no válida'); return; }
+  
+  const datosComunes = {
+    cliente:     SelOpcion.form6?.cliente         || '',
+    pedido:      SelOpcion.form6?.numPedido       || '',
+    fecha:       new Date().toLocaleDateString('es-ES'),
+    comentarios: SelOpcion.form6?.comentarios     || '',
+    conjuntos:   SelOpcion.form6?.conjuntos       || '1',
+    acabado:     SelOpcion.form6?.AcabadoAluminio || '',
+    colorVidrio: SelOpcion.form6?.ColorVidrio     || '',
+    alto:        SelOpcion.form6?.Alto            || ''
+  };
+  
+  document.querySelectorAll('.formulario').forEach(f => f.classList.remove('active'));
+  
+  // ── Orden según form15 ────────────────────────────────────────────
+  let composicion = [...config.composicion];
+  const posicionFijo = SelOpcion.form15?.posicionFijo || 'izquierda';
+  if (config.numFijos === 1 && config.numPuertas >= 1) {
+    if (posicionFijo === 'derecha') {
+      composicion = composicion.filter(e => !e.startsWith('Fijo'));
+      composicion.push('Fijo1');
+    }
+    // 'izquierda' → orden natural (fijo primero) ya correcto
+  }
+  
+  // ── Insertar 'Marco' justo tras Puerta1, eliminar 'Puerta2' standalone ──
+  if (config.numPuertas >= 1) {
+    composicion = composicion.filter(e => e !== 'Puerta2');
+    const idxP1 = composicion.indexOf('Puerta1');
+    if (idxP1 !== -1) composicion.splice(idxP1 + 1, 0, 'Marco');
+  }
+  
+  const totalPaginas = composicion.length;
+
+  // ── Reordenar DOM según composicion ──────────────────────────────
+  const wrapper = document.getElementById('informes-wrapper');
+  composicion.forEach(elem => {
+    const pageId = 'pagina-' + elem.toLowerCase().replace(/(\d)/, '$1');
+    const el = document.getElementById(pageId);
+    if (el) wrapper.appendChild(el);
+  });
+  
+  // ── Generar cada página ───────────────────────────────────────────
+  for (let i = 0; i < composicion.length; i++) {
+    const elem = composicion[i];
+    if (elem === 'Marco') {
+      await generarPaginaMarco(datosComunes, config, i, totalPaginas);
+    } else {
+      await generarPaginaElementoConPrecios(elem.toLowerCase(), datosComunes, config, i, totalPaginas);
+    }
+  }
+  
+  document.getElementById('botones-accion-informes').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  console.log('Informes generados correctamente con precios. Orden:', composicion);
+}
+
+  // ============================================================
+  // SECCIÓN: FORMULARIO 1.5 — MANO Y POSICIÓN
+  // ============================================================
+
+  const estadoF15 = {
+    manoPuerta1: 'Derecha',
+    posicionFijo: 'izquierda'
+  };
+
+  const RutaImgF15 = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';
+
+  const configOpsF15 = {
+    op1: { editarMano: true,  editarPosicion: false },
+    op2: { editarMano: true,  editarPosicion: true  },
+    op3: { editarMano: true,  editarPosicion: false },
+    op4: { editarMano: false, editarPosicion: false },
+    op5: { editarMano: false, editarPosicion: true  },
+    op6: { editarMano: false, editarPosicion: false }
+  };
+
+  function imgAlzadoF15(tipo, mano, esDoble = false) {
+    if (tipo === 'fijo') return RutaImgF15 + 'Fijo.png';
+    if (esDoble) return mano === 'Derecha' ? RutaImgF15 + 'PuertaDobleDer.png' : RutaImgF15 + 'PuertaDobleIzq.png';
+    return mano === 'Derecha' ? RutaImgF15 + 'PuertaDer.png' : RutaImgF15 + 'PuertaIzq.png';
+  }
+  function imgPlantaF15(tipo, mano) {
+    if (tipo === 'fijo') return RutaImgF15 + 'FijoPlanta.png';
+    return mano === 'Derecha' ? RutaImgF15 + 'PuertaDerPlanta.png' : RutaImgF15 + 'PuertaIzqPlanta.png';
+  }
+
+  function bloqueF15(tipo, etiqueta, mano, esDoble = false) {
+    const labelClass = tipo === 'fijo' ? 'fijo-label-f15' : 'puerta-label-f15';
+    return `
+      <div class="bloque-f15">
+        <span class="bloque-label-f15 ${labelClass}">${etiqueta}</span>
+        <img class="img-alzado-f15" src="${imgAlzadoF15(tipo, mano, esDoble)}" alt="${etiqueta}">
+        <div class="separador-vistas-f15"></div>
+        <img class="img-planta-f15" src="${imgPlantaF15(tipo, mano)}" alt="planta ${etiqueta}">
+      </div>`;
+  }
+
+  function renderElementosF15() {
+    const zona = document.getElementById('f15-zona-elementos');
+    if (!zona) return;
+    const op = SelOpcion.form1?.opcion || 'op1';
+    const { manoPuerta1, posicionFijo } = estadoF15;
+    let html = '';
+    switch(op) {
+      case 'op1':
+        html = bloqueF15('puerta', 'Puerta', manoPuerta1);
+        break;
+      case 'op2':
+        html = posicionFijo === 'izquierda'
+          ? bloqueF15('fijo',   'Fijo',   null)        + bloqueF15('puerta', 'Puerta', manoPuerta1)
+          : bloqueF15('puerta', 'Puerta', manoPuerta1) + bloqueF15('fijo',   'Fijo',   null);
+        break;
+      case 'op3':
+        html = bloqueF15('fijo',   'Fijo 1', null)
+             + bloqueF15('puerta', 'Puerta', manoPuerta1)
+             + bloqueF15('fijo',   'Fijo 2', null);
+        break;
+      case 'op4':
+        html = bloqueF15('puerta', 'Puerta Izq', 'Izquierda', true)
+             + bloqueF15('puerta', 'Puerta Der', 'Derecha',   true);
+        break;
+      case 'op5':
+        html = posicionFijo === 'izquierda'
+          ? bloqueF15('fijo',   'Fijo',       null,        false)
+          + bloqueF15('puerta', 'Puerta Izq', 'Izquierda', true)
+          + bloqueF15('puerta', 'Puerta Der', 'Derecha',   true)
+          : bloqueF15('puerta', 'Puerta Izq', 'Izquierda', true)
+          + bloqueF15('puerta', 'Puerta Der', 'Derecha',   true)
+          + bloqueF15('fijo',   'Fijo',       null,        false);
+        break;
+      case 'op6':
+        html = bloqueF15('fijo',   'Fijo 1',     null,        false)
+             + bloqueF15('puerta', 'Puerta Izq', 'Izquierda', true)
+             + bloqueF15('puerta', 'Puerta Der', 'Derecha',   true)
+             + bloqueF15('fijo',   'Fijo 2',     null,        false);
+        break;
+    }
+    zona.innerHTML = html;
+  }
+
+  function renderControlesF15() {
+    const zona = document.getElementById('f15-zona-controles');
+    if (!zona) return;
+    const op = SelOpcion.form1?.opcion || 'op1';
+    const cfg = configOpsF15[op] || configOpsF15['op1'];
+    let html = '';
+
+    if (cfg.editarMano) {
+      const selDer = estadoF15.manoPuerta1 === 'Derecha'   ? 'seleccionado' : '';
+      const selIzq = estadoF15.manoPuerta1 === 'Izquierda' ? 'seleccionado' : '';
+      html += `
+        <div class="control-grupo-f15">
+          <label>Mano de apertura</label>
+          <div class="radio-grupo-f15">
+            <label class="radio-card-f15 ${selDer}" onclick="setManoF15('Derecha')">
+              <input type="radio" name="manoF15" value="Derecha"> 🚪 Derecha
+            </label>
+            <label class="radio-card-f15 ${selIzq}" onclick="setManoF15('Izquierda')">
+              <input type="radio" name="manoF15" value="Izquierda"> 🚪 Izquierda
+            </label>
+          </div>
+        </div>`;
+    } else {
+      html += `
+        <div class="control-grupo-f15">
+          <label>Mano de apertura</label>
+          <div class="info-fija-f15">ℹ️ Puerta doble: siempre Izquierda — Derecha</div>
+        </div>`;
+    }
+
+    if (cfg.editarPosicion) {
+      const selIzq = estadoF15.posicionFijo === 'izquierda' ? 'seleccionado' : '';
+      const selDer = estadoF15.posicionFijo === 'derecha'   ? 'seleccionado' : '';
+      html += `
+        <div class="control-grupo-f15">
+          <label>Posición del fijo</label>
+          <div class="radio-grupo-f15">
+            <label class="radio-card-f15 ${selIzq}" onclick="setPosicionF15('izquierda')">
+              ◀ Fijo a la izquierda
+            </label>
+            <label class="radio-card-f15 ${selDer}" onclick="setPosicionF15('derecha')">
+              Fijo a la derecha ▶
+            </label>
+          </div>
+        </div>`;
+    }
+    zona.innerHTML = html;
+  }
+
+  function renderForm15() {
+    // Restaurar estado guardado si existe, si no usar defaults
+    if (SelOpcion.form15) {
+      estadoF15.manoPuerta1  = SelOpcion.form15.mano       || 'Derecha';
+      estadoF15.posicionFijo = SelOpcion.form15.posicionFijo || 'izquierda';
+    } else {
+      estadoF15.manoPuerta1  = 'Derecha';
+      estadoF15.posicionFijo = 'izquierda';
+    }
+    renderElementosF15();
+    renderControlesF15();
+  }
+
+  function guardarEstadoForm15() {
+    SelOpcion.form15 = {
+      mano: estadoF15.manoPuerta1,
+      posicionFijo: estadoF15.posicionFijo
+    };
+  }
+
+  function setManoF15(mano) {
+    estadoF15.manoPuerta1 = mano;
+    renderElementosF15();
+    renderControlesF15();
+  }
+
+  function setPosicionF15(pos) {
+    estadoF15.posicionFijo = pos;
+    renderElementosF15();
+    renderControlesF15();
+  }
+
+  </script>
+</body>
+</html>

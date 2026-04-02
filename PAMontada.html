@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Adinor PA Vidrio montado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .formulario {
+      display: none;
+    }
+    .formulario.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #1a2b6f;
+      margin-bottom: 30px;
+    }
+
+    form {
+      margin-left: 30px;
+    }
+    
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      min-width: 120px;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .botones-formulario {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+
+    
+    #form1 .opciones-imagenes, #form2 .opciones-imagenes, #form4 .opciones-imagenes, #form5 .opciones-imagenes {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    #form1 .opcion, #form2 .opcion, #form4 .opcion, #form5 .opcion {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ------   Opciones de formulario 1   ------ */
+
+    /* Estilos de los marcos verdes */
+    .grupo-opciones {
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .grupo-opciones legend {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #4CAF50;
+      padding: 0 20px;
+    }
+
+    /* Contenedor principal con proporción 4:6 */
+    .contenedor-marcos {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      width: calc(100% - 130px); /* 100% menos 130px de margen total */
+      margin: 0 auto; /* Centra horizontalmente */
+      max-width: 100%; /* Evita problemas en pantallas pequeñas */
+    }
+
+    /* Proporción 6 partes - Primero el ancho grande, luego el flex */
+    .grupo-opciones:first-child {
+      min-width: 350px; /* Ancho mínimo para el bloque grande */
+      flex: 4; /* Ocupa 4 partes */
+    }
+
+    .grupo-opciones:last-child {
+      min-width: 250px; /* Ancho mínimo para el bloque pequeño */
+      flex: 2; /* Ocupa 2 partes */
+    }
+
+    /* Resto de estilos sin cambios... */
+    .grupo-opciones img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .grupo-opciones .opciones-imagenes {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .grupo-opciones .opcion {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .Sub-opcion {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      margin-top: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .Sub-opcion .opcion {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      min-width: auto;
+      flex: none;
+    }
+
+    .grupo-opciones .opcion p {
+      margin-bottom: 8px;
+    }
+
+    .Sub-opcion .opcion p {
+      margin: 0;
+    }
+
+    select#AcabadoAluminio,
+    select#ColorVidrio {
+    background-color: #ffffff !important; /* o el color que quieras */
+    }
+
+
+
+    /* Media Query ÚNICA y CORREGIDA */
+    @media (max-width: 768px) {
+      .contenedor-marcos {
+        flex-direction: column;
+      }
+      
+      /* Resetea proporciones en móvil */
+      .grupo-opciones:first-child,
+      .grupo-opciones:last-child {
+        flex: none;
+        width: 100%;
+        min-width: auto; /* Resetea el min-width en móvil */
+      }
+      
+      .grupo-opciones .opcion {
+        min-width: 100%;
+      }
+      
+      .Sub-opcion {
+        flex-direction: column;
+      }
+      
+      .Sub-opcion .opcion {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+    }
+
+
+    /*------------Fin Form 1-----------------------------*/
+    /*--------------------------------------------------*/
+
+
+    #form1 .opcion img {
+      width: 230px;
+      height: 180px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #form2 .opcion img {
+      width: 270px;
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #form4 .opcion img {
+      width: 200px;
+      height: 180px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #form5 .opcion img {
+      width: 110px;
+      height: 220px;
+      object-fit: contain;  /* Contein se ajusta a cuadro que tengamos es un zoom mas ajustado */
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #form1 .selector, #form2 .selector {
+      margin-top: 20px;
+    }
+
+    #form1 .opcion input[type="radio"], #form2 .opcion input[type="radio"], #form3 .opcion input[type="radio"], #form4 .opcion input[type="radio"]{
+      margin-top: 10px;
+    }
+
+    #form3 p {
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    #form3 label {
+      display: block;
+      margin-left: 40px;
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+
+    #form6 label {
+      margin-left: 5px;
+      display: block;
+    }
+
+    #form6 select,
+    #form6 input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    #form6 .columna {
+      width: 200px;
+    }
+
+    /* ================================== */
+    /* ESTILOS DEL INFORME */
+    /* ================================== */
+
+
+    #informe-container {
+      display: none;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+
+    .informe-header {
+        border-bottom: none;
+        padding-bottom: 5px;
+        margin-bottom: 10px;  /* Más espacio antes de "MEDIDAS DE PUERTA" */
+    }
+
+
+    .informe-header h1 {   /* el titulo del informe*/ 
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #2a2a2a;
+    }
+
+    /* Campos de cabecera en línea horizontal */
+    .info-basica {
+      display: grid;
+      grid-template-columns: 1fr 150px 150px;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .campo-informe {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0; /* permite que los campos se reduzcan si es necesario */
+    }
+
+    .campo-informe label {
+      font-weight: bold;
+      font-size: 12px;
+      white-space: nowrap;
+      flex-shrink: 0; /* evita que el label se achique demasiado */
+      color: #555;
+    }
+
+    .campo-informe input {     /*   Las casillas de cabecera*/
+      flex: 1 1 auto; /* permite que el input crezca y se reduzca */
+      padding: 6px;           /* Altura de casilla*/
+      border: 1px solid #333;
+      border-radius: 3px;
+      font-size: 12px;
+      min-width: 0; /* evita que imponga un ancho mínimo */
+    }
+
+  
+    /* Estilos para bloques */
+    .bloque-informe {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .bloque-informe.active {
+      display: block;
+    }
+
+    .bloque-titulo {
+      background: #bbb;
+      border: 2px solid #999;  /* Borde gris que SÍ se imprime */
+      padding: 6px 20px;     
+      font-weight: bold;
+      font-size: 12px;
+      margin: 10px 0;    /* - Añade espacio externo; arriba y abajo, 0 a los lados */
+      border-radius: 4px;
+
+    }
+
+    .seccion-titulo {
+      font-weight: bold;
+      font-size: 12px;
+      margin: 15px 0 8px 0;
+      color: #333;
+    }
+
+    /* ----------------------------------  Definiciones de la tabla dentro de informe 1  --------------------------------*/
+
+    .tabla-informe {
+    width: calc(100% - 200px);   /* Calcula el ancho de la tabla como el 100% del contenedor menos 50 píxeles.*/
+    border-collapse: collapse;   /*  Hace que las celdas de la tabla compartan los bordes comunes.*/
+    margin: 5px 10px 0px 100px; /*Define los márgenes externos de la tabla, arriba, derecha, abaj, izquierda */
+    }
+
+    .tabla-informe th,
+    .tabla-informe td {
+      border: 1px solid #333;
+      padding: 6px 8px;   /*  espacio interno de la celda arriba y abajo / a los lados  */ 
+      text-align: center;
+      font-size: 12px;
+      line-height: 0.8;    /* 80% de la Altura de la letra */ 
+    }
+
+    .tabla-informe th {
+      background: #ddd;
+      font-weight: bold;
+    }
+
+    .tabla-informe td:empty {
+      border: none; 
+      padding: 0; 
+      background: transparent;
+    }
+
+    .tabla-informe .imagen-perfil {
+      width: 80px;
+      font-size: 20px;
+    }
+
+    .tabla-informe .texto-izq {
+      text-align: left;
+      padding-left: 5px;
+    }
+     .tabla-informe .texto-Der {
+      text-align: Right;
+      padding-right: 18px;
+    }
+    /* Botones del informe */
+
+    .botones-informe {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid #eee;
+    }
+
+
+/* ================================== */
+/* ESTILOS PARA PDF - NO BORRAR */
+/* ================================== */
+
+/* Oculta botón en el PDF generado */
+.no-pdf {
+  display: none !important;
+}
+
+/* Solo ocultar botones DENTRO del PDF generado */
+@media print {
+  .btn {
+    display: none !important;
+  }
+}
+
+/* Forza fondos y colores */
+#informe-container *,
+#hoja-pedido-container * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Tamaño A4 para ambos contenedores */
+#informe-container,
+#hoja-pedido-container {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  box-sizing: border-box;
+  background: white !important;
+}
+
+    /* Fondo blanco forzado para PDF */
+  #informe-container,
+  #hoja-pedido-container {
+    background-color: #ffffff !important;
+  }
+
+  </style>
+
+</head>
+<body>
+
+
+  <!-- Formulario 1 -->
+  <form id="form1" class="formulario active">
+    <h2>Configurador Sistema PA montado con vidrio</h2>
+    <br>
+    
+    <div class="contenedor-marcos">
+      <!-- Marco 1: Frentes completos -->
+      <fieldset class="grupo-opciones">
+        <legend>Frentes completos - Instalación en hueco</legend>
+        <div class="opciones-imagenes">
+
+          <label class="opcion">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PuertaCorredera.png" alt="Opción 1" width="300"><br><br>
+            <p>Puerta corredera</p>
+            <input type="radio" name="imagen" value="1" required>
+          </label>
+
+          <label class="opcion">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PuertaAbatible.png" alt="Opción 2" width="300"><br><br>
+            <p>Puerta Abatible</p>
+            <input type="radio" name="imagen" value="2">
+          </label>
+
+          <label class="opcion">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Murete.png" alt="Opción 5" width="300"><br><br>
+            <p>Sobremurete</p>
+            <input type="radio" name="imagen" value="5">
+          </label>
+
+        </div>
+      </fieldset>
+      
+      <!-- Marco 2: Elementos independientes -->
+      <fieldset class="grupo-opciones">
+        <legend>Elementos independientes</legend>
+        <div class="opciones-imagenes">
+          <label class="opcion">
+            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ElementoSuelto.png" alt="Opción 3" width="300"><br><br>
+            <div class="Sub-opcion">
+              
+              <div class="opcion"> 
+                <p>Puerta corredera</p>
+                <input type="radio" name="imagen" value="3">
+              </div>
+            
+              <div class="opcion">  
+                <p>Fijo</p>
+                <input type="radio" name="imagen" value="4">
+              </div>
+
+            </div>
+          </label>
+        </div>
+      </fieldset>
+    </div>
+    
+    <br>
+    <p>Seleccionar una opción antes de continuar</p>
+
+    <div class="botones-formulario">
+      <button type="button" onclick="limpiarDatos()" class="btn">🔄 Nuevo</button>
+      <button type="button" onclick="siguienteFormulario(1)" class="btn">Siguiente</button>
+    </div>
+    <br>
+    <p>V.02</p>
+  </form>
+
+
+
+  <!-- Formulario 2 -->
+  <form id="form2" class="formulario">
+    <h2>Guías Sky</h2>
+    <div class="opciones-imagenes">
+      <label class="opcion">
+        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK112.png" alt="Opción 1" width="150"><br><br>
+        <p>Montaje a pared</p>
+        <input type="radio" name="guia" value="SK112" required>
+      </label>
+      <label class="opcion">
+        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK111.png" alt="Opción 2" width="150"><br><br>
+        <p>Montaje a techo</p>
+        <input type="radio" name="guia" value="SK111">
+      </label>
+      <label class="opcion">
+        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK119.png" alt="Opción 3" width="150"><br><br>
+        <p>Montaje guía empotrada</p>
+        <input type="radio" name="guia" value="SK119">
+      </label>
+    </div>
+    <br>
+    <p>Seleccionar una opción antes de continuar</p>
+    
+    <div class="botones-formulario"> 
+      <button type="button" onclick="anteriorFormulario(2)" class="btn">Atrás</button>
+      <button type="button" onclick="siguienteFormulario(2)" class="btn">Siguiente</button>
+    </div>
+  </form>
+
+
+
+
+  <!-- Formulario 3 -->
+  <form id="form3" class="formulario">
+    <h2>Combinación de puertas</h2>
+    <p>1 elementos</p>
+    <label><input type="radio" name="opcion" value="1puerta" required> 1 puerta</label>
+    <label><input type="radio" name="opcion" value="1puerta-casoneto"> 1 puerta casoneto</label>
+    <p>2 elementos</p>
+    <label><input type="radio" name="opcion" value="2puertas"> 2 puertas</label>
+    <label><input type="radio" name="opcion" value="1puerta-1fijo"> 1 puerta y 1 fijo</label>
+    <p>3 elementos</p>
+    <label><input type="radio" name="opcion" value="3puertas"> 3 puertas con arrastres</label>
+    <label><input type="radio" name="opcion" value="2puertas-1fijo"> 2 puertas y 1 fijo</label>
+    <label><input type="radio" name="opcion" value="1puerta-2fijos"> 1 puerta y 2 fijos</label>
+    <p>4 elementos</p>
+    <label><input type="radio" name="opcion" value="2puertas-2fijos"> 2 puertas 2 fijos</label>
+    <label><input type="radio" name="opcion" value="3puertas-1fijo"> 3 puertas y 1 fijo</label>
+    <label><input type="radio" name="opcion" value="4puertas"> 4 puertas con arrastres</label>
+    <br>
+    <br>
+    <p>Seleccionar una opción antes de continuar</p>
+    <div class="botones-formulario">
+      <button type="button" onclick="anteriorFormulario(3)" class="btn">Atrás</button>
+      <button type="button" onclick="siguienteFormulario(3)" class="btn">Siguiente</button>
+    </div>
+    </form>
+
+
+  <!-- Formulario 4 -->
+
+<form id="form4" class="formulario">
+  <h2>Tipología de Fijo</h2>
+  <div class="opciones-imagenes">
+    <label class="opcion" id="opcion-3paredes">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3.png" alt="3 paredes" width="150">
+      <p>3 paredes</p>
+      <input type="radio" name="imagen" value="0" required>
+    </label>
+    <label class="opcion" id="opcion-3paredesU">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3U.png" alt="3 paredes U" width="150">
+      <p>3 paredes U</p>
+      <input type="radio" name="imagen" value="A">
+    </label>
+    <label class="opcion" id="opcion-4paredes">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared4.png" alt="4 paredes" width="150">
+      <p>4 paredes</p>
+      <input type="radio" name="imagen" value="B">
+    </label>
+  </div>
+  <br>
+  <p>Seleccionar una opción antes de continuar</p>
+
+  <div class="botones-formulario">
+    <button type="button" onclick="anteriorFormulario(4)" class="btn">Atrás</button>
+    <button type="button" onclick="siguienteFormulario(4)" class="btn">Siguiente</button>
+  </div>
+</form>
+
+
+  <!-- Formulario 5    DIVISIONES   -->
+<form id="form5" class="formulario">
+  <h2>Divisiones Adhesivas 13x3</h2>
+  <div class="opciones-imagenes">
+    <label class="opcion">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_0.png" alt="Sin Img" width="150"><br>
+      <p>Sin embellecedor</p>
+      <input type="radio" name="NumDiv" value="0" required>
+    </label>
+    <label class="opcion">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_1.png" alt="Sin Img" width="150"><br>
+      <p>Modelo A</p>
+      <input type="radio" name="NumDiv" value="2">
+    </label>
+    <label class="opcion">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_2.png" alt="Sin Img" width="150"><br>
+      <p>Modelo B</p>
+      <input type="radio" name="NumDiv" value="4">
+    </label>
+    <label class="opcion">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3.png" alt="Sin Img" width="150"><br>
+      <p>Modelo C</p>
+      <input type="radio" name="NumDiv" value="6">
+    </label>
+    <label class="opcion">
+      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3_Plus.png" alt="Sin Img" width="150"><br>
+      <p>Modelo D</p>
+      <input type="radio" name="NumDiv" value="D">
+    </label>
+  </div>
+  <br>
+  <p>Seleccionar una opción antes de continuar</p>
+
+  <div class="botones-formulario">
+    <button type="button" onclick="anteriorFormulario(5)" class="btn">Atrás</button>
+    <button type="button" onclick="siguienteFormulario(5)" class="btn">Siguiente</button>
+  </div>
+</form>
+
+  <!-- Formulario 6 -->
+<!-- Formulario 6 -->
+<form id="form6" class="formulario">
+  <h2>Medidas de Instalación</h2>
+  
+  <!-- Primera fila: Alto, Acabado y Color (3 columnas) -->
+  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 5px;">
+    <div style="width: 200px;">
+      <label for="Alto">Alto de hueco<br>
+        <input type="number" id="Alto" name="Alto" required min="1" style="width: 100%; box-sizing: border-box; padding: 8px;">
+      </label>
+    </div>
+    <div style="width: 200px;">
+      <label for="AcabadoAluminio">Acabado Aluminio<br>
+        <select id="AcabadoAluminio" name="AcabadoAluminio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
+          <option value="Blanco mate 9003">Blanco mate 9003</option>
+          <option value="Negro mate texturado">Negro mate texturado</option>
+          <option value="Acero corten">Acero corten</option>
+          <option value="Chapa roble barnizada">Chapa roble barnizada</option>
+          <option value="Chapa nogal barnizada">Chapa nogal barnizada</option>
+          <option value="Acabado Especial">Acabado Especial</option>
+        </select><br><br>
+      </label>
+    </div>
+    <div style="width: 200px;">
+      <label for="ColorVidrio">Color de vidrio<br>
+        <select id="ColorVidrio" name="ColorVidrio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
+          <option value="TRANSPARENTE">Transparente</option>
+          <option value="MATE">Mate</option>
+          <option value="BRONCE">Bronce</option>
+          <option value="GRIS">Gris</option>
+          <option value="GRIS OSCURO">Gris oscuro</option>
+          <option value="ESPECIAL">Especial</option>
+        </select><br>
+      </label>
+    </div>
+  </div>
+  
+  <!-- Segunda fila: Solo Ancho (1 columna a la izquierda) -->
+  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 10px">
+    <div style="width: 200px;">
+      <label for="Ancho">Ancho de hueco<br>
+        <input type="number" id="Ancho" name="Ancho" required min="1" style="width: 100%; box-sizing: border-box; padding: 8px;"><br><br>
+      </label>
+    </div>
+    <div style="width: 200px;"></div> <!-- Espacio vacío a la derecha -->
+    <div style="width: 200px;"></div> <!-- Espacio vacío a la derecha-->
+  </div>
+  <!-- Tercera fila: Cliente y Nº Pedido -->
+  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 30px;">    <!-- Margin-top es la distacia a la linea anterior    -->
+    <label style="width: 450px;"> <!-- 200 + 50 + 200 = 450px para ocupar 2 columnas -->
+      Cliente<br>
+      <input type="text" name="cliente" required style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
+    </label>
+    <label style="width: 200px;">
+      Nº Pedido<br>
+      <input type="text" name="numPedido" required style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
+    </label>
+  </div>
+  
+    <!-- Cuarta fila: Comentarios (línea completa) -->
+    <div style="display: flex; justify-content: center;">
+      <label style="width: 700px;"> <!-- 200×3 + 50×2 = 700px -->
+        Comentarios<br>
+        <textarea name="comentarios" rows="2" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px; resize: vertical; font-family: inherit;"></textarea>
+      </label>
+    </div>
+    <br><br>
+    <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px;">
+  <label style="width: 200px;">
+    Nº de conjuntos a fabricar<br>
+    <input type="number" name="conjuntos" required min="1" value="1" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px;">
+  </label>
+  <div style="width: 450px;"></div> <!-- espacio vacío -->
+</div>
+ <br>
+    <p>Seleccionar una opción antes de continuar</p>
+    <div class="botones-formulario" style="margin-top: 40px;">
+      <button type="button" onclick="anteriorFormulario(6)" class="btn">Atrás</button>
+      <button type="button" onclick="finalizarFlujo()" class="btn">Siguiente</button>
+    </div>
+
+  </form>
+
+  <!-- -->
+  <!-- &&&&&&&&&&&&&&&&&&&&&     INFORME 1  &&&&&&&&&&&&&&&&&&&&&&& -->
+  <!-- CONTENEDOR DEL INFORME -->
+  <div id="informe-container">
+    <div class="informe-header">
+      <h1>PA CORREDERA VIDRIO - HOJA FABRICACION</h1>
+      <div class="info-basica">
+        <div class="campo-informe">
+          <label>Cliente</label>
+          <span id="inf-cliente"></span>
+        </div>
+        <div class="campo-informe">
+          <label>Num Pedido</label>
+          <span id="inf-num-pedido"></span>
+        </div>
+        <div class="campo-informe">
+          <label>Fecha</label>
+          <span id="inf-fecha"></span>
+        </div>
+      </div>
+      <div class="comentarios-informe">
+        <div class="campo-informe">
+          <label>Comentarios</label>
+          <span id="inf-comentarios"></span>
+        </div>
+      </div>
+    
+      <!--  <p id="mensaje-opcion"></p>  -->
+      <p id="mensaje-opcion" style="font-weight: bold; margin: 25px 0 0 0; font-size: 14px;"></p>
+    </div>
+
+    <!-- BLOQUE PUERTA -->
+    <div id="bloque-puerta" class="bloque-informe">
+      <div class="bloque-titulo">MEDIDAS DE PUERTA</div>
+      
+      <div class="seccion-titulo">Perfiles Acabado <span id="acabado-puerta"></span></div>
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th class="imagen-perfil"></th>
+            <th>Tipo</th>
+            <th>Longitud mm</th>
+            <th>Cantidad</th>
+            <th>Con retrac Inf</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-perfiles-puerta">
+        </tbody>
+      </table>
+
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th>Embellecedor</th>
+            <th>Longitud mm</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-embellecedor-puerta">
+        </tbody>
+      </table>
+
+      <div class="seccion-titulo">Medidas de Cristales <span id="color-vidrio-puerta"></span></div> 
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th>Vidrio Acabado</th>
+            <th>Alto mm</th>
+            <th>Ancho mm</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-cristales-puerta">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- BLOQUE FIJO -->
+    <div id="bloque-fijo" class="bloque-informe">
+      <div class="bloque-titulo">MEDIDAS DE FIJO</div>
+      
+      <div class="seccion-titulo">Perfiles Acabado <span id="acabado-fijo"></span></div>
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th class="imagen-perfil"></th>
+            <th>Tipo</th>
+            <th>Longitud mm</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-perfiles-fijo">
+        </tbody>
+      </table>
+
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th>Embellecedor</th>
+            <th>Longitud mm</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-embellecedor-fijo">
+        </tbody>
+      </table>
+
+      <div class="seccion-titulo">Medidas de Cristales <span id="color-vidrio-fijo"></span></div>
+      <table class="tabla-informe">
+        <thead>
+          <tr>
+            <th>Vidrio Acabado</th>
+            <th>Alto mm</th>
+            <th>Ancho mm</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-cristales-fijo">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- *********************************************************************************-->
+  <!-- *****************          INFORME 2 de HOJA DE PEDIDO    ***********************-->
+  <!-- *********************************************************************************-->
+    <!-- ========================= HOJA DE PEDIDO ========================= -->
+
+<div id="hoja-pedido-container" style="display:none; max-width:900px; margin:40px auto; padding:40px; background:white; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,.1);">
+
+<div class="informe-header">
+  <h1>PA CORREDERA VIDRIO - HOJA DE PEDIDO</h1>
+  <div class="info-basica">
+    <div class="campo-informe"><label>Cliente</label><span id="hp-cliente" class="span-dato"></span></div>
+    <div class="campo-informe"><label>Nº Pedido</label><span id="hp-num-pedido" class="span-dato"></span></div>
+    <div class="campo-informe"><label>Fecha</label><span id="hp-fecha" class="span-dato"></span></div>
+    <div class="campo-informe"><label>Comentarios</label><span id="hp-Comentarios" class="span-dato"></span></div>
+  </div>
+</div>
+
+<p id="hp-Titulo" style="font-weight:bold; margin:15px 0 0 0; font-size:14px;"></p>
+
+<!-- MEDIDAS PUERTA -->
+<div id="hp-bloque-puerta" class="bloque-informe">
+  <div class="bloque-titulo">RESUMEN PUERTA</div>
+  <table class="tabla-informe">
+    <thead>
+        <tr>
+            <th>Código</th> 
+            <th>Concepto</th>
+            <th>Valor</th>
+            <th>Cantidad</th>
+            <th>Precio €</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td id="hp-cod-puerta" class="texto-izq"></td>
+          <td class="texto-izq">Tipo</td>
+          <td id="hp-tipo-puerta"class="texto-izq"></td>
+          <td id="hp-cant-puerta" class="texto-Der"></td>
+          <td id="hp-precio-puerta" class="texto-Der"></td>
+        </tr>
+        <tr><td></td><td class="texto-izq">Acabado</td><td class="texto-izq" id="hp-acabado-puerta"></td></tr>
+        <tr><td></td><td class="texto-izq">Color Vidrio</td><td class="texto-izq" id="hp-color-puerta"></td></tr>
+        <tr><td></td><td class="texto-izq">Alto Puerta</td><td class="texto-Der" id="hp-alto-puerta"></td></tr>
+        <tr><td></td><td class="texto-izq">Ancho Puerta</td><td class="texto-Der" id="hp-ancho-puerta"></td></tr>
+        <tr id="fila-emb-puerta">   <!-- Para poder ocultar la linea   -->
+            <td id="hp-cod-emb-puerta" class="texto-izq"></td>
+            <td class="texto-izq">Embellecedor 13x3</td>
+            <td id="hp-Embellecedor-puerta" class="texto-izq"></td>
+            <td id="hp-cant-emb-puerta" class="texto-Der"></td>
+            <td id="hp-precio-emb-puerta" class="texto-Der"></td>
+        </tr> 
+    </tbody>
+  </table>
+</div>
+
+<!-- MEDIDAS FIJO -->
+<div id="hp-bloque-fijo" class="bloque-informe">
+  <div class="bloque-titulo">RESUMEN FIJO</div>
+  <table class="tabla-informe">
+    <thead>
+        <tr>
+            <th>Código</th> 
+            <th>Concepto</th>
+            <th>Valor</th>
+            <th>Cantidad</th>
+            <th>Precio €</th>
+        </tr>
+    </thead>    
+    <tbody>
+         <tr>
+            <td id="hp-cod-fijo" class="texto-izq"></td>
+            <td class="texto-izq">Fijo</td>
+            <td id="hp-tipo-fijo" class="texto-izq"></td>
+            <td id="hp-cant-fijo" class="texto-Der"></td>
+            <td id="hp-precio-fijo" class="texto-Der"></td>
+        </tr>
+        <tr><td></td><td class="texto-izq">Acabado</td><td class="texto-izq" id="hp-acabado-fijo"></td></tr>
+        <tr><td></td><td class="texto-izq">Color Vidrio</td><td class="texto-izq" id="hp-color-fijo"></td></tr>
+        <tr><td></td><td class="texto-izq">Alto Fijo</td><td class="texto-Der" id="hp-alto-fijo"></td></tr>
+        <tr><td></td><td class="texto-izq">Ancho Fijo</td><td class="texto-Der" id="hp-ancho-fijo"></td></tr>
+        <tr id="fila-emb-fijo">  <!-- Para poder ocultar la linea   -->
+            <td id="hp-cod-emb-fijo" class="texto-izq"></td>
+            <td class="texto-izq">Embellecedor 13x3</td>
+            <td id="hp-Embellecedor-fijo" class="texto-izq"></td>
+            <td id="hp-cant-emb-fijo" class="texto-Der"></td>
+            <td id="hp-precio-emb-fijo" class="texto-Der"></td>
+        </tr>
+        <tr>
+            <td id="hp-cod-bastidor-fijo" class="texto-izq"></td>
+            <td class="texto-izq">Bastidor</td>
+            <td id="hp-bastidor-fijo" class="texto-izq"></td>
+            <td id="hp-cant-bastidores" class="texto-Der"></td>
+            <td id="hp-precio-bastidor-fijo" class="texto-Der"></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="botones-informe">
+  <!-- <button type="button" onclick="volverAlInicio()" class="btn">← Volver al Inicio</button>   -->
+   <button type="button" onclick="volverAlInicio()" class="btn">← Volver al Inicio</button>
+   <button id="btn-descargar-pdf" class="btn">📄 Descargar PDF</button>
+</div>
+
+</div>
+
+
+<!-- *********************************************************************************-->
+<!-- *****************-- CONTINÚA EN PARTE 2 CON EL JAVASCRIPT ***********************-->
+<!-- *********************************************************************************-->
+<!-- *********************************************************************************-->
+
+<!-- ========================================================= -->
+<!-- ✅ PARTE 3: SCRIPTS (EN ESTE ORDEN EXACTO) -->
+<!-- ========================================================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/SalidaPDF.js"></script> <!-- TU ARCHIVO -->
+
+
+<script type="module">
+
+  let tablasCargadas = false; // ★ Añade esto en la línea 1 de tu script
+
+  import { cargarTablas, calcularPresupuesto } from './js/BuscaCodigoPrecio.js';
+
+
+  // 1️⃣ DECLARAR PRIMERO las variables globales que se usan en todo el archivo
+  let datosFormularios = {};  // ← USA let, NO const, y declárala ANTES
+
+
+//   MAPEOS PARA LA FUNCION
+    const CODIGOS_ACABADO = {
+        'Blanco mate 9003': 'L.BM03',
+        'Negro mate texturado': 'L.NMT',
+        'Acero corten': 'L.C',
+        'Chapa roble barnizada': 'C.RB',
+        'Chapa nogal barnizada': 'C.NG',
+        'Acabado Especial': 'ESP'
+    };
+
+    const CODIGOS_VIDRIO = {
+        'TRANSPARENTE': '01',
+        'MATE': '02',
+        'BRONCE': '03',
+        'GRIS': '04',
+        'GRIS OSCURO': '05',
+        'ESPECIAL': '00',
+    };
+
+    const CODIGOS_EMBELLECEDOR = {
+        '0': '',
+        '2': 'MA',
+        '4': 'MB',
+        '6': 'MC',
+        'D': 'MD'
+    };
+
+    const CODIGOS_BASTIDOR = {
+        '0': '0301',  // 3 paredes
+        'A': '0302',  // 3 paredes U
+        'B': '0401'   // 4 paredes
+    };
+
+// ==========================================
+// SISTEMA DE FLUJOS DE NAVEGACIÓN
+// ==========================================
+
+const FLUJOS = {
+  '1': { // Puerta corredera (flujo completo con bifurcación)
+    rutaBase: [1, 2, 3], // Solo los pasos fijos
+    requiereFijo: true,   // Tiene bifurcación en Form3
+    valoresPorDefecto: {} // No usa valores por defecto (todo manual)
+  },
+  
+  '2': { // Mensaje común para los bloqueados
+      rutaBase: [1],
+      valoresPorDefecto: {}
+  },
+
+  '5': { // Mensaje común para los bloqueados
+      rutaBase: [1],
+      valoresPorDefecto: {}
+  }, 
+
+  '3': { // Elemento independiente → PUERTA ÚNICA
+    rutaBase: [1, 5, 6], // Salta directo a Form6
+    saltados: [2, 3, 4], // ✅ Documentación explícita
+    requiereFijo: false,
+    valoresPorDefecto: {
+      form2: { guia: 'SinGuia' },
+      form3: { opcion: 'PuertaUnica' },
+        }
+  },
+  '4': { // Elemento independiente → FIJO ÚNICO
+    rutaBase: [1, 4, 5, 6], // Muestra Form4 y Form5
+    requiereFijo: true,
+    valoresPorDefecto: {
+      form2: { guia: 'SinGuia' },
+      form3: { opcion: 'FijoUnico' },
+    }
+  }
+};
+
+let flujoActual = null; // Rastrea el flujo activo
+
+
+
+function calcularDestino(flujoId, formActual, direccion) {
+  // Tabla de rutas (solo navegación, sin valores por defecto)
+
+  // ========== 2️⃣ TABLA DE RUTAS ==========
+
+  const rutas = {
+    '1': { avance: {1:2, 2:3, 4:5, 5:6}, retroceso: {6:5, 4:3, 3:2, 2:1} },
+    '3': { avance: { 1:5, 5:6 },  retroceso: { 6:5, 5:1 } },
+    '4': { avance: {1:4, 4:5, 5:6}, retroceso: {6:5, 5:4, 4:1} }
+  };
+  const ruta = rutas[flujoId];
+  if (!ruta) return null; // Flujo no definido o bloqueado (2)
+
+  // Manejo de la BIFURCACIÓN CRÍTICA en Form3 (flujo 1)
+  if (flujoId === '1' && formActual === 3 && direccion === 'avance') {
+    const opcion = datosFormularios.form3?.opcion;
+    return opcion?.includes('fijo') ? 4 : 5;
+
+  }
+  // ========== 4️⃣ RETROCESO DESDE FORM5 (flujo 1) ==========
+  if (flujoId === '1' && formActual === 5 && direccion === 'retroceso') {
+    const opcion = datosFormularios.form3?.opcion;
+    return opcion?.includes('fijo') ? 4 : 3;
+  }
+
+ // ========== 5️⃣ DESTINO ESTÁNDAR ==========
+  return ruta[direccion][formActual] || null;
+}
+
+
+/**
+ * Aplica valores por defecto y marca radios físicamente
+ * @param {object} valoresPorDefecto - Objeto con valores a aplicar
+ */
+function aplicarValoresPorDefecto(valoresPorDefecto) {
+  if (!valoresPorDefecto) return;
+
+  Object.entries(valoresPorDefecto).forEach(([formKey, valor]) => {
+    if (!valor || typeof valor !== 'object') return;
+
+    // 1. Guardar en datosFormularios
+    datosFormularios[formKey] = valor;
+
+    // 2. Obtener número de formulario
+    const formNum = formKey.replace('form', ''); // 'form4' -> '4'
+
+    // 3. Marcar radios físicamente EN EL DOM
+    Object.entries(valor).forEach(([propiedad, valorProp]) => {
+      const radio = document.querySelector(`#form${formNum} input[name="${propiedad}"][value="${valorProp}"]`);
+      if (radio) {
+        radio.checked = true; // ✅ MARCA EL RADIO VISUALMENTE
+        console.log(`✅ Radio marcado: Form${formNum} → ${propiedad} = ${valorProp}`);
+      }
+    });
+  });
+}
+
+
+function aplicarFiltroForm4SegunFlujo() {
+  const form4 = document.getElementById('form4');
+  if (!form4) return;
+  
+  const valorForm1 = datosFormularios.form1?.imagen;
+  const opcion3Paredes = form4.querySelector('#opcion-3paredes');
+  const opcion4Paredes = form4.querySelector('#opcion-4paredes');
+  const opcion3ParedesU = form4.querySelector('#opcion-3paredesU');
+  
+  // ✅ RESET: Mostrar todas las opciones primero
+  if (opcion3Paredes) opcion3Paredes.style.display = 'block';
+  if (opcion4Paredes) opcion4Paredes.style.display = 'block';
+  if (opcion3ParedesU) opcion3ParedesU.style.display = 'block';
+  
+  // FILTRO EXCLUSIVO PARA FLUJO 1 (Puerta corredera)
+  if (valorForm1 === '1') {
+    if (opcion3Paredes) opcion3Paredes.style.display = 'none';
+    if (opcion4Paredes) opcion4Paredes.style.display = 'none';
+    
+    // Seleccionar automáticamente "3 paredes U"
+    const radioU = opcion3ParedesU?.querySelector('input[type="radio"]');
+    if (radioU) radioU.checked = true;
+  }
+  // FLUJO 4 (Value 4) no necesita filtro, ya están todas visibles
+}
+
+
+function guardarValoresPorDefecto(valoresPorDefecto, forzar = false) {
+  if (!valoresPorDefecto) return;
+  
+  Object.keys(valoresPorDefecto).forEach(formKey => {
+    if (valoresPorDefecto[formKey]) {
+      // ✅ Solo sobreescribir si forzar=true O si no existe
+      if (forzar || !datosFormularios[formKey]) {
+        datosFormularios[formKey] = valoresPorDefecto[formKey];
+        console.log(`✅ ${formKey} cargado con valores por defecto:`, valoresPorDefecto[formKey]);
+      }
+    }
+  });
+}
+
+
+
+function configurarForm6SegunFlujo(valorForm1) {
+  const labelAlto = document.querySelector('#form6 label[for="Alto"]');
+  const labelAncho = document.querySelector('#form6 label[for="Ancho"]');
+  
+  if (!labelAlto || !labelAncho) return;
+  
+  const inputAlto = document.getElementById('Alto');
+  const inputAncho = document.getElementById('Ancho');
+  
+  // ✅ DETECTAR CAMBIO DE FLUJO usando la variable global existente
+  const cambioFlujo = flujoActual !== null && flujoActual !== valorForm1;
+  
+  // ✅ Preservar valores solo si NO hay cambio de flujo
+  const valorAlto = cambioFlujo ? '' : (inputAlto?.value || '');
+  const valorAncho = cambioFlujo ? '' : (inputAncho?.value || '');
+  
+  let textoAlto, textoAncho, color;
+  
+  switch(valorForm1) {
+    case '3': // Puerta única
+      textoAlto = 'Alto de la puerta (mm)';
+      textoAncho = 'Ancho de la puerta (mm)';
+      color = 'blue';
+      break;
+    case '4': // Fijo único
+      textoAlto = 'Alto del fijo (mm)';
+      textoAncho = 'Ancho del fijo (mm)';
+      color = 'green';
+      break;
+    default: // Flujo normal (1)
+      textoAlto = 'Alto de hueco (mm)';
+      textoAncho = 'Ancho de hueco (mm)';
+      color = 'black';
+  }
+  
+  const estiloColor = color ? ` style="color: ${color}"` : '';
+  
+  labelAlto.innerHTML = `<span${estiloColor}>${textoAlto}</span><br>
+    <input type="number" id="Alto" name="Alto" required min="1" value="${valorAlto}" style="width: 100%; box-sizing: border-box; padding: 8px;">`;
+  
+  labelAncho.innerHTML = `<span${estiloColor}>${textoAncho}</span><br>
+    <input type="number" id="Ancho" name="Ancho" required min="1" value="${valorAncho}" style="width: 100%; box-sizing: border-box; padding: 8px;"><br><br>`;
+}
+
+
+    // Función segura para establecer textContent
+function setSafeTextContent(id, valor) {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.textContent = valor ?? ''; // Si valor es null/undefined, pone ''
+        } else {
+            console.warn(`⚠️ Elemento con id="${id}" no encontrado en el HTML`);
+        }
+    }
+
+  // Función segura para mostrar/ocultar elementos
+function setSafeDisplay(id, mostrar) {
+    const elemento = typeof id === 'string' ? document.getElementById(id) : id;
+    
+    if (elemento) {
+      // Detectar si es una tabla
+      const esTabla = elemento.tagName === 'TABLE';
+      const valorDisplay = mostrar ? (esTabla ? 'table' : 'block') : 'none';
+      elemento.style.display = valorDisplay;
+    } else if (typeof id === 'string') {
+      console.warn(`⚠️ Elemento con id="${id}" no encontrado para ocultar/mostrar`);
+    } else {
+      console.warn(`⚠️ Elemento no encontrado para ocultar/mostrar`, id);
+    }
+  }
+
+
+function guardarDatosFormulario(numForm) {
+    // =================== EXCEPCIÓN FORM4 (texto del label) ====================
+    if (numForm === 4) {
+        const selected = document.querySelector('#form4 input[name="imagen"]:checked');
+        if (!selected) return;
+
+        const value = selected.value; // '0', 'A' o 'B'
+        const labelText = selected.parentElement.querySelector('p').textContent.trim();
+        const codigoBastidor = CODIGOS_BASTIDOR[value];
+        
+        datosFormularios.form4 = {
+            imagen: selected.value,
+            textoSeleccionado: labelText,
+            codigoBastidor: codigoBastidor  // '0301', '0302' o '0401' ← CÓDIGO LISTO
+        };
+        
+        return; // Salir para no ejecutar código general
+    }
+
+
+    // ==================== EXCEPCIÓN FORM5 (radio buttons con estructura compleja) ====================
+    if (numForm === 5) {
+        const selected = document.querySelector('#form5 input[name="NumDiv"]:checked');
+        if (!selected) return;
+
+        const value = selected.value; // "0", "2", "4", "6", "D"
+        const labelText = selected.parentElement.querySelector('p').textContent.trim();
+        const codigoEmb = CODIGOS_EMBELLECEDOR[value];    // Transformar a código de embellecedor
+  
+        datosFormularios.form5 = {
+            division: {
+                tipo: value,
+                texto: labelText,
+                codigoEmb: codigoEmb,  // '', 'MA', 'MB', 'MC' o 'MD' ← CÓDIGO LISTO
+                lineas: value === 'D' 
+                    ? [
+                        { medida: 'calc', cantidad: 2 },
+                        { medida: 'calc', cantidad: 12 }
+                    ]
+                    : [{ medida: 'calc', cantidad: parseInt(value) }]
+            }
+        };
+        
+        return; // Salir para no ejecutar código general
+    }
+
+        // ==================== EXCEPCIÓN FORM6 (mapeo de acabado y vidrio) ====================
+    if (numForm === 6) {
+        const form = document.getElementById('form6');
+        const formData = new FormData(form);
+        
+        // Extraer valores originales (texto)
+        const acabadoTexto = formData.get('AcabadoAluminio');
+        const vidrioTexto = formData.get('ColorVidrio');
+        
+        // Transformar a códigos
+        const codigoColor = CODIGOS_ACABADO[acabadoTexto];
+        const codigoVidrio = CODIGOS_VIDRIO[vidrioTexto];
+        
+        // Guardar TODO: texto original + códigos
+        datosFormularios.form6 = {
+            // Datos originales (textos para el informe)
+            cliente: formData.get('cliente')?.trim(),
+            numPedido: formData.get('numPedido')?.trim(),
+            Alto: parseInt(formData.get('Alto')),
+            Ancho: parseInt(formData.get('Ancho')),
+            AcabadoAluminio: acabadoTexto,   // 'Blanco mate 9003'
+            ColorVidrio: vidrioTexto,        // 'Transparente'
+            conjuntos: parseInt(formData.get('conjuntos')) || 1,
+            comentarios: formData.get('comentarios')?.trim(),
+            
+            // NUEVOS: Códigos para la función de precios
+            codigoColor: codigoColor,        // 'L.BM03'
+            codigoVidrio: codigoVidrio       // '01'
+        };
+        
+        return; // Salir para no ejecutar código general
+    }
+
+    // ==================== CÓDIGO GENERAL (Form1, Form2, Form3, Form6) ====================
+    const form = document.getElementById(`form${numForm}`);
+    const formData = new FormData(form);
+    
+    datosFormularios[`form${numForm}`] = {};
+    for (let [key, value] of formData.entries()) {
+        datosFormularios[`form${numForm}`][key] = value;
+    }
+}
+
+function finalizarFlujo() {
+  try {
+    // Validar Form6
+    const form6 = document.getElementById('form6');
+    if (!validarFormulario(form6, 6)) return;
+    
+    // Guardar datos de Form6
+    guardarDatosFormulario(6);
+    
+    // Aplicar valores por defecto finales (por si acaso)
+    const flujoId = datosFormularios.form1?.imagen;
+    const flujo = FLUJOS[flujoId];
+    if (flujo?.valoresPorDefecto) {
+      aplicarValoresPorDefecto(flujo.valoresPorDefecto);
+    }
+    
+    // Calcular y mostrar
+    const datosCalculados = realizarCalculos();
+    if (!datosCalculados) throw new Error('Cálculo fallido');
+    
+    mostrarInformesCompletos(datosCalculados);
+    
+  } catch (error) {
+    console.error('💥 ERROR en finalizarFlujo():', error.message);
+    alert(`Error al finalizar: ${error.message}`);
+  }
+}
+
+function anteriorFormulario(actual) {
+  try {
+    const formActual = document.getElementById(`form${actual}`);
+    const flujoId = datosFormularios.form1?.imagen;
+    const destino = calcularDestino(flujoId, actual, 'retroceso');
+    
+    if (!destino) {
+      console.warn(`No hay destino hacia atrás desde Form${actual}`);
+      return;
+    }
+    
+    // ✅ SOLO NAVEGAR (sin tocar datosFormularios)
+    formActual.classList.remove('active');
+    document.getElementById(`form${destino}`).classList.add('active');
+    
+    if (destino === 4) aplicarFiltroForm4SegunFlujo();
+  } catch (error) {
+    console.error('💥 ERROR en anteriorFormulario():', error.message);
+  }
+}
+
+function siguienteFormulario(actual) {
+  try {
+    const formActual = document.getElementById(`form${actual}`);
+    if (!validarFormulario(formActual, actual)) return;
+    
+    guardarDatosFormulario(actual);
+    
+    const flujoId = datosFormularios.form1?.imagen;
+    
+
+    // ✅ AL SALIR DE FORM1: Limpiar y aplicar valores por defecto
+    if (actual === 1) {
+      const flujo = FLUJOS[flujoId];
+      
+      // ✅ SI CAMBIÓ EL FLUJO: Limpiar formularios saltados
+      if (flujoActual !== flujoId) {
+        console.log(`🔄 Cambio de flujo detectado: ${flujoActual} → ${flujoId}`);
+        
+        // ✅ LIMPIAR FORMULARIOS SALTADOS
+        if (flujo.saltados && flujo.saltados.length > 0) {
+          flujo.saltados.forEach(numForm => {
+            const formKey = `form${numForm}`;
+            delete datosFormularios[formKey];
+            console.log(`🗑️  ${formKey} eliminado (formulario saltado)`);
+          });
+        }
+        
+        // ✅ APLICAR VALORES POR DEFECTO
+        if (flujo.valoresPorDefecto && Object.keys(flujo.valoresPorDefecto).length > 0) {
+          guardarValoresPorDefecto(flujo.valoresPorDefecto, true);
+          console.log(`✅ Valores por defecto aplicados para flujo ${flujoId}`);
+        }
+      }
+      
+          // ✅ REDIRECCIÓN A 'PAMontAbatible.html para opciones 2
+    if (flujoId === '2') {
+      // Guardar el flujoId en localStorage para que pruebabotones.html lo recupere
+      localStorage.setItem('flujoSeleccionado', flujoId);
+      
+      // Guardar todos los datos del formulario por si los necesitas
+      localStorage.setItem('datosFormularios', JSON.stringify(datosFormularios));
+
+      alert('⚠️ En fase de desarrollo. NO VALIDO para pedidos. Mensaje especialmente dirigido a Guillemo Espinosa');
+      
+      // Redirigir a pruebabotones.html
+      window.location.href = 'PAMontAbatible.html';
+      return;
+    }
+
+          // ✅ De momento nada
+    if (flujoId === '5') {
+
+      alert('⚠️ Murete En fase de desarrollo. No valido para pedidos.');
+
+      return;
+    }
+
+
+      // ✅ Configurar Form6 y actualizar flujo actual
+      configurarForm6SegunFlujo(flujoId);
+      flujoActual = flujoId;
+    }
+    
+    const destino = calcularDestino(flujoId, actual, 'avance');
+    
+    if (!destino) {
+      console.warn(`No hay destino desde Form${actual}`);
+      return;
+    }
+    
+    formActual.classList.remove('active');
+    document.getElementById(`form${destino}`).classList.add('active');
+    
+    if (destino === 4) aplicarFiltroForm4SegunFlujo();
+    
+  } catch (error) {
+    console.error(error.message);
+    alert(error.message);
+  }
+}
+
+
+function limpiarDatos() {
+  // ========== 1️⃣ RESET COMPLETO DEL OBJETO DE DATOS ==========
+  datosFormularios = {
+    form1: {}, // ← CRÍTICO: limpia también la selección de flujo inicial
+    form2: {},
+    form3: {},
+    form4: {},
+    form5: {},
+    form6: {}
+  };
+  
+  // ========== 2️⃣ RESET DE VARIABLES GLOBALES ==========
+  window.ultimosDatosInforme = null;
+  window.flujoActual = null; // Si usas variable para tracking del flujo
+  
+  // ========== 3️⃣ LIMPIEZA VISUAL DE FORMULARIOS ==========
+  
+  // --- Form1: Resetear radios/checkboxes principales ---
+  const flujoRadios = document.querySelectorAll('input[name="flujo"]');
+  flujoRadios.forEach(radio => radio.checked = false);
+  
+  // Añade aquí otros campos de form1 si los tienen
+  // Ej: document.getElementById('campo-form1').value = '';
+  
+  // --- Forms 1-6: Resetear todos los inputs ---
+  for (let i = 1; i <= 6; i++) {
+    const formElement = document.getElementById(`form${i}`);
+    if (formElement) {
+      // Resetear inputs de texto, número, email
+      formElement.querySelectorAll('input[type="text"], input[type="number"], input[type="email"], textarea').forEach(input => {
+        input.value = '';
+      });
+      
+      // Resetear selects
+      formElement.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0; // Volver a primera opción
+      });
+      
+      // Resetear radios y checkboxes
+      formElement.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+        input.checked = false;
+      });
+    }
+  }
+  
+  // ========== 4️⃣ OCULTAR INFORMES Y CONTENEDORES ==========
+  document.getElementById('informe-container').style.display = 'none';
+  document.getElementById('hoja-pedido-container').style.display = 'none';
+  
+  // ========== 5️⃣ OCULTAR BLOQUES CONDICIONALES ==========
+  // Lista de todos los bloques que pueden aparecer
+  const bloques = [
+    'bloque-puerta',
+    'bloque-fijo',
+    'hp-bloque-puerta',
+    'hp-bloque-fijo',
+    // Añade aquí cualquier otro bloque visual condicional
+  ];
+  
+  bloques.forEach(id => {
+    const elemento = document.getElementById(id);
+    if (elemento) elemento.classList.remove('active');
+  });
+  
+  // ========== 6️⃣ VOLVER A FORM1 LIMPIO ==========
+  // Ocultar todos los formularios
+  for (let i = 1; i <= 6; i++) {
+    document.getElementById(`form${i}`).classList.remove('active');
+  }
+  
+  // Mostrar solo form1
+  document.getElementById('form1').classList.add('active');
+  
+  // Scroll arriba
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  console.log('✅ Todos los datos han sido reseteados. Estado inicial limpio.');
+}
+
+function validarFormulario(form, numForm) {
+
+  // 1️⃣ Validar radios (si existen y son required)
+  const primerRadio = form.querySelector('input[type="radio"][required]');
+  if (primerRadio) {
+    const radioSeleccionado = form.querySelector(`input[name="${primerRadio.name}"]:checked`);
+    if (!radioSeleccionado) {
+      alert('Por favor, selecciona una opción antes de continuar');
+      return false;
+    }
+  }
+
+  // 2️⃣ Validar Form6 (rangos de medidas)
+  if (numForm === 6) {
+    const alto = parseInt(form.querySelector('#Alto')?.value);
+    const ancho = parseInt(form.querySelector('#Ancho')?.value);
+    
+    if (!alto || !ancho || alto <= 0 || alto > 3000 || ancho <= 0 || ancho > 6000) {
+      alert('Revisar las medidas (rango válido: 1-3000 mm alto, 1-6000 mm ancho)');
+      return false;
+    }
+  }
+  return true;
+}
+
+
+// FUNCIONES AUXILIARES (deben estar ANTES de realizarCalculos)
+function AnchoEleCorredera(opcion, ancho) {
+
+ let X = 0; // Ancho del elemento
+ let retracInf = 0
+ let NumPuertas = 0
+ let NumFijos = 0
+    // Calcular X según la opción seleccionada
+  switch(opcion) {
+    case 'PuertaUnica':
+      X = ancho;
+      NumPuertas = 1
+      break;
+
+    case 'FijoUnico':
+      X = ancho;
+      NumFijos = 1
+      break;
+
+    case '1puerta':
+      X = ancho + 24;
+      NumPuertas = 1
+      break;
+
+    case '1puerta-casoneto':
+      X = ancho + 12;
+      retracInf = 1
+      NumPuertas = 1
+      break;
+
+    case '2puertas':
+      X = (ancho / 2) + 6;
+      NumPuertas = 2
+      break;
+    case '1puerta-1fijo':
+      X = (ancho / 2) + 6;
+      NumPuertas = 1
+      NumFijos = 1
+      break;
+
+    case '3puertas':
+      X = (ancho / 3) + 8;
+      NumPuertas = 3
+      break;
+    case '2puertas-1fijo':
+      X = (ancho / 3) + 8;
+      NumPuertas = 2
+      NumFijos = 1
+      break;
+    case '1puerta-2fijos':
+      X = (ancho / 3) + 8;
+      NumPuertas = 1
+      NumFijos = 2
+      break;
+
+    case '2puertas-2fijos':
+      X = (ancho / 4) + 6;
+      NumPuertas = 2
+      NumFijos = 2     
+      break;
+    case '3puertas-1fijo':
+      X = (ancho / 4) + 9;
+      NumPuertas = 3
+      NumFijos = 1 
+      break;
+    case '4puertas':
+      X = (ancho / 4) + 9;
+      NumPuertas = 4
+      break;
+    default:
+      X = 0; // Valor por defecto
+  }
+
+  return { X: Math.floor(X), retracInf, NumPuertas, NumFijos };    //  es el valor devuelto de la función, para poder seguir usandola, valor de X entero hacia abajo.
+
+}
+
+function AltoEleCorredera(guia,alto) {
+let Y = 0; // alto del elemento
+  switch(guia) {
+    case 'SinGuia':
+      Y = alto;
+      break;
+    case 'SK112':
+      Y = alto-15;
+      break;
+    case 'SK111':
+      Y = alto-40-15;
+      break;
+    case 'SK119':
+      Y = alto-15;
+      break;
+  }
+  return { Y };    //  es el valor devuelto de la función, para poder seguir usandola.
+}
+
+function realizarCalculos() {
+  try {
+    // 1️⃣ VERIFICACIONES DE SEGURIDAD
+    if (!tablasCargadas) {
+      throw new Error('Las tablas de precios no están cargadas. Espera unos segundos.');
+    }
+    
+    if (typeof calcularPresupuesto !== 'function') {
+      throw new Error('La función calcularPresupuesto no está disponible.');
+    }
+
+    // 2️⃣ OBTENER FLUJO Y OPCIÓN
+    const flujoId = datosFormularios.form1?.imagen;
+    const opcion = datosFormularios.form3?.opcion || 'PuertaUnica';
+    
+    // ✅ DETERMINAR QUÉ CALCULAR SEGÚN LA OPCIÓN
+    const tienePuerta = opcion.includes('puerta') || opcion === 'PuertaUnica';
+    const tieneFijo = opcion.includes('fijo') || opcion === 'FijoUnico';
+    
+    console.log('🔍 Flujo:', flujoId, '| Opción:', opcion);
+    console.log('  → Tiene puerta:', tienePuerta);
+    console.log('  → Tiene fijo:', tieneFijo);
+
+    // 3️⃣ DATOS COMUNES
+    const guia = datosFormularios.form2?.guia || 'SinGuia';
+    const cliente = datosFormularios.form6?.cliente?.trim() || 'Cliente';
+    const numPedido = datosFormularios.form6?.numPedido?.trim() || 'Sxx000';
+    const alto = parseInt(datosFormularios.form6?.Alto);
+    const ancho = parseInt(datosFormularios.form6?.Ancho);
+    const acabado = datosFormularios.form6?.AcabadoAluminio || 'Blanco mate 9003';
+    const colorVidrio = datosFormularios.form6?.ColorVidrio || 'TRANSPARENTE';
+    const conjuntos = parseInt(datosFormularios.form6?.conjuntos) || 1;
+    const comentarios = datosFormularios.form6?.comentarios?.trim() || '';
+    const codigoColor = datosFormularios.form6?.codigoColor || 'L.BM03';
+    const codigoVidrio = datosFormularios.form6?.codigoVidrio || '01';
+    
+    // División (siempre disponible)
+    const divisionData = datosFormularios.form5?.division || {};
+    const textoDivision = divisionData.texto || 'Sin embellecedor';
+    const codigoEmb = divisionData.codigoEmb || '';
+
+    // 4️⃣ DATOS Y CÁLCULOS DE FIJO (solo si tiene fijo)
+    let tipoFijo = null;
+    let textoTipoFijo = 'Sin tipo';
+    let codigoBastidor = '';
+    let resultadoFijo = { altoFijo: 0, anchoFijo: 0, perfiles: [], cristales: [] };
+    let preciosFijo = { puerta: { codigo: '', precio: 0 }, emb: { codigo: '', precio: 0 }, bast: { codigo: '', precio: 0 } };
+    
+    if (tieneFijo) {
+      tipoFijo = datosFormularios.form4?.imagen || null;
+      textoTipoFijo = datosFormularios.form4?.textoSeleccionado || 'Sin tipo';
+      codigoBastidor = datosFormularios.form4?.codigoBastidor || '';
+      
+      console.log('  → Calculando datos de FIJO...');
+      console.log('    · tipoFijo:', tipoFijo);
+      console.log('    · codigoBastidor:', codigoBastidor);
+    }
+
+    // 5️⃣ CALCULAR DIMENSIONES Y PERFILES
+    const { X, retracInf, NumPuertas, NumFijos } = AnchoEleCorredera(opcion, ancho);
+    const { Y } = AltoEleCorredera(guia, alto);
+
+    console.log('  → NumPuertas:', NumPuertas, '| NumFijos:', NumFijos);
+
+    // ✅ CALCULAR PERFILES SEGÚN LO QUE TIENE
+    let resultadoPuerta = { perfiles: [], cristales: [] };
+    let preciosPuerta = { puerta: { codigo: '', precio: 0 }, emb: { codigo: '', precio: 0 } };
+    
+    if (tienePuerta && NumPuertas > 0) {
+      console.log('  → Calculando PUERTA...');
+      resultadoPuerta = calcularPerfilesPuerta(Y, X, NumPuertas, retracInf);
+      
+      const entradaPuerta = {
+        tipo: '01',    // Es corredera
+        color: codigoColor,
+        vidrio: codigoVidrio,
+        altura: Y,
+        ancho: X,
+        modeloEmb: codigoEmb,
+        bastidor: ''
+      };
+      
+      preciosPuerta = calcularPresupuesto(entradaPuerta);
+    }
+
+    if (tieneFijo && NumFijos > 0) {
+      console.log('  → Calculando FIJO...');
+      resultadoFijo = calcularPerfilesFijo(alto, X, NumFijos, tipoFijo);
+      
+      const entradaFijo = {
+        tipo: '02',
+        color: codigoColor,
+        vidrio: codigoVidrio,
+        altura: resultadoFijo.altoFijo,
+        ancho: resultadoFijo.anchoFijo,
+        modeloEmb: codigoEmb,
+        bastidor: codigoBastidor
+      };
+      
+      preciosFijo = calcularPresupuesto(entradaFijo);
+    }
+
+    // 6️⃣ CONSTRUIR INFORME COMPLETO
+    const datosInforme = {
+      // Datos generales
+      cliente,
+      numPedido,
+      comentarios,
+      fecha: new Date().toLocaleDateString('es-ES'),
+      mensajeOpcion: generarMensajeOpcion(opcion, tipoFijo, textoDivision, conjuntos),
+      acabado,
+      colorVidrio,
+      
+      // Configuración
+      mostrarPuerta: tienePuerta,
+      mostrarFijo: tieneFijo,
+      numPuertas: NumPuertas,
+      numFijos: NumFijos,
+      Conjuntos: conjuntos,
+      
+      // Medidas
+      altoPuerta: Y,
+      anchoPuerta: X,
+      altoFijo: resultadoFijo.altoFijo,
+      anchoFijo: resultadoFijo.anchoFijo,
+      
+      // Descripciones
+      textoDivision,
+      textoTipoFijo,
+      
+      // Códigos
+      codigoColor,
+      codigoVidrio,
+      
+      // Resultados técnicos
+      perfilesPuerta: resultadoPuerta.perfiles,
+      perfilesFijo: resultadoFijo.perfiles,
+      embellecedorPuerta: tienePuerta ? calcularEmbellecedorPuerta(X, Y, acabado) : [],
+      embellecedorFijo: tieneFijo ? calcularEmbellecedorFijo(resultadoFijo.altoFijo, resultadoFijo.anchoFijo, acabado) : [],
+      cristalesPuerta: resultadoPuerta.cristales,
+      cristalesFijo: resultadoFijo.cristales,
+
+      // PRECIOS PUERTA
+      puertaCodigo: preciosPuerta.puerta.codigo,
+      puertaPrecioUnit: preciosPuerta.puerta.precio,
+      embPuertaCodigo: preciosPuerta.emb.codigo,
+      embPuertaPrecioUnit: preciosPuerta.emb.precio,
+      
+      // PRECIOS FIJO
+      fijoCodigo: preciosFijo.puerta.codigo,
+      fijoPrecioUnit: preciosFijo.puerta.precio,
+      embFijoCodigo: preciosFijo.emb.codigo,
+      embFijoPrecioUnit: preciosFijo.emb.precio,
+      bastidorCodigo: preciosFijo.bast.codigo,
+      bastidorPrecioUnit: preciosFijo.bast.precio
+    };
+
+    console.log('✅ datosInforme generado:', datosInforme);
+    return datosInforme;
+    
+  } catch (error) {
+    console.error('💥 ERROR FATAL en realizarCalculos():', error);
+    alert('Error en cálculos: ' + error.message);
+    return null;
+  }
+}
+
+// Funciones para iconos de perfiles (imágenes jpg desde GitHub)
+function IconoVert(size = 40) {
+  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/VERTICAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+}
+
+function IconoHoriz(size = 40) {
+  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/HORIZONTAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+}
+
+function IconoBasePAFB(size = 40) {
+  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFB.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+}
+
+function IconoClipPAFC(size = 40) {
+  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFC.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+}
+
+function IconoPAFU(size = 40) {
+  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFU.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+}
+
+
+
+function generarMensajeOpcion(opcion, tipoFijo, textoDivision, conjuntos) {
+
+    console.log('_________   Para mensaje __________')
+    console.log('opcion:', opcion);
+    console.log('tipoFijo:', tipoFijo);
+    console.log('textoDivision:', textoDivision);
+    console.log('conjuntos:', conjuntos);
+
+    const comentarios = {
+        'PuertaUnica': "PUERTA INDEPENDIENTE",
+        'FijoUnico' : "FIJO INDEPENDIENTE",
+        '1puerta': '1 PUERTA',
+        '1puerta-casoneto': '1 PUERTA CASONETO',
+        '2puertas': '2 PUERTAS',
+        '1puerta-1fijo': '1 PUERTA Y 1 FIJO',
+        '3puertas': '3 PUERTAS',
+        '2puertas-1fijo': '2 PUERTAS Y 1 FIJO',
+        '1puerta-2fijos': '1 PUERTA Y 2 FIJOS',
+        '2puertas-2fijos': '2 PUERTAS Y 2 FIJOS', 
+        '3puertas-1fijo': '3 PUERTAS Y 1 FIJO',
+        '4puertas': '4 PUERTAS'
+    };
+  
+    const tiposFijo = {
+        '0': ' - 3 PAREDES',
+        'A': ' - 3 PAREDES con PAFU',
+        'B': ' - 4 PAREDES'
+    };
+    
+    let mensaje = comentarios[opcion] || 'CONFIGURACIÓN PERSONALIZADA';
+    
+    // Si tiene fijo, añadir el tipo
+    if (tipoFijo && tiposFijo[tipoFijo]) {
+        mensaje += tiposFijo[tipoFijo] || "";
+    }
+    
+    // Añadir texto de divisiones si existe, aunque siempre existe.
+    mensaje += ` - ${textoDivision || 'Sin embellecedor PEPE'}`;
+
+
+    // === Etiqueta dinámica para la última parte ===
+    // Usa UNIDAD/UNIDADES si es PuertaUnica o FijoUnico; si no, CONJUNTO/CONJUNTOS
+    const usaUnidades = opcion === 'PuertaUnica' || opcion === 'FijoUnico';
+    const etiqueta = usaUnidades
+      ? `UNIDAD${conjuntos > 1 ? 'ES' : ''}`
+      : `CONJUNTO${conjuntos > 1 ? 'S' : ''}`;
+
+    mensaje += ` - ( ${conjuntos} ${etiqueta} )`;
+
+
+    return mensaje;
+}
+
+
+function formatearNumero(numero, decimales = 0) {
+  // Convertir a número si es string
+  const num = typeof numero === 'string' ? parseFloat(numero) : numero;
+  
+  // Si no es un número válido, devolver el valor original o '-'
+  if (isNaN(num) || num === null || num === undefined) {
+    return numero ?? '-';
+  }
+  
+  // Formatear con separador de miles y decimales configurables
+  return new Intl.NumberFormat('es-ES', {
+    minimumFractionDigits: decimales,
+    maximumFractionDigits: decimales,
+    useGrouping: true // separador de miles
+  }).format(num);
+}
+
+// --------------    Funciones del bloque 1 , Puertas  -----------------------------------
+
+function calcularPerfilesPuerta(Y, X, NumPuertas, retracInf) {
+
+  //  Desdoblo en dos el resultado de la funcion Perfiles y cristales ya que los datos origen son los mismos
+  return {  
+    perfiles: [
+      { icono: IconoVert(30), tipo: 'Verticales Retrac', longitud: Y, cantidad: NumPuertas * 2, retracInf: retracInf },
+      { icono: IconoHoriz(25), tipo: 'Horizontales', longitud: X - 24, cantidad: NumPuertas * 2, retracInf: "" }
+    ],
+    cristales:[
+      { descripcion: 'Vidrio templado 4 mm', alto: Y-58, ancho: X-10, cantidad: NumPuertas }
+    ]
+  };
+}
+
+function calcularEmbellecedorPuerta(X, Y, acabado) {
+  const div = datosFormularios.form5?.division;
+  if (!div) return [];
+
+  // CASO D (División Doble): 2 líneas (Vertical + Horizontal)
+  if (div.tipo === 'D') {
+    return [
+      {
+        tipo: `Pletina 13x3mm ${acabado} - Vertical`,
+        longitud: Y - 70,
+        cantidad: div.lineas[0]?.cantidad || 0
+      },
+      {
+        tipo: `Pletina 13x3mm ${acabado} - Horizontal`,
+        longitud: Math.floor((X - 37) / 2),   // -12-12-13 = 37
+        cantidad: div.lineas[1]?.cantidad || 0
+      }
+    ].filter(item => item.cantidad > 0);
+  }
+  
+  // ──────────────────────────────────────────────────────────────
+  // CASO SIMPLE: 1 línea Solo Horizontal
+  // ──────────────────────────────────────────────────────────────
+  return [{
+    tipo: `Pletina 13x3mm ${acabado}`,
+    longitud: X - 24,
+    cantidad: div.lineas[0]?.cantidad || 0
+  }].filter(item => item.cantidad > 0);
+}
+
+
+
+// -----------------------------------------------------------------------------------------------
+// --------------    Funciones del bloque 2 , Fijos  -----------------------------------
+
+function calcularPerfilesFijo(alto, X, NumFijos, tipoFijo) {
+  // El fijo usa el alto original (form6), NO el Y de la puerta. le daremos una holgura de 2 mm adicional
+  // Solo necesita X para calcular el ancho del cristal
+
+  let verticales = { longitud: 0, cantidad: 0 };
+  let horizontales = { longitud: 0, cantidad: 0 };
+  let perfilBase_Vertical = { longitud: 0, cantidad: 0 };
+  let perfilBase_Horizontal = { longitud: 0, cantidad: 0 };
+  let perfilClip_Vertical = { longitud: 0, cantidad: 0 };
+  let perfilClip_Horizontal = { longitud: 0, cantidad: 0 };
+  let perfilU_Vertical = { longitud: 0, cantidad: 0 };
+  let perfilU_Horizontal = { longitud: 0, cantidad: 0 };
+  let altoFijo = 0;  //  medida del elemento fijo alto
+  let anchoFijo = 0; //  medida del elemento fijo ancho
+  let embellecedorFijo = [];
+
+  // ✅ Control por si tipofijo es null
+  if (!tipoFijo || NumFijos === 0) {
+    return { perfiles: [], cristales: [], altoFijo: 0, anchoFijo: 0 };
+  }
+  // Calcular según el tipo de fijo seleccionado     
+  switch(tipoFijo) {
+    case '0': // 3 paredes - Modificado el alto del bastidor 2 mm Holgura frente al Hueco vertical. Horizontal sigue Igual sin 
+        verticales = { longitud: alto - 31, cantidad: 2 * NumFijos };  // -19-8-2-2 (holgura interna y externa) = 31
+        horizontales = { longitud: X - 42, cantidad: 2 * NumFijos };   // -8-12-12-8-2(holgura interna)= 42
+        altoFijo =  alto - 31   // igual que el vertical
+        anchoFijo = X - 18   // -8-8-2 (solo holgura interior) 
+        perfilBase_Horizontal = {longitud: X - 36, cantidad: 1 * NumFijos}; // 
+        perfilClip_Horizontal = {longitud: X - 36, cantidad: 1 * NumFijos};
+        perfilU_Vertical = {longitud: alto-2, cantidad: 2 * NumFijos};
+        perfilU_Horizontal = {longitud: X - 36, cantidad: 1 * NumFijos};
+        break;
+      
+    case 'A': // 3 paredes con PAFU - Modificado el alto del bastidor 2 mm Holgura frente al Hueco vertical. Horizontal sigue Igual sin 
+        verticales = { longitud: alto - 20, cantidad: 2 * NumFijos };   // -8-8-2-2 (holgura interna y externa) = 20
+        horizontales = { longitud: X - 42, cantidad: 2 * NumFijos };    //   -8-12-12-8-2(holgura)= 42
+        altoFijo =  alto - 20  // igual que el vertical
+        anchoFijo = X - 18   // -8-8-2 (solo holgura interior)       
+        perfilU_Vertical = {longitud: alto-2, cantidad: 2 * NumFijos};
+        perfilU_Horizontal = {longitud: X - 36, cantidad: 2 * NumFijos};
+        break;
+      
+    case 'B': // 4 paredes - Modificado a 4 lados con clip. el alto del bastidor 2 mm Holgura frente al Hueco vertical. Horizontal sigue Igual sin holgura.
+        verticales = { longitud: alto - 42, cantidad: 2 * NumFijos };   // Barra = -19-19-2-2 (holgura interna y externa) = 42  / 
+        horizontales = { longitud: X - 64, cantidad: 2 * NumFijos };    // Barra = -19-12-12-19-2(holgura)= 64
+        altoFijo =  alto - 42   // igual que el vertical
+        anchoFijo = X - 40   // -19-19-2 (solo holgura interior)
+        perfilBase_Vertical = {longitud: alto-2, cantidad: 2 * NumFijos}; //  Modificado el alto del bastidor 2 mm Holgura frente al Hueco vertical
+        perfilClip_Vertical = {longitud: alto-2, cantidad: 2 * NumFijos}; 
+        perfilBase_Horizontal = {longitud: X - 62, cantidad: 2 * NumFijos};  //  Más cambios, ahora es todo el perimetro con clip. No hay U
+        perfilClip_Horizontal = {longitud: X - 62, cantidad: 2 * NumFijos};
+        //perfilU_Horizontal = {longitud: X - 62, cantidad: 1 * NumFijos};   
+        break;
+    }
+  
+ 
+    // Crear array de perfiles solo con los que tienen cantidad > 0
+    const perfiles = [
+    
+    // Verticales y horizontales SIEMPRE visibles
+        { 
+        icono: IconoVert(30), 
+        tipo: 'Verticales', 
+        longitud: verticales.longitud, 
+        cantidad: verticales.cantidad 
+        },
+        { 
+        icono: IconoHoriz(25), 
+        tipo: 'Horizontales', 
+        longitud: horizontales.longitud, 
+        cantidad: horizontales.cantidad 
+        }
+    ];
+    
+    if (perfilBase_Vertical.cantidad > 0) {
+    perfiles.push({ 
+        icono: IconoBasePAFB(25), 
+        tipo: 'Perfil Base Fijo Vertical', 
+        longitud: perfilBase_Vertical.longitud, 
+        cantidad: perfilBase_Vertical.cantidad 
+    });
+    }
+    // Agregar Perfil Clip Vertical solo si existe
+    if (perfilClip_Vertical.cantidad > 0) {
+        perfiles.push({ 
+        icono: IconoClipPAFC(25), 
+        tipo: 'Perfil Clip Fijo Vertical', 
+        longitud: perfilClip_Vertical.longitud, 
+        cantidad: perfilClip_Vertical.cantidad 
+        });
+    }
+
+    if (perfilBase_Horizontal.cantidad > 0) {
+    perfiles.push({ 
+        icono: IconoBasePAFB(25), 
+        tipo: 'Perfil Base Fijo Horizontal', 
+        longitud: perfilBase_Horizontal.longitud, 
+        cantidad: perfilBase_Horizontal.cantidad 
+    });
+    }
+
+    // Agregar Perfil Clip Horizontal solo si existe
+    if (perfilClip_Horizontal.cantidad > 0) {
+        perfiles.push({ 
+        icono: IconoClipPAFC(25), 
+        tipo: 'Perfil Clip Fijo Horizontal', 
+        longitud: perfilClip_Horizontal.longitud, 
+        cantidad: perfilClip_Horizontal.cantidad 
+        });
+    }
+
+    // Agregar Perfil U Vertical solo si existe
+    if (perfilU_Vertical.cantidad > 0) {
+        perfiles.push({ 
+        icono: IconoPAFU(30), 
+        tipo: 'Perfil U Fijo Vertical', 
+        longitud: perfilU_Vertical.longitud, 
+        cantidad: perfilU_Vertical.cantidad 
+        });
+    }
+    
+    // Agregar Perfil U Horizontal solo si existe
+    if (perfilU_Horizontal.cantidad > 0) {
+        perfiles.push({ 
+        icono: IconoPAFU(30), 
+        tipo: 'Perfil U Fijo Horizontal', 
+        longitud: perfilU_Horizontal.longitud, 
+        cantidad: perfilU_Horizontal.cantidad 
+        });
+    }
+    
+    // Calcular medidas del cristal del fijo  usando los valores ya calculados
+    const altoCristalFijo = verticales.longitud - 58;  // alto form6 - perfilesfijo - holguras = Verticales.longitud y luego -58 
+    const anchoCristalFijo = horizontales.longitud + 24 - 10;    // Depende igualmente de los perfiles fijos elegidos
+
+    return {
+        perfiles: perfiles,
+        cristales: [
+        { descripcion: 'Vidrio templado 4 mm', alto: altoCristalFijo, ancho: anchoCristalFijo, cantidad: NumFijos }
+        ],
+        altoFijo,   // ➜ nuevo
+        anchoFijo
+    };
+}
+
+function calcularEmbellecedorFijo(altoFijo, anchoFijo, acabado) {
+  
+  const div = datosFormularios.form5?.division;  //Es tipo de embellecedor
+  if (!div) return [];
+
+  // CASO D (División Doble): 2 líneas (Vertical + Horizontal)
+  if (div.tipo === 'D') {
+    return [
+      {
+        tipo: `Pletina 13x3mm ${acabado} - Vertical`,
+        longitud: altoFijo - 70,
+        cantidad: div.lineas[0]?.cantidad || 0
+      },
+      {
+        tipo: `Pletina 13x3mm ${acabado} - Horizontal`,
+        longitud: Math.floor((anchoFijo -37) / 2),  // -12-12-13 = 37
+        cantidad: div.lineas[1]?.cantidad || 0
+      }
+    ].filter(item => item.cantidad > 0); // Filtrar líneas con cantidad 0
+  }
+
+  // CASO SIMPLE: 1 línea Solo Horizontal
+  return [{
+    tipo: `Pletina 13x3mm ${acabado}`,
+    longitud: anchoFijo - 24,
+    cantidad: div.lineas[0]?.cantidad || 0
+  }].filter(item => item.cantidad > 0);
+}
+
+// -----------------------  fin de Funciones bloque 2 y del informe    -------------------------------------
+
+// ????????????????????????????????????????????????????????????????????????????
+// ???????????????????????????????????????????????????????????????????????????
+
+/**
+ * PASO 1: Generador de bloque PUERTA
+ * Recibe el objeto 'd' de realizarCalculos() y devuelve un objeto
+ * estructurado con toda la lógica de visibilidad y datos para cualquier plantilla
+ * 
+ * @param {object} datos - Objeto completo de datos del cálculo
+ * @returns {object} Bloque de puerta listo para renderizar
+ */
+function generarBloquePuerta(datos) {
+
+  // ──────────────────────────────────────────────────────────────────
+  // 1. CÁLCULO DE VISIBILIDAD (Lógica centralizada)
+  // ──────────────────────────────────────────────────────────────────
+  const hayEmbellecedores = datos.embellecedorPuerta?.some(item => item.cantidad > 0) ?? false;
+  
+  // ──────────────────────────────────────────────────────────────────
+  // 2. CONSTRUCCIÓN DEL OBJETO ESTANDARIZADO
+  // ──────────────────────────────────────────────────────────────────
+  const bloquePuerta = {
+    // 🔹 METADATOS (Control de renderizado)
+    visible: datos.mostrarPuerta,     // true siempre actualmente
+    mostrarEmbellecedores: hayEmbellecedores, // Flag único para todas las plantillas
+    
+    // 🔹 DATOS GENERALES (Usados por ambos informes)
+    tipo: 'CORREDERA',
+    cantidad: datos.numPuertas,
+    acabado: datos.acabado,
+    colorVidrio: datos.colorVidrio,
+    alto: datos.altoPuerta,
+    ancho: datos.anchoPuerta,
+    textoDivision: datos.textoDivision,
+    codigoColor: datos.codigoColor,
+    codigoVidrio: datos.codigoVidrio, // ← Asumo que tú arreglas el typo
+    Conjuntos: datos.Conjuntos,
+    
+    // 🔹 DATOS TÉCNICOS (Para informe detallado)
+    perfiles: datos.perfilesPuerta || [],
+    cristales: datos.cristalesPuerta || [],
+    embellecedores: datos.embellecedorPuerta || [],
+    
+    // 🔹 DATOS COMERCIALES (Para informe resumen)
+    puertaCodigo: datos.puertaCodigo,
+    puertaPrecioUnit: datos.puertaPrecioUnit,
+    embPuertaCodigo: datos.embPuertaCodigo,
+    embPuertaPrecioUnit: datos.embPuertaPrecioUnit
+  };
+
+
+  return bloquePuerta;
+}
+
+
+/**
+ * PASO 2: Generador de bloque FIJO
+ * Recibe el objeto 'd' de realizarCalculos() y devuelve un objeto
+ * estructurado con toda la lógica de visibilidad y datos para cualquier plantilla
+ * 
+ * @param {object} datos - Objeto completo de datos del cálculo
+ * @returns {object} Bloque de fijo listo para renderizar
+ */
+function generarBloqueFijo(datos) {
+
+  // ──────────────────────────────────────────────────────────────────
+  // 1. CÁLCULO DE VISIBILIDAD (Lógica centralizada)
+  // ──────────────────────────────────────────────────────────────────
+  const hayEmbellecedores = datos.embellecedorFijo?.some(item => item.cantidad > 0) ?? false;
+  
+  // ──────────────────────────────────────────────────────────────────
+  // 2. CONSTRUCCIÓN DEL OBJETO ESTANDARIZADO
+  // ──────────────────────────────────────────────────────────────────
+  const bloqueFijo = {
+    // 🔹 METADATOS (Control de renderizado)
+    visible: datos.mostrarFijo,
+    mostrarEmbellecedores: hayEmbellecedores, // Flag único para todas las plantillas
+    
+    // 🔹 DATOS GENERALES (Usados por ambos informes)
+    tipo: 'FIJO',
+    cantidad: datos.numFijos,
+    acabado: datos.acabado,
+    colorVidrio: datos.colorVidrio,
+    alto: datos.altoFijo,
+    ancho: datos.anchoFijo,
+    textoDivision: datos.textoDivision,
+    textoTipoFijo: datos.textoTipoFijo, // ← Dato específico de fijos
+    codigoColor: datos.codigoColor,
+    codigoVidrio: datos.codigoVidrio,
+    Conjuntos: datos.Conjuntos,
+    
+    // 🔹 DATOS TÉCNICOS (Para informe detallado)
+    perfiles: datos.perfilesFijo || [],
+    cristales: datos.cristalesFijo || [],
+    embellecedores: datos.embellecedorFijo || [],
+    
+    // 🔹 DATOS COMERCIALES (Para informe resumen)
+    fijoCodigo: datos.fijoCodigo,
+    fijoPrecioUnit: datos.fijoPrecioUnit,
+    embFijoCodigo: datos.embFijoCodigo,
+    embFijoPrecioUnit: datos.embFijoPrecioUnit,
+    bastidorCodigo: datos.bastidorCodigo,
+    bastidorPrecioUnit: datos.bastidorPrecioUnit
+  };
+
+  return bloqueFijo;
+}
+
+
+/**
+ * PASO 3: Renderizador del INFORME TÉCNICO
+ * Recibe los bloques generados y pinta el Informe 1 con tablas detalladas
+ * 
+ * @param {object} bloques - Objeto con { cliente, numPedido, ..., puerta, fijo }
+ */
+function renderizarInformeTecnico(bloques) {
+
+
+  // ──────────────────────────────────────────────────────────────────
+  // 1. DATOS GENERALES
+  // ──────────────────────────────────────────────────────────────────
+  setSafeTextContent('inf-cliente', bloques.cliente);
+  setSafeTextContent('inf-num-pedido', bloques.numPedido);
+  setSafeTextContent('inf-fecha', bloques.fecha);
+  setSafeTextContent('inf-comentarios', bloques.comentarios);
+  setSafeTextContent('mensaje-opcion', bloques.mensajeOpcion);
+
+  // ──────────────────────────────────────────────────────────────────
+  // 2. BLOQUE PUERTA (siempre visible según tu lógica)
+  // ──────────────────────────────────────────────────────────────────
+  const puerta = bloques.puerta;
+  setSafeDisplay('bloque-puerta', puerta.visible);
+  
+  if (puerta.visible) {
+    // Datos básicos
+    //setSafeTextContent('tipo-puerta', puerta.tipo);
+    //setSafeTextContent('cant-puerta', puerta.cantidad);
+    setSafeTextContent('acabado-puerta', puerta.acabado);
+    setSafeTextContent('color-vidrio-puerta', puerta.colorVidrio);
+    //setSafeTextContent('alto-puerta', formatearNumero(puerta.alto) + ' mm');
+    //setSafeTextContent('ancho-puerta', formatearNumero(puerta.ancho) + ' mm');
+
+    // Tabla PERFILES
+
+    const tablaPerfiles = document.getElementById('tabla-perfiles-puerta');
+    tablaPerfiles.innerHTML = '';
+    puerta.perfiles.forEach(perfil => {
+      // 🔹 Cambio clave: `> 0` en lugar de `!== undefined`
+      const tieneRetraccion = perfil.retracInf > 0;
+      const retraccionHtml = tieneRetraccion 
+        ? `${perfil.retracInf} → (${perfil.retracInf * puerta.Conjuntos})`
+        : '-';
+
+      tablaPerfiles.innerHTML += `
+        <tr>
+          <td class="imagen-perfil">${perfil.icono || ''}</td>
+          <td class="texto-izq">${perfil.tipo}</td>
+          <td>${formatearNumero(perfil.longitud)}</td>
+          <td>${perfil.cantidad} → (${perfil.cantidad * puerta.Conjuntos})</td>
+          <td>${retraccionHtml}</td>
+        </tr>
+      `;
+    });
+
+    // Tabla EMBELLECEDORES (con lógica de visibilidad)
+    const tablaEmb = document.getElementById('tabla-embellecedor-puerta');
+    const tablaEmbContainer = tablaEmb?.closest('table');
+    
+    if (puerta.mostrarEmbellecedores) {
+      setSafeDisplay(tablaEmbContainer, true);
+      tablaEmb.innerHTML = '';
+      puerta.embellecedores.forEach(item => {
+        if (item.cantidad > 0) {
+          tablaEmb.innerHTML += `
+            <tr>
+              <td class="texto-izq">${item.tipo}</td>
+              <td>${formatearNumero(item.longitud)}</td>
+              <td>${item.cantidad} → (${item.cantidad * puerta.Conjuntos})</td>
+            </tr>
+          `;
+        }
+      });
+    } else {
+      setSafeDisplay(tablaEmbContainer, false);
+    }
+
+    // Tabla CRISTALES
+    const tablaCristales = document.getElementById('tabla-cristales-puerta');
+    tablaCristales.innerHTML = '';
+    puerta.cristales.forEach(cristal => {
+      tablaCristales.innerHTML += `
+        <tr>
+          <td class="texto-izq">${cristal.descripcion}</td>
+          <td>${formatearNumero(cristal.alto)}</td>
+          <td>${formatearNumero(cristal.ancho)}</td>
+          <td>${formatearNumero(cristal.cantidad * puerta.Conjuntos)}</td>
+        </tr>
+      `;
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 3. BLOQUE FIJO (misma estructura, datos diferentes)
+  // ──────────────────────────────────────────────────────────────────
+  const fijo = bloques.fijo;
+  setSafeDisplay('bloque-fijo', fijo.visible);
+  
+  if (fijo.visible) {
+
+    setSafeTextContent('acabado-fijo', fijo.acabado);
+
+    // Tabla PERFILES (mismo patrón que puerta)
+    const tablaPerfilesFijo = document.getElementById('tabla-perfiles-fijo');
+    tablaPerfilesFijo.innerHTML = '';
+    fijo.perfiles.forEach(perfil => {
+      tablaPerfilesFijo.innerHTML += `
+        <tr>
+          <td class="imagen-perfil">${perfil.icono || ''}</td>
+          <td class="texto-izq">${perfil.tipo}</td>
+          <td>${formatearNumero(perfil.longitud)}</td>
+          <td>${perfil.cantidad} → (${perfil.cantidad * fijo.Conjuntos})</td>
+        </tr>
+      `;
+    });
+
+    // Tabla EMBELLECEDORES (misma lógica)
+    const tablaEmbFijo = document.getElementById('tabla-embellecedor-fijo');
+    const tablaEmbFijoContainer = tablaEmbFijo?.closest('table');
+    
+    if (fijo.mostrarEmbellecedores) {
+      setSafeDisplay(tablaEmbFijoContainer, true);
+      tablaEmbFijo.innerHTML = '';
+      fijo.embellecedores.forEach(item => {
+        if (item.cantidad > 0) {
+          tablaEmbFijo.innerHTML += `
+            <tr>
+              <td class="texto-izq">${item.tipo}</td>
+              <td>${formatearNumero(item.longitud)}</td>
+              <td>${item.cantidad} → (${item.cantidad * fijo.Conjuntos})</td>
+            </tr>
+          `;
+        }
+      });
+    } else {
+      setSafeDisplay(tablaEmbFijoContainer, false);
+    }
+
+    // Tabla CRISTALES
+    const tablaCristalesFijo = document.getElementById('tabla-cristales-fijo');
+    tablaCristalesFijo.innerHTML = '';
+    fijo.cristales.forEach(cristal => {
+      tablaCristalesFijo.innerHTML += `
+        <tr>
+          <td class="texto-izq">${cristal.descripcion}</td>
+          <td>${formatearNumero(cristal.alto)}</td>
+          <td>${formatearNumero(cristal.ancho)}</td>
+          <td>${formatearNumero(cristal.cantidad * fijo.Conjuntos)}</td>
+        </tr>
+      `;
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 4. MOSTRAR CONTENEDOR PRINCIPAL
+  // ──────────────────────────────────────────────────────────────────
+  setSafeDisplay('informe-container', true);
+}
+
+
+/**
+ * PASO 4: Renderizador de la HOJA DE PEDIDO (Informe Comercial)
+ * Recibe los mismos bloques que el técnico, pero pinta un resumen con precios
+ * 
+ * @param {object} bloques - Objeto con { cliente, numPedido, ..., puerta, fijo }
+ */
+function renderizarInformeComercial(bloques) {
+
+  // ──────────────────────────────────────────────────────────────────
+  // 1. DATOS GENERALES
+  // ──────────────────────────────────────────────────────────────────
+  setSafeTextContent('hp-cliente', bloques.cliente);
+  setSafeTextContent('hp-num-pedido', bloques.numPedido);
+  setSafeTextContent('hp-fecha', bloques.fecha);
+  setSafeTextContent('hp-Comentarios', bloques.comentarios);
+  setSafeTextContent('hp-Titulo', bloques.mensajeOpcion);
+
+  // ──────────────────────────────────────────────────────────────────
+  // 2. BLOQUE PUERTA
+  // ──────────────────────────────────────────────────────────────────
+  const puerta = bloques.puerta;
+  setSafeDisplay('hp-bloque-puerta', puerta.visible);
+  
+  if (puerta.visible) {
+    setSafeTextContent('hp-cod-puerta', puerta.puertaCodigo);
+    setSafeTextContent('hp-tipo-puerta', puerta.tipo);
+    setSafeTextContent('hp-cant-puerta', puerta.cantidad * puerta.Conjuntos);
+    setSafeTextContent('hp-precio-puerta', formatearNumero(puerta.puertaPrecioUnit, 2));
+    setSafeTextContent('hp-acabado-puerta', puerta.acabado);
+    setSafeTextContent('hp-color-puerta', puerta.colorVidrio);
+    setSafeTextContent('hp-alto-puerta', formatearNumero(puerta.alto) + ' mm');
+    setSafeTextContent('hp-ancho-puerta', formatearNumero(puerta.ancho) + ' mm');
+
+    // ✅ FIX: Ocultar/Mostrar CADA CELDA del embellecedor
+  const filaEmbPuerta = document.getElementById('fila-emb-puerta');
+  if (filaEmbPuerta) {
+    const cells = filaEmbPuerta.getElementsByTagName('td');
+    if (puerta.mostrarEmbellecedores) {
+      // Mostrar celdas y poner datos
+      Array.from(cells).forEach(cell => cell.style.display = 'table-cell');
+      setSafeTextContent('hp-cod-emb-puerta', puerta.embPuertaCodigo);
+      setSafeTextContent('hp-Embellecedor-puerta', puerta.textoDivision);
+      setSafeTextContent('hp-cant-emb-puerta', puerta.cantidad * puerta.Conjuntos);
+      setSafeTextContent('hp-precio-emb-puerta', formatearNumero(puerta.embPuertaPrecioUnit, 2));
+    } else {
+      // Ocultar TODAS las celdas de esa fila
+      Array.from(cells).forEach(cell => cell.style.display = 'none');
+    }
+  }
+ }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 3. BLOQUE FIJO
+  // ──────────────────────────────────────────────────────────────────
+  const fijo = bloques.fijo;
+  setSafeDisplay('hp-bloque-fijo', fijo.visible);
+  
+  if (fijo.visible) {
+    setSafeTextContent('hp-cod-fijo', fijo.fijoCodigo);  
+    setSafeTextContent('hp-tipo-fijo', fijo.tipo);
+    setSafeTextContent('hp-cant-fijo', fijo.cantidad * fijo.Conjuntos);
+    setSafeTextContent('hp-precio-fijo', formatearNumero(fijo.fijoPrecioUnit, 2));
+    setSafeTextContent('hp-acabado-fijo', fijo.acabado);
+    setSafeTextContent('hp-color-fijo', fijo.colorVidrio);
+    setSafeTextContent('hp-alto-fijo', formatearNumero(fijo.alto) + ' mm');
+    setSafeTextContent('hp-ancho-fijo', formatearNumero(fijo.ancho) + ' mm');
+    setSafeTextContent('hp-cod-bastidor-fijo', fijo.bastidorCodigo);
+    setSafeTextContent('hp-bastidor-fijo', fijo.textoTipoFijo);
+    setSafeTextContent('hp-cant-bastidores', fijo.cantidad * fijo.Conjuntos);
+    setSafeTextContent('hp-precio-bastidor-fijo', formatearNumero(fijo.bastidorPrecioUnit, 2));
+  
+    // ✅ FIX: Ocultar/Mostrar CADA CELDA del embellecedor
+    const filaEmbFijo = document.getElementById('fila-emb-fijo');
+    if (filaEmbFijo) {
+      const cells = filaEmbFijo.getElementsByTagName('td');
+      if (fijo.mostrarEmbellecedores) {
+        Array.from(cells).forEach(cell => cell.style.display = 'table-cell');
+        setSafeTextContent('hp-cod-emb-fijo', fijo.embFijoCodigo);
+        setSafeTextContent('hp-Embellecedor-fijo', fijo.textoDivision);
+        setSafeTextContent('hp-cant-emb-fijo', fijo.cantidad * fijo.Conjuntos);
+        setSafeTextContent('hp-precio-emb-fijo', formatearNumero(fijo.embFijoPrecioUnit, 2));
+      } else {
+        Array.from(cells).forEach(cell => cell.style.display = 'none');
+      }
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  // 4. MOSTRAR CONTENEDOR PRINCIPAL
+  // ──────────────────────────────────────────────────────────────────
+  setSafeDisplay('hoja-pedido-container', true);
+  
+
+}
+
+// ──────────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────────
+
+function mostrarInformesCompletos(d) {
+  
+  
+  if (!d) {
+    console.error('💥 No hay datos para mostrar');
+    alert('Error: No se recibieron datos del cálculo');
+    return;
+  }
+
+  // 1️⃣ OCULTAR FORMULARIOS (mismo código)
+  document.querySelectorAll('.formulario').forEach(form => {
+    form.classList.remove('active');
+  });
+
+  // 2️⃣ GENERAR BLOQUES ESTANDARIZADOS
+  const bloques = {
+    cliente: d.cliente,
+    numPedido: d.numPedido,
+    fecha: d.fecha,
+    comentarios: d.comentarios,
+    mensajeOpcion: d.mensajeOpcion,
+    puerta: generarBloquePuerta(d),  // ← Paso 1
+    fijo: generarBloqueFijo(d)       // ← Paso 2
+  };
+ 
+  // 3️⃣ RENDERIZAR INFORMES
+  renderizarInformeTecnico(bloques);    // ← Paso 3
+  renderizarInformeComercial(bloques);  // ← Paso 4
+
+  // 4️⃣ MOSTRAR CONTENEDORES Y SCROLL
+  setSafeDisplay('informe-container', true);
+  setSafeDisplay('hoja-pedido-container', true);
+  
+  const informeContainer = document.getElementById('informe-container');
+  if (informeContainer) {
+    informeContainer.scrollIntoView({ behavior: 'smooth' });
+  }
+  
+}
+
+
+function volverAlInicio() {
+  // Ocultar informes
+  document.getElementById('informe-container').style.display = 'none';
+  document.getElementById('hoja-pedido-container').style.display = 'none';
+
+   // Limpiar datos de los formularios
+  for (let i = 2; i <= 6; i++) {
+    datosFormularios[`form${i}`] = {};
+  }
+  
+  // Limpiar últimos datos de informe
+  window.ultimosDatosInforme = null;
+
+  // Ocultar bloques
+  document.getElementById('bloque-puerta').classList.remove('active');
+  document.getElementById('bloque-fijo').classList.remove('active');
+  document.getElementById('hp-bloque-puerta').classList.remove('active');
+  document.getElementById('hp-bloque-fijo').classList.remove('active');
+  
+  // Volver al form1
+  document.getElementById('form1').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+function cerrarInforme() {
+  document.getElementById('informe-container').style.display = 'none';
+  document.getElementById('form1').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+function volverInforme1() {
+  document.getElementById('hoja-pedido-container').style.display = 'none';
+  document.getElementById('informe-container').style.display = 'block';
+  document.getElementById('informe-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+
+function cerrarHojaPedido() {
+  document.getElementById('hoja-pedido-container').style.display = 'none';
+  document.getElementById('form1').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+// Función para iniciar la app SOLO cuando las tablas estén listas
+async function iniciarAplicacion() {
+  try {
+    console.log('🚀 Cargando tablas de precios...');
+    await cargarTablas();
+    tablasCargadas = true; // ★ Marcar como cargadas
+    console.log('✅ Tablas cargadas. Aplicación lista.');
+  } catch (error) {
+    console.error('❌ FALLO CRÍTICO al cargar tablas:', error);
+    alert('ERROR: No se pueden cargar los precios. La aplicación no funcionará.');
+  }
+}
+
+
+// ============================================================================
+// 1. DEFINIR FUNCIONES REALES (asegúrate de que estén definidas ANTES de este bloque)
+// ============================================================================
+// - calcularDestino
+// - siguienteFormulario
+// - anteriorFormulario
+// - finalizarFlujo
+// - validarFormulario
+// - guardarDatosFormulario
+// - aplicarValoresPorDefecto
+// - aplicarFiltroForm4SegunFlujo
+// - configurarForm6SegunFlujo
+// - realizarCalculos
+// - mostrarInformesCompletos
+// - volverAlInicio
+// - cerrarInforme
+// ============================================================================
+
+// ============================================================================
+// 2. EXPONER FUNCIONES AL GLOBAL (con control de tablas cargadas)
+// ============================================================================
+
+// Guardar referencias originales
+const calcularDestinoOriginal = calcularDestino;
+const siguienteOriginal = siguienteFormulario;
+const anteriorOriginal = anteriorFormulario;
+const finalizarOriginal = finalizarFlujo;
+
+// Exponer con control de tablas
+window.calcularDestino = function(...args) {
+  if (!tablasCargadas) {
+    console.warn('⚠️ calcularDestino llamado antes de cargar tablas');
+    return null;
+  }
+  return calcularDestinoOriginal.apply(this, args);
+};
+
+window.siguienteFormulario = function(actual) {
+  if (!tablasCargadas) {
+    alert('⏳ Espera, las tablas de precios aún no se han cargado. Intenta de nuevo en unos segundos.');
+    return;
+  }
+  return siguienteOriginal.call(this, actual);
+};
+
+window.anteriorFormulario = function(actual) {
+  if (!tablasCargadas) {
+    console.warn('⚠️ Navegación hacia atrás mientras se cargan tablas');
+    return;
+  }
+  return anteriorOriginal.call(this, actual);
+};
+
+window.limpiarDatos = limpiarDatos;
+
+window.finalizarFlujo = function() {
+  if (!tablasCargadas) {
+    alert('⏳ Las tablas aún no están cargadas. No se puede finalizar.');
+    return;
+  }
+  return finalizarOriginal.call(this);
+};
+
+// Funciones que no necesitan control de tablas (UI pura)
+window.volverAlInicio = volverAlInicio;
+window.cerrarInforme = cerrarInforme;
+window.configurarForm6SegunFlujo = configurarForm6SegunFlujo; // Si la usas fuera
+
+console.log('✅ Todas las funciones expuestas al global correctamente');
+
+// ============================================================================
+// 3. INICIAR APLICACIÓN AL CARGAR
+// ============================================================================
+iniciarAplicacion();
+
+</script>
+
+ </body>
+
+
+
+ </html>
