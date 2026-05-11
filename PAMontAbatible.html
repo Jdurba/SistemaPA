@@ -7,64 +7,131 @@
 
   <script>
     // ⚙️ CONFIGURACIÓN GLOBAL — Cambiar aquí si se cambia el host
-    const RutaImagen = "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/";
+    const RutaImagen = "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/";
   </script>
 
-  <title>Adinor PA Vidrio montado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+  <title>Adinor · PA Abatible</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Cormorant:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
   
   <style>
     :root {
-      --color-primario: #2563eb;
-      --borde: #d1d5db;
-      --borde-hover: #9ca3af;
-      --fondo: #ffffff;
-      --fondo-hover: #f9fafb;
-      --radio: 12px;
+      /* Paleta base */
+      --bg:        #E5E5E3;
+      --ink:       #111111;
+      --ink-mid:   #555550;
+      --ink-light: #727270;
+      --rule:      rgba(0,0,0,0.11);
+
+      /* Header */
+      --header-dark:   #2D3A4B;
+      --header-ink:    #FFFFFF;
+      --header-accent: #6B7FB8;
+
+      /* Cards seleccionables */
+      --card-bg-idle:      #FFFFFF;
+      --card-bg-hover:     #F0F0EE;
+      --card-bg-selected:  #D4D4D3;
+      --card-bd-idle:      rgba(0,0,0,0.18);
+      --card-bd-hover:     #3a3a3a;
+      --card-bd-selected:  #111111;
+
+      --radio: 6px;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Montserrat', sans-serif;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
-    h2 {
-      font-size: 30px;
-      color: #1a2b6f;
-      margin-bottom: 30px;
-    }
-
-    h3 {
-      font-size: 15px;
-      /*margin-bottom: 30px; */
-      margin: 10px 0 0;       /* margen superior 4px, sin margen inferior */
-      text-align: center;  /* centra el texto horizontalmente */
-    }
-
-    #form1 h3 {
-      font-size: 14px;
-      /*margin-bottom: 30px; */
-      margin: 4px 0 0;       /* margen superior 4px, sin margen inferior */
-      text-align: center;  /* centra el texto horizontalmente */
-    }
-
-    .formulario {                /* Este lo traigo de PAMontada  para ocultar los forms al principio */
-      display: none;
-    }
-
-    .formulario.active {        
-      display: block;
+    html, body {
+      height: 100%;
+      margin: 0;
     }
 
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      margin: 20px;
-      background: #f3f4f6;
-      color: #111827;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--ink);
     }
 
-    /* Body de página completa */
-    html, body {
-    height: 100%;
+    /* ── HEADER ── */
+    .cfg-header {
+      display: flex;
+      align-items: center;
+      background: var(--header-dark);
+      padding: 0 28px;
+      height: 72px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .cfg-header-logo {
+      height: 58px;
+      width: auto;
+      flex-shrink: 0;
+    }
+    .cfg-header-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--header-ink);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .cfg-header-back {
+      flex-shrink: 0;
+      background: none;
+      border: 1.5px solid var(--header-accent);
+      color: var(--header-accent);
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.85rem;
+      padding: 7px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .cfg-header-back:hover {
+      background: var(--header-accent);
+      color: #fff;
+    }
+
+    /* ── CONTENIDO ── */
+    .cfg-content {
+      padding: 32px 40px;
+    }
+
+    h2 {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin: 0 0 28px;
+      letter-spacing: 0.02em;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 8px 0 0;
+      text-align: center;
+      color: var(--ink-mid);
+    }
+
+    #form1 h3 {
+      font-size: 0.95rem;
+      margin: 4px 0 0;
+      text-align: center;
+    }
+
+    .formulario {
+      display: none;
+    }
+    .formulario.active {
+      display: block;
     }
 
     .form {
@@ -73,13 +140,15 @@
       margin: 0 auto;
     }
 
-    #form1 .opciones-imagenes, #form2 .opciones-imagenes, #form4 .opciones-imagenes, #form5 .opciones-imagenes {
+    #form1 .opciones-imagenes, #form2 .opciones-imagenes,
+    #form4 .opciones-imagenes, #form5 .opciones-imagenes {
       display: flex;
       justify-content: center;
       gap: 30px;
     }
 
-    #form1 .opcion, #form2 .opcion, #form4 .opcion, #form5 .opcion {
+    #form1 .opcion, #form2 .opcion,
+    #form4 .opcion, #form5 .opcion {
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -91,18 +160,16 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 30px;
-      margin-left: 200px;   /* 👈  margin-left: 48px;   /* 👈 más margen a la izquierda */
-      margin-right: 200px;  /* equilibrio opcional */
+      gap: 24px;
+      margin-left: 180px;
+      margin-right: 180px;
     }
 
     #form5 .grid {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
-    /*   &&&&&&&&&&&&&    Formulario 1    &&&&&&&&&&&&&&&& */
-  
-    /* Tarjeta accesible: <label> con <input> (oculto) + <div.visual> */
+    /* ── CARDS ── */
     .card { display: block; cursor: pointer; }
 
     .card input {
@@ -111,84 +178,132 @@
       pointer-events: none;
     }
 
-    /* 3. El contenido visual debe estar detrás */
     .visual {
-      /*height: 100%;  */
       display: grid;
       grid-template-rows: auto auto 1fr;
       gap: 8px;
-      padding: 12px;    /* Espacio al borde  */
-      border: 2px solid var(--borde);
+      padding: 12px;
+      border: 2px solid var(--card-bd-idle);
       border-radius: var(--radio);
-      background: var(--fondo);
+      background: var(--card-bg-idle);
       transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
 
     #form1 .visual {
-      gap: 2px;  /*  Espacio entre elementos*/
-      padding: 5px;    /* Espacio interno al borde  */
+      gap: 2px;
+      padding: 5px;
     }
 
     .visual:hover {
-      border-color: var(--borde-hover);
-      background: var(--fondo-hover);
+      border-color: var(--card-bd-hover);
+      background: var(--card-bg-hover);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10),
+                  0 1px 4px  rgba(0,0,0,0.08);
     }
 
-    /* Contorno al seleccionar  */
     .card input:checked + .visual {
-      border-color: var(--color-primario);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+      border-color: var(--card-bd-selected);
+      background: var(--card-bg-selected);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18),
+                  0 2px 8px  rgba(0,0,0,0.12),
+                  0 0 0 1px var(--card-bd-selected) inset;
     }
 
-    /* Contorno al enfocar con teclado   */
-    .card input:focus + .visual {
-      outline: 3px solid rgba(37, 99, 235, 0.6);
-      outline-offset: 2px;
-    }    
+    /* Hover sobre seleccionado: mantiene estado seleccionado, no cambia color */
+    .card input:checked + .visual:hover {
+      background: var(--card-bg-selected);
+      border-color: var(--card-bd-selected);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.20),
+                  0 3px 10px  rgba(0,0,0,0.13),
+                  0 0 0 1px var(--card-bd-selected) inset;
+    }
+
+    .card input:focus-visible + .visual {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.18);
+    }
 
     .visual img {
       width: 120px;
       height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      justify-self: center;   /* centra horizontalmente en la grid */
+      object-fit: contain;
+      aspect-ratio: 4/3;
+      justify-self: center;
+    }
+
+    #form2 .visual img {
+      width: 240px;
+      height: 240px;
     }
 
     #form4 .visual img {
       width: 200px;
       height: 160px;
     }
-    
+
     #form5 .visual img {
       width: 110px;
       height: 220px;
-      object-fit: contain;  /* Contain se ajusta a cuadro que tengamos es un zoom mas ajustado */
+      object-fit: contain;
     }
 
-    .visual p { margin: 0; font-size: 0.9rem; color: #4b5563; } 
+    .visual p { margin: 0; font-size: 0.9rem; color: var(--ink-mid); }
 
+    /* ── SEPARADOR DE SECCIÓN ── */
+    .seccion-sep {
+      border: none;
+      border-top: 1.5px solid rgba(0,0,0,0.45);
+      margin: 24px 0 20px;
+    }
+
+    /* ── ETIQUETA DE VERSIÓN ── */
+    .version-tag {
+      margin-top: 24px;
+      color: var(--ink-light);
+      font-size: 0.75rem;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    /* ── ACCIONES ── */
     .acciones {
       display: flex;
       gap: 12px;
-      justify-content: flex-start; /* 👈 Ahora se alinean a la izquierda  justify-content: flex-start; /* 👈 Ahora se alinean a la izquierda */
+      justify-content: flex-end;
       margin-top: 20px;
     }
 
+    /* ── BOTONES ── */
     .btn {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px 24px;
       border: none;
       border-radius: 4px;
-      font-size: 1em;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95em;
+      font-weight: 400;
       cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
+      transition: background 0.22s ease, transform 0.22s ease;
       min-width: 120px;
       text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: #4a4a4a;
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      background: #111111;
+      transform: translateX(2px);
+    }
+
+    .btn:disabled,
+    .btn[disabled] {
+      background: #b8b8b6;
+      color: #ffffff;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .resumen-lista {
@@ -197,13 +312,13 @@
     }
 
     /* ----------  FORMULARIO 6 ----------- */
-    /* Estilos para campos de medidas pequeños (4 dígitos) */
     .campo-medida {
       width: 100%;
       box-sizing: border-box;
       padding: 8px;
       font-size: 14px;
       text-align: center;
+      font-family: 'Jost', sans-serif;
     }
 
     .caracteristicas {
@@ -239,61 +354,124 @@
     .label-medida {
       flex: 1;
       text-align: center;
-    } */
+    }
 
     /* Clase para ocultar elementos */
     .label-medida.oculto {
       display: none !important;
     }
 
+    /* Móvil: 1 columna y márgenes laterales reducidos para que respire */
     @media (max-width: 520px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 520px) {
-      .grid { grid-template-columns: 1fr; }
+      .grid {
+        grid-template-columns: 1fr;
+        margin-left: 20px;
+        margin-right: 20px;
+        gap: 20px;
+      }
     }
 
     /* CSS INFORMES */
     .pagina-informe{display:none;width:210mm;min-height:297mm;padding:15mm;box-sizing:border-box;background:white!important;margin:20px auto;page-break-after:always}
     @media print{
-      body{margin:0;background:white!important;}
-      .formulario,.formulario.active{display:none!important;}
-      #botones-accion-informes{display:none!important;}
-      .pagina-informe{display:none;}
-      .pagina-informe.active{display:block!important;margin:0;box-shadow:none;}
-      #informes-wrapper{display:flex!important;flex-direction:column!important;}
-      @page{size:A4 portrait;margin:0;}
+      body * { display: none !important; }
+      body::after {
+        display: block !important;
+        content: "La impresion no esta disponible. Utiliza el boton PDF para generar el documento.";
+        font-size: 18px;
+        color: #2D3A4B;
+        text-align: center;
+        margin-top: 40mm;
+        padding: 0 20mm;
+      }
     }
     .pagina-informe.active{display:block}
-    .informe-header{margin-bottom:15px;padding-bottom:10px}
-    .informe-header h1{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:bold;margin:0 0 15px 0;color:#1a2b6f;text-align:left;letter-spacing:1px}
-    .linea-principal{display:flex;gap:20px;margin-bottom:8px;align-items:center}
-    .linea-comentarios{margin-bottom:8px}
-    .linea-resumen{background:#f0f0f0;padding:6px 12px;border-radius:4px;font-weight:bold;font-size:14px;color:#1a2b6f;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+    .informe-header{margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a2b6f}
+    .informe-header-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+    .informe-header-logo{height:44px;width:auto;flex-shrink:0}
+    .informe-header h1{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;margin:0;color:#1a2b6f;text-align:center;letter-spacing:0.5px;flex:1;text-transform:uppercase;line-height:1.2}
+    .linea-principal{display:flex;gap:20px;margin-bottom:5px;align-items:center}
+    .linea-comentarios{margin-bottom:22px}
+    .linea-resumen{background:#636363;padding:6px 12px;border-radius:4px;font-weight:bold;font-size:14px;color:#ffffff;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:12px}
     .linea-resumen .texto-resumen{flex:1;text-align:center}
-    .linea-resumen .paginacion{font-size:14px;font-weight:bold;color:#1a2b6f;white-space:nowrap}
+    .linea-resumen .medidas-hueco{flex:1;text-align:center;font-weight:bold;color:#ffffff;white-space:nowrap}
+    .linea-resumen .paginacion{font-size:10px;font-weight:bold;color:#ffffff;white-space:nowrap}
     .campo-informe{display:flex;align-items:center;gap:8px;min-width:0}
     .campo-informe label{font-weight:bold;font-size:12px;white-space:nowrap;flex-shrink:0;color:#555}
-    .campo-informe span{flex:1 1 auto;padding:2px 8px;border-bottom:1px solid #999;font-size:12px;min-width:0}
+    .campo-informe span{flex:1 1 auto;padding:2px 8px;border-bottom:1px solid #999;font-size:14px;min-width:0;font-weight:500;color:#111}
     .campo-informe-full{display:flex;align-items:center;gap:8px;width:100%}
     .campo-informe-full label{font-weight:bold;font-size:12px;color:#555;flex-shrink:0}
-    .campo-informe-full span{flex:1;padding:2px 8px;border-bottom:1px solid #999;font-size:12px}
-    .titulo-elemento{color:black;padding:8px 15px;font-weight:bold;font-size:16px;margin:15px 0 12px 0;border-radius:4px;text-align:left;line-height:1.4;border:2px solid #000;background:transparent}
-    .titulo-elemento .elemento-principal{font-size:14px;display:block;margin-bottom:3px}
-    .titulo-elemento .elemento-detalle{font-size:11px;font-weight:normal;display:block}
-    .bloque-fabricacion,.bloque-pedido{margin-bottom:15px}
-    .bloque-titulo{background:#a8a8a8;color:white;padding:6px 12px;font-weight:bold;font-size:13px;margin-bottom:8px;text-align:center}
-    .seccion-titulo{font-weight:bold;font-size:11px;margin:8px 0 4px 0;color:#333}
-    .seccion-sub-titulo{background:#e8eaf6;color:#1a2b6f;padding:5px 12px;font-weight:bold;font-size:11px;margin:10px 0 4px 0;border-left:3px solid #1a2b6f;letter-spacing:0.3px}
-    .tabla-informe{width:calc(100% - 200px);border-collapse:collapse;margin:5px auto 15px auto;font-size:11px}
-    .tabla-informe th,.tabla-informe td{border:1px solid #999;padding:4px 6px;text-align:center}
-    .tabla-informe th{background:#e5e7eb;font-weight:bold;font-size:10px}
-    .tabla-informe .imagen-perfil{width:50px}
-    .tabla-informe td img{width:40px;height:40px;object-fit:contain}
+    .campo-informe-full span{flex:1;padding:2px 8px;border-bottom:1px solid #999;font-size:14px;font-weight:500;color:#111}
+    .titulo-elemento{color:black;padding:6px 12px 6px 14px;font-weight:bold;font-size:16px;margin:8px 0 12px 0;text-align:left;line-height:1.4;border:none;border-left:5px solid #000;background:transparent}
+    .titulo-elemento .elemento-fila{display:flex;align-items:baseline;gap:14px;margin-bottom:3px}
+    .titulo-elemento .elemento-principal{font-size:14px;font-weight:bold}
+    .titulo-elemento .elemento-medidas{font-size:13px;font-weight:600;color:#1a2b6f;letter-spacing:0.3px}
+    .titulo-elemento .elemento-detalle{font-size:13px;font-weight:normal;display:block;color:#444}
+    /* Jerarquía de sangrías (saltos de 48px):
+       N1 (cabecera): 0px
+       N2 (titulo-elemento BLOQUE FIJO/PUERTA): 0px, barra negra 5px
+       N3 (bloque-fabricacion, bloque-pedido): 48px todo el contenido
+       N3.1 (sub-bloques PUERTA 1 / PUERTA 2 — hermanas, mismo nivel): +48px (total 96px)
+       Tablas: SIEMPRE un nivel más adentro que su título (deja "respirar" al título) */
+    .bloque-fabricacion,.bloque-pedido{margin-bottom:15px;padding-left:48px}
+    .bloque-titulo{background:#e8e8e8;color:#000;padding:7px 14px;font-weight:bold;font-size:14px;margin:8px 0 8px 0;text-align:left;letter-spacing:0.5px;border-left:3px solid #888}
+    .seccion-titulo{font-weight:bold;font-size:13px;margin:8px 0 4px 0;color:#333}
+    .seccion-sub-titulo{background:#e8eaf6;color:#1a2b6f;padding:5px 12px;font-weight:bold;font-size:13px;margin:10px 0 4px 48px;border-left:3px solid #1a2b6f;letter-spacing:0.3px}
+    /* Tablas: por defecto sangradas un nivel adicional (48px dentro de su contenedor) */
+    .tabla-informe{width:calc(100% - 30px - 48px);border-collapse:collapse;margin:5px 0 15px 48px;font-size:12px}
+    /* === Página puerta1: PUERTA 1 y PUERTA 2 hermanas (sub-titulo a 48px → tabla a 96px) === */
+    /* 'Cristales P1' alineado con sub-titulo PUERTA 1 */
+    #pagina-puerta1 #puerta1-subtitulo ~ .seccion-titulo{margin-left:48px}
+    /* Sub-bloque PUERTA 2: NO sangrado adicional (hermana de P1) */
+    #puerta1-seccion-p2{padding-left:0}
+    #puerta1-seccion-p2 .seccion-sub-titulo{margin-left:48px}
+    #puerta1-seccion-p2 .seccion-titulo{margin-left:48px}
+    /* Tablas dentro de los sub-bloques P1, P2, MARCO: sub-titulo a 48px → tabla a 96px (un nivel más) */
+    #pagina-puerta1 #puerta1-subtitulo ~ .tabla-informe,
+    #puerta1-seccion-p2 .tabla-informe,
+    #pagina-marco .bloque-fabricacion .tabla-informe{margin-left:96px;width:calc(100% - 30px - 96px)}
+    .tabla-informe th,.tabla-informe td{border:1px solid #999;padding:7px 8px;text-align:center}
+    .tabla-informe th{background:#e5e7eb;font-weight:bold;font-size:11px}
+    /* Hoja de Pedido: anchos fijos para columnas cortas, Descripción absorbe el resto */
+    .bloque-pedido .tabla-informe{table-layout:fixed;width:calc(100% - 48px);margin-right:0}
+    .bloque-pedido .tabla-informe th:nth-child(1),
+    .bloque-pedido .tabla-informe td:nth-child(1){width:117px;word-break:break-all}
+    .bloque-pedido .tabla-informe th:nth-child(2),
+    .bloque-pedido .tabla-informe td:nth-child(2){width:90px}
+    .bloque-pedido .tabla-informe th:nth-child(4),
+    .bloque-pedido .tabla-informe td:nth-child(4){width:65px}
+    .bloque-pedido .tabla-informe th:nth-child(5),
+    .bloque-pedido .tabla-informe td:nth-child(5){width:75px}
+    /* Descripción (3ª col) sin width → absorbe el resto */
+    .tabla-informe .imagen-perfil{width:70px}
+    .tabla-informe td img{width:48px;height:48px;object-fit:contain}
+    /* Columna descriptiva (Tipo / Embellecedor / Vidrio) alineada a la izquierda */
+    .tabla-informe tbody tr td:nth-child(2){text-align:left;padding-left:14px}
+    /* En tablas con icono en columna 1, la descripción queda en columna 2 (ya cubierto).
+       En tablas sin icono, la descripción es la columna 1 → también a la izquierda */
+    .bloque-fabricacion table:not(:first-of-type) tbody tr td:nth-child(1),
+    .tabla-informe tbody tr td.texto-izq{text-align:left;padding-left:14px}
     .tabla-informe .texto-izq{text-align:left!important}
     .tabla-informe .texto-Der{text-align:right!important}
-    #botones-accion-informes{display:none;text-align:center;margin:20px 0;gap:10px}
-    #botones-accion-informes button{min-width:150px}
+    #botones-accion-informes{display:none;position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--header-dark);padding:0 28px;height:72px;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
+    #botones-accion-informes.visible{display:flex;align-items:center;gap:10px}
+    #botones-accion-informes .barra-logo{height:58px;width:auto;flex-shrink:0;margin-right:auto}
+    /* Botones del informe en color accent del header */
+    #botones-accion-informes button.btn{
+      min-width:115px;
+      padding:7px 15px;
+      font-size:0.85em;
+      background:var(--header-accent);
+      color:#fff;
+    }
+    #botones-accion-informes button.btn:hover{
+      background:#5a6ea8;
+      transform:translateX(2px);
+    }
+    /* Cuando la vista de informes está activa, oculta la cabecera del configurador
+       para que solo se vea la barra fija de informes */
+    body.informes-activos .cfg-header{display:none}
+    body.informes-activos{padding-top:78px}
 
     /* ============================================================
        FORM 1.5 — CONFIGURACIÓN DE MANO Y POSICIÓN
@@ -319,8 +497,8 @@
       letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
-    #form15 .fijo-label-f15   { color: #2563eb; }
-    #form15 .puerta-label-f15 { color: #dc2626; }
+    #form15 .fijo-label-f15   { color: var(--header-accent); }
+    #form15 .puerta-label-f15 { color: var(--ink); }
     #form15 .img-alzado-f15 {
       width: 120px;
       height: auto;
@@ -360,33 +538,33 @@
       gap: 6px;
       padding: 8px 12px;
       min-width: 160px;
-      border: 2px solid var(--borde);
+      border: 2px solid var(--card-bd-idle);
       border-radius: 8px;
       cursor: pointer;
       font-size: 13px;
       transition: all 0.2s;
-      background: white;
+      background: var(--card-bg-idle);
       user-select: none;
       white-space: nowrap;
     }
-    #form15 .radio-card-f15:hover { border-color: var(--color-primario); background: #eff6ff; }
+    #form15 .radio-card-f15:hover { border-color: var(--card-bd-hover); background: var(--card-bg-hover); }
     #form15 .radio-card-f15 input { display: none; }
     #form15 .radio-card-f15.seleccionado {
-      border-color: var(--color-primario);
-      background: #eff6ff;
-      color: var(--color-primario);
-      font-weight: 600;
+      border-color: var(--card-bd-selected);
+      background: var(--card-bg-selected);
+      color: var(--ink);
+      font-weight: 500;
     }
     #form15 .info-fija-f15 {
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 8px 14px;
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
+      background: #f5f5f4;
+      border: 1px solid rgba(0,0,0,0.15);
       border-radius: 8px;
       font-size: 12px;
-      color: #0369a1;
+      color: var(--ink-mid);
     }
 
   </style>
@@ -394,6 +572,15 @@
 </head>
 <body>
 
+<!-- HEADER ESTÁNDAR -->
+<header class="cfg-header">
+  <img class="cfg-header-logo"
+       src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png"
+       alt="Adinor">
+  <h1 class="cfg-header-title">PA Vidrio Montado · Abatible</h1>
+</header>
+
+<div class="cfg-content">
 
 <!-- Formulario 1 -->
 <form id="form1" class="formulario active">
@@ -404,7 +591,7 @@
       <label class="card">
         <input type="radio" name="opcion" value="op1">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible01.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible01.png">
           <h3>1 Puerta</h3>
         </div>
       </label>
@@ -412,7 +599,7 @@
       <label class="card">
         <input type="radio" name="opcion" value="op2">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible02.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible02.png">
           <h3>1 Puerta y 1 Fijo</h3>
         </div>
       </label>
@@ -420,7 +607,7 @@
       <label class="card">
         <input type="radio" name="opcion" value="op3">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible03.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible03.png">
            <h3>1 Puerta y 2 Fijos</h3>
         </div>
       </label>
@@ -428,7 +615,7 @@
       <label class="card">
         <input type="radio" name="opcion" value="op4">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible04.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible04.png">
           <h3>2 Puertas (doble)</h3>
         </div>
       </label>
@@ -436,7 +623,7 @@
       <label class="card">
         <input type="radio" name="opcion" value="op5">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible05.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible05.png">
           <h3>2 Puertas (doble) y 1 fijo</h3>
         </div>
       </label>
@@ -444,20 +631,21 @@
       <label class="card">
         <input type="radio" name="opcion" value="op6">
         <div class="visual">
-          <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Abatible06.png">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Abatible06.png">
           <h3>2 Puertas (doble) y 2 fijos</h3>
         </div>
       </label>
     </div>   
     <br>
   <!--  margin: 10px 20px 30px 40px; arriba 10, derecha 20, abajo 30, izquierda 40 -->
-    <p style="margin: 20px 0 0 0;">Los marcos de puerta y los bastidores de los fijos estan incluidos en los diseños.</p>
-    <p style="margin: 5px 0;">Seleccionar al menos una opción antes de continuar</p>
+    <p style="margin: 20px 0 0 0; color: var(--ink-mid); font-size:1rem;">Los marcos de puerta y los bastidores de los fijos están incluidos en los diseños.</p>
 
     <div class="acciones">
+      <span style="align-self:center; margin-right:8px; color:var(--ink-light); font-size:0.9rem; font-style:italic;">Seleccionar al menos una opción antes de continuar</span>
       <button type="button" onclick="volverAlInicio()" class="btn">⪡ Atrás</button>
       <button type="button" onclick="if(validarFormulario(1)) { cambiarFormulario(1,15); }" class="btn">Siguiente ⪢</button>
     </div>
+    <div class="version-tag">V.02</div>
      <br><br>
 </form>
 
@@ -491,7 +679,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="op1" checked>
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/CierreMagnetico.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PA_ABATIBLE_MAG2.png">
             <h3>Cierre Magnético</h3>
           </div>
         </label>
@@ -499,14 +687,14 @@
         <label class="card">
           <input type="radio" name="opcion" value="op2">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/CierreCerradura.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PA_ABATIBLE_CER2.png">
             <h3>Cierre Cerradura</h3>
           </div>
         </label>
       </div>
       <br>
-      <p>Seleccionar una opción antes de continuar</p>
       <div class="acciones">
+        <span style="align-self:center; margin-right:8px; color:var(--ink-light); font-size:0.9rem; font-style:italic;">Seleccionar una opción antes de continuar</span>
         <button type="button" onclick="cambiarFormulario(2,15)" class="btn">⪡ Atrás</button>
         <button type="button" onclick="if(validarFormulario(2)) { cambiarFormulario(2,6); }" class="btn">Siguiente ⪢</button>
       </div>
@@ -520,7 +708,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="0">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/FijoPared3.png">
             <h3>3 Paredes</h3>
           </div>
         </label>
@@ -528,16 +716,15 @@
         <label class="card">
           <input type="radio" name="opcion" value="A">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3U.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/FijoPared3U.png">
             <h3>3 Paredes U</h3>
           </div>
         </label>
       </div> 
       <br>
-      <p>Seleccionar una opción antes de continuar</p>
       <div class="acciones">
+        <span style="align-self:center; margin-right:8px; color:var(--ink-light); font-size:0.9rem; font-style:italic;">Seleccionar una opción antes de continuar</span>
         <button type="button" onclick="if(validarFormulario(4)) { cambiarFormulario(4,6); }" class="btn">Siguiente ⪢</button>
-
       </div>
   </form>
 
@@ -550,7 +737,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="0">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_0.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_0.png">
             <h3>Sin embellecedor</h3>
           </div>
         </label>
@@ -558,7 +745,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="2">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_1.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_1.png">
             <h3>Modelo A</h3>
           </div>
         </label>
@@ -566,7 +753,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="4">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_2.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_2.png">
             <h3>Modelo B</h3>
           </div>
         </label>
@@ -574,7 +761,7 @@
         <label class="card">
           <input type="radio" name="opcion" value="6">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_3.png">
             <h3>Modelo C</h3>
           </div>
         </label>
@@ -582,14 +769,14 @@
         <label class="card">
           <input type="radio" name="opcion" value="D">
           <div class="visual">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3_Plus.png">
+            <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_3_Plus.png">
             <h3>Modelo D</h3>
           </div>
         </label>
       </div>
       <br>
-      <p>Seleccionar una opción antes de continuar</p>
       <div class="acciones">
+        <span style="align-self:center; margin-right:8px; color:var(--ink-light); font-size:0.9rem; font-style:italic;">Seleccionar una opción antes de continuar</span>
         <!--  <button type="button" onclick="cambiarFormulario(5,6)" class="btn">Selección ⪢</button>   -->
         <button type="button" onclick="if(validarFormulario(5)) { cambiarFormulario(5,6); }" class="btn">Siguiente ⪢</button>
       </div>
@@ -606,7 +793,7 @@
     <div style="flex: 0 0 33%; display: flex; flex-direction: column; gap: 15px;">
       <!-- Imagen -->
       <div style="width: 100%;">
-        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles01.png" 
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles01.png" 
             alt="Imagen de referencia" 
             class="imagen-referencia"
             style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -706,31 +893,43 @@
   </div>
   
   <br>
-  <div style="background:#fef9c3; border-left:4px solid #ca8a04; border-radius:6px; padding:10px 16px; font-size:13px; color:#713f12; max-width:700px;">
-    ⚠️ La medida de <strong>puerta</strong> debe incluir el <strong>marco</strong>, y la de <strong>fijo</strong> debe incluir el <strong>bastidor</strong> (medidas en mm).
-  </div>
-  <p>Seleccionar una opción antes de continuar</p>
-  <div class="acciones" style="margin-top: 20px;">
-    <button type="button" onclick="cambiarFormulario(6,2)" class="btn">⪡ Atrás</button> 
-    <button type="button" onclick="if(validarFormulario(6)) generarInformesConPrecios()" class="btn">Generar Informes ⪢</button>
+  <div style="display:flex; align-items:center; gap:20px; margin-top:10px; flex-wrap:wrap;">
+    <div style="background:#fef9c3; border-left:4px solid #ca8a04; border-radius:6px; padding:10px 16px; font-size:13px; color:#713f12; max-width:700px;">
+      ⚠️ La medida de <strong>puerta</strong> debe incluir el <strong>marco</strong>, y la de <strong>fijo</strong> debe incluir el <strong>bastidor</strong> (medidas en mm).
+    </div>
+    <div style="display:flex; gap:12px; margin-left:auto; flex-shrink:0;">
+      <button type="button" onclick="cambiarFormulario(6,2)" class="btn">⪡ Atrás</button> 
+      <button type="button" onclick="validarYGenerarInformes()" class="btn">Generar Informes ⪢</button>
+    </div>
   </div>
 </form>
 
 <!-- PAGINAS DE INFORMES -->
+<div id="botones-accion-informes">
+<img class="barra-logo" src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png" alt="Adinor">
+<button id="btn-volver" onclick="ocultarInformes()" class="btn">⪡ Atrás</button>
+<button id="btn-pdf-con" onclick="generarPDFAbatible(true)"  class="btn">📄 PDF con precios</button>
+<button id="btn-pdf-sin" onclick="generarPDFAbatible(false)" class="btn">📄 PDF sin precios</button>
+<button id="btn-nueva-config" onclick="limpiarTodo()" class="btn">Nueva Configuración</button>
+</div>
 <div id="informes-wrapper" style="display:flex;flex-direction:column;">
 <div id="pagina-fijo1" class="pagina-informe">
-<div class="informe-header"><h1>PA vidrio montado - Abatible</h1>
+<div class="informe-header">
+<div class="informe-header-top">
+<img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+<h1>PA Vidrio Montado · Abatible</h1>
+</div>
 <div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="fijo1-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="fijo1-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="fijo1-fecha"></span></div></div>
 <div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="fijo1-comentarios"></span></div></div>
-<div class="linea-resumen"><span class="texto-resumen" id="fijo1-resumen-config"></span><span class="paginacion" id="fijo1-paginacion"></span></div></div>
-<div class="titulo-elemento"><span class="elemento-principal">FIJO 1</span><span class="elemento-detalle" id="fijo1-detalle-config"></span></div>
-<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="linea-resumen"><span class="texto-resumen" id="fijo1-resumen-config"></span><span class="medidas-hueco" id="fijo1-medidas-hueco"></span><span class="paginacion" id="fijo1-paginacion"></span></div></div>
+<div class="titulo-elemento"><div class="elemento-fila"><span class="elemento-principal">BLOQUE FIJO 1</span><span class="elemento-medidas" id="fijo1-medidas-elemento"></span></div><span class="elemento-detalle" id="fijo1-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo" id="fijo1-bloque-fab-titulo">HOJA DE FABRICACIÓN</div>
 <div class="seccion-titulo">Perfiles Acabado: <span id="fijo1-acabado"></span></div>
 <table class="tabla-informe"><thead><tr><th class="imagen-perfil">🔧</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-perfiles"></tbody></table>
 <table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-embellecedor"></tbody></table>
 <div class="seccion-titulo">Medidas de Cristales - Color: <span id="fijo1-color-vidrio"></span></div>
 <table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo1-tabla-cristales"></tbody></table></div>
-<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<div class="bloque-pedido"><div class="bloque-titulo" id="fijo1-bloque-ped-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
 <table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
 <tbody>
 <tr><td id="fijo1-cod-fijo" class="texto-izq"></td><td class="texto-izq">Fijo</td><td id="fijo1-tipo-fijo" class="texto-izq"></td><td id="fijo1-cant-fijo" class="texto-Der"></td><td id="fijo1-precio-fijo" class="texto-Der"></td></tr>
@@ -742,12 +941,16 @@
 </tbody></table></div></div>
 
 <div id="pagina-puerta1" class="pagina-informe">
-<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="informe-header">
+<div class="informe-header-top">
+<img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+<h1>PA Vidrio Montado · Abatible</h1>
+</div>
 <div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="puerta1-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="puerta1-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="puerta1-fecha"></span></div></div>
 <div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="puerta1-comentarios"></span></div></div>
-<div class="linea-resumen"><span class="texto-resumen" id="puerta1-resumen-config"></span><span class="paginacion" id="puerta1-paginacion"></span></div></div>
-<div class="titulo-elemento"><span class="elemento-principal">PUERTA 1</span><span class="elemento-detalle" id="puerta1-detalle-config"></span></div>
-<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="linea-resumen"><span class="texto-resumen" id="puerta1-resumen-config"></span><span class="medidas-hueco" id="puerta1-medidas-hueco"></span><span class="paginacion" id="puerta1-paginacion"></span></div></div>
+<div class="titulo-elemento"><div class="elemento-fila"><span class="elemento-principal">BLOQUE PUERTA</span><span class="elemento-medidas" id="puerta1-medidas-elemento"></span></div><span class="elemento-detalle" id="puerta1-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo" id="puerta1-bloque-fab-titulo">HOJA DE FABRICACIÓN</div>
 <div class="seccion-titulo">Perfiles Acabado: <span id="puerta1-acabado"></span></div>
 <div class="seccion-sub-titulo" id="puerta1-subtitulo">PUERTA 1</div>
 <table class="tabla-informe"><thead><tr><th class="imagen-perfil">&#x1F527;</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="puerta1-tabla-perfiles"></tbody></table>
@@ -766,16 +969,21 @@
 <!-- pagina-puerta2 eliminada; su contenido se integra en pagina-puerta1 (doble) y pagina-marco -->
 
 <div id="pagina-marco" class="pagina-informe">
-<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="informe-header">
+<div class="informe-header-top">
+<img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+<h1>PA Vidrio Montado · Abatible</h1>
+</div>
 <div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="marco-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="marco-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="marco-fecha"></span></div></div>
 <div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="marco-comentarios"></span></div></div>
-<div class="linea-resumen"><span class="texto-resumen" id="marco-resumen-config"></span><span class="paginacion" id="marco-paginacion"></span></div></div>
-<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="linea-resumen"><span class="texto-resumen" id="marco-resumen-config"></span><span class="medidas-hueco" id="marco-medidas-hueco"></span><span class="paginacion" id="marco-paginacion"></span></div></div>
+<div class="titulo-elemento"><div class="elemento-fila"><span class="elemento-principal">BLOQUE PUERTA</span><span class="elemento-medidas" id="marco-medidas-elemento"></span></div><span class="elemento-detalle">Marco + Hoja de pedido del conjunto</span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo" id="marco-bloque-fab-titulo">HOJA DE FABRICACIÓN</div>
 <div class="seccion-titulo">Perfiles Acabado: <span id="marco-acabado"></span></div>
 <div class="seccion-sub-titulo" id="marco-subtitulo">MARCO</div>
 <table class="tabla-informe"><thead><tr><th class="imagen-perfil">&#x1F527;</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="marco-tabla-perfiles"></tbody></table>
 </div>
-<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<div class="bloque-pedido"><div class="bloque-titulo" id="marco-bloque-ped-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
 <table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
 <tbody>
 <tr><td id="marco-cod-puerta" class="texto-izq"></td><td class="texto-izq" id="marco-label-puerta">Puerta</td><td id="marco-tipo-puerta" class="texto-izq"></td><td id="marco-cant-puerta" class="texto-Der"></td><td id="marco-precio-puerta" class="texto-Der"></td></tr>
@@ -788,18 +996,22 @@
 </tbody></table></div></div>
 
 <div id="pagina-fijo2" class="pagina-informe">
-<div class="informe-header"><h1>PA VIDRIO MONTADO - ABATIBLE</h1>
+<div class="informe-header">
+<div class="informe-header-top">
+<img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+<h1>PA Vidrio Montado · Abatible</h1>
+</div>
 <div class="linea-principal"><div class="campo-informe" style="flex:2"><label>Cliente:</label><span id="fijo2-cliente"></span></div><div class="campo-informe" style="flex:1"><label>Nº Pedido:</label><span id="fijo2-pedido"></span></div><div class="campo-informe" style="flex:1"><label>Fecha:</label><span id="fijo2-fecha"></span></div></div>
 <div class="linea-comentarios"><div class="campo-informe-full"><label>Comentarios:</label><span id="fijo2-comentarios"></span></div></div>
-<div class="linea-resumen"><span class="texto-resumen" id="fijo2-resumen-config"></span><span class="paginacion" id="fijo2-paginacion"></span></div></div>
-<div class="titulo-elemento"><span class="elemento-principal">FIJO 2</span><span class="elemento-detalle" id="fijo2-detalle-config"></span></div>
-<div class="bloque-fabricacion"><div class="bloque-titulo">HOJA DE FABRICACIÓN</div>
+<div class="linea-resumen"><span class="texto-resumen" id="fijo2-resumen-config"></span><span class="medidas-hueco" id="fijo2-medidas-hueco"></span><span class="paginacion" id="fijo2-paginacion"></span></div></div>
+<div class="titulo-elemento"><div class="elemento-fila"><span class="elemento-principal">BLOQUE FIJO 2</span><span class="elemento-medidas" id="fijo2-medidas-elemento"></span></div><span class="elemento-detalle" id="fijo2-detalle-config"></span></div>
+<div class="bloque-fabricacion"><div class="bloque-titulo" id="fijo2-bloque-fab-titulo">HOJA DE FABRICACIÓN</div>
 <div class="seccion-titulo">Perfiles Acabado: <span id="fijo2-acabado"></span></div>
 <table class="tabla-informe"><thead><tr><th class="imagen-perfil">🔧</th><th>Tipo</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-perfiles"></tbody></table>
 <table class="tabla-informe"><thead><tr><th>Embellecedor</th><th>Longitud (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-embellecedor"></tbody></table>
 <div class="seccion-titulo">Medidas de Cristales - Color: <span id="fijo2-color-vidrio"></span></div>
 <table class="tabla-informe"><thead><tr><th>Vidrio</th><th>Alto (mm)</th><th>Ancho (mm)</th><th>Cantidad</th></tr></thead><tbody id="fijo2-tabla-cristales"></tbody></table></div>
-<div class="bloque-pedido"><div class="bloque-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
+<div class="bloque-pedido"><div class="bloque-titulo" id="fijo2-bloque-ped-titulo">HOJA DE PEDIDO - CÓDIGOS Y PRECIOS</div>
 <table class="tabla-informe"><thead><tr><th>Código</th><th>Concepto</th><th>Descripción</th><th>Cantidad</th><th>Precio €</th></tr></thead>
 <tbody>
 <tr><td id="fijo2-cod-fijo" class="texto-izq"></td><td class="texto-izq">Fijo</td><td id="fijo2-tipo-fijo" class="texto-izq"></td><td id="fijo2-cant-fijo" class="texto-Der"></td><td id="fijo2-precio-fijo" class="texto-Der"></td></tr>
@@ -811,12 +1023,7 @@
 </tbody></table></div></div>
 
 </div><!-- /informes-wrapper -->
-<div id="botones-accion-informes">
-<button id="btn-volver" onclick="ocultarInformes()" class="btn">⪡ Atrás</button>
-<button id="btn-pdf-con" onclick="generarPDFAbatible(true)"  class="btn">📄 PDF con precios</button>
-<button id="btn-pdf-sin" onclick="generarPDFAbatible(false)" class="btn">📄 PDF sin precios</button>
-<button id="btn-nueva-config" onclick="limpiarTodo()" class="btn">Nueva Configuración</button>
-</div>
+</div><!-- /cfg-content -->
 <BR></BR>
 
 
@@ -841,13 +1048,13 @@
   }
 
 
-  function volverAlInicio() {
-    // Opcional: limpiar el localStorage
-    // localStorage.removeItem('flujoSeleccionado');
-    // localStorage.removeItem('datosFormularios');
-    
-    window.location.href = 'PAMontada.html'; // o el nombre de tu HTML principal
-    }
+  function volverAlMenu() {
+    localStorage.setItem('regresarASubMenuPA', '1');
+    window.location.href = '../index.html';
+  }
+
+  // Alias para compatibilidad con llamadas previas
+  function volverAlInicio() { volverAlMenu(); }
 
 
   function cambiarFormulario(actual, destino) {
@@ -918,7 +1125,7 @@
   // PARA FORM6 -- Mapeo completo de opciones con imagen, composición y elementos
   const mapaOpciones = {
     "op1": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles01.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles01.png",
       composicion: ["Puerta1"],
       tieneFijo: false,
       tieneFijo1: false,
@@ -927,7 +1134,7 @@
       numFijos: 0
     },
     "op2": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles02.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles02.png",
       composicion: ["Fijo1", "Puerta1"],
       tieneFijo: true,
       tieneFijo1: true,
@@ -936,7 +1143,7 @@
       numFijos: 1
     },
     "op3": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles03.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles03.png",
       composicion: ["Fijo1", "Puerta1", "Fijo2"],
       tieneFijo: true,
       tieneFijo1: true,
@@ -945,7 +1152,7 @@
       numFijos: 2
     },
     "op4": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles02.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles02.png",
       composicion: ["Puerta1", "Puerta2"],
       tieneFijo: false,
       tieneFijo1: false,
@@ -954,7 +1161,7 @@
       numFijos: 0
     },
     "op5": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles03.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles03.png",
       composicion: ["Fijo1", "Puerta1", "Puerta2"],
       tieneFijo: true,
       tieneFijo1: true,
@@ -963,7 +1170,7 @@
       numFijos: 1
     },
     "op6": {
-      imagen: "https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ConjuntoAbatibles04.png",
+      imagen: "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/ConjuntoAbatibles04.png",
       composicion: ["Fijo1", "Puerta1", "Puerta2", "Fijo2"],
       tieneFijo: true,
       tieneFijo1: true,
@@ -1356,56 +1563,62 @@ document.querySelectorAll('#form1 input[name="opcion_extra"]').forEach(checkbox 
   function validarFormulario(numeroFormulario) {
     const form = document.getElementById(`form${numeroFormulario}`);
     if (!form) return false;
-    
+
     // Form1: validar radio
     if (numeroFormulario === 1) {
-      return form.querySelector('input[name="opcion"]:checked') ? true : alert('Selecciona una configuración.');
-    }
-    
-    // Form6: validación completa
-    if (numeroFormulario === 6) {
-      // Validar medidas
-      const medidas = form.querySelectorAll('input[name^="Ancho"]:not([name="Ancho"])');
-      for (let campo of medidas) {
-        if (campo.offsetParent && !parseFloat(campo.value)) {
-          alert('Completa todas las medidas.');
-          campo.focus();
-          return false;
-        }
+      if (!form.querySelector('input[name="opcion"]:checked')) {
+        aviso('Selecciona una configuración.');
+        return false;
       }
-      
-      // Validar características
-      const caracteristicas = form.querySelectorAll('input.caracteristicas');
-      for (let campo of caracteristicas) {
-        if (campo.offsetParent && !campo.value) {
-          alert('Configura embellecedores y bastidores.');
-          campo.focus();
-          return false;
-        }
-      }
-      
-      // Validar otros campos obligatorios
-      const obligatorios = ['Alto', 'AcabadoAluminio', 'ColorVidrio', 'conjuntos'];
-      for (let name of obligatorios) {
-        const campo = form.querySelector(`[name="${name}"]`);
-        if (!campo.value) {
-          alert(`Completa el campo ${name}.`);
-          campo.focus();
-          return false;
-        }
-      }
-      
       return true;
     }
-    
-    // Otros formularios (4,5): validar radio si se intenta avanzar
+
+    // Form6: gestionado por validarYGenerarInformes()
+    if (numeroFormulario === 6) return true;
+
+    // Otros formularios (2, 4, 5): validar radio
     const radio = form.querySelector('input[name="opcion"]:checked');
     if (!radio) {
-      alert('Selecciona una opción.');
+      aviso('Selecciona una opción.');
       return false;
     }
     return true;
-}
+  }
+
+  // Validación completa del form6 antes de generar — función separada async
+  async function validarYGenerarInformes() {
+    const form = document.getElementById('form6');
+    // Medidas
+    const medidas = form.querySelectorAll('input[name^="Ancho"]:not([name="Ancho"])');
+    for (let campo of medidas) {
+      if (campo.offsetParent && !parseFloat(campo.value)) {
+        aviso('Completa todas las medidas.');
+        campo.focus();
+        return;
+      }
+    }
+    // Características
+    const caracteristicas = form.querySelectorAll('input.caracteristicas');
+    for (let campo of caracteristicas) {
+      if (campo.offsetParent && !campo.value) {
+        aviso('Configura los embellecedores y bastidores.');
+        campo.focus();
+        return;
+      }
+    }
+    // Campos obligatorios
+    const obligatorios = ['Alto', 'AcabadoAluminio', 'ColorVidrio', 'conjuntos'];
+    for (let name of obligatorios) {
+      const campo = form.querySelector(`[name="${name}"]`);
+      if (!campo || !campo.value) {
+        aviso(`Completa el campo ${name}.`);
+        if (campo) campo.focus();
+        return;
+      }
+    }
+    // Todo OK — generar
+    generarInformesConPrecios();
+  }
 
 
 // Función para guardar datos de un formulario antes de cambiar
@@ -1447,8 +1660,8 @@ function guardarDatosFormulario(numeroFormulario) {
 
 
 // FUNCIONES DE CÁLCULO DE FABRICACIÓN
-function calcularPerfilesPuerta(numPuerta,config,medidas){const perfiles=[];const esMagnetico=(SelOpcion.form2?.opcion||'op1')==='op1';const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;const conjuntos=parseInt(medidas.conjuntos)||1;const rutaImg='https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';if(esMagnetico){perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Horizontal Iman',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}else{perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical Mec Cerradura',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}return perfiles}
-function calcularPerfilesFijo(tipoFijo,config,medidas){const perfiles=[];const tipoBastidor=SelOpcion.form4?.opcion||'0';const conjuntos=parseInt(medidas.conjuntos)||1;const altoReal=parseFloat(medidas.alto)-2;const anchoFijoNom=parseFloat(medidas[`ancho_${tipoFijo}`]);const anchoFijoReal=anchoFijoNom-1;const holguraFijo=2;const rutaImg='https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';if(tipoBastidor==='0'){const altoFijo=altoReal-19-19-holguraFijo;const anchoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil Base Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFB.jpg'});perfiles.push({tipo:'Perfil Clip Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFC.jpg'})}else{const altoElementoFijo=altoReal-8-8-holguraFijo;const anchoElementoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoElementoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoElementoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil U Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFU.jpg'})}return perfiles}
+function calcularPerfilesPuerta(numPuerta,config,medidas){const perfiles=[];const esMagnetico=(SelOpcion.form2?.opcion||'op1')==='op1';const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;const conjuntos=parseInt(medidas.conjuntos)||1;const rutaImg='https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/';if(esMagnetico){perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Horizontal Iman',cantidad:1*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}else{perfiles.push({tipo:'Vertical Bisagras',cantidad:1*conjuntos,medida:Math.round(altoPuerta-6),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Vertical Mec Cerradura',cantidad:1*conjuntos,medida:Math.round(altoPuerta),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoPuertaReal-24),imagen:rutaImg+'HORIZONTAL.jpg'})}return perfiles}
+function calcularPerfilesFijo(tipoFijo,config,medidas){const perfiles=[];const tipoBastidor=SelOpcion.form4?.opcion||'0';const conjuntos=parseInt(medidas.conjuntos)||1;const altoReal=parseFloat(medidas.alto)-2;const anchoFijoNom=parseFloat(medidas[`ancho_${tipoFijo}`]);const anchoFijoReal=anchoFijoNom-1;const holguraFijo=2;const rutaImg='https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/';if(tipoBastidor==='0'){const altoFijo=altoReal-19-19-holguraFijo;const anchoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil Base Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFB.jpg'});perfiles.push({tipo:'Perfil Clip Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFC.jpg'})}else{const altoElementoFijo=altoReal-8-8-holguraFijo;const anchoElementoFijo=anchoFijoReal-8-8-holguraFijo;perfiles.push({tipo:'Vertical',cantidad:2*conjuntos,medida:Math.round(altoElementoFijo),imagen:rutaImg+'VERTICAL.jpg'});perfiles.push({tipo:'Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoElementoFijo-24),imagen:rutaImg+'HORIZONTAL.jpg'});perfiles.push({tipo:'Perfil U Fijo Vertical',cantidad:2*conjuntos,medida:Math.round(altoReal),imagen:rutaImg+'PAFU.jpg'});perfiles.push({tipo:'Perfil U Fijo Horizontal',cantidad:2*conjuntos,medida:Math.round(anchoFijoReal-36),imagen:rutaImg+'PAFU.jpg'})}return perfiles}
 
 function calcularPerfilesMarco(config, medidas) {
   const perfiles = [];
@@ -1456,7 +1669,7 @@ function calcularPerfilesMarco(config, medidas) {
   const altoReal = parseFloat(medidas.alto) - 2;
   const anchoPuerta1 = parseFloat(medidas.ancho_p1) - 1;
   const anchoPuerta2 = parseFloat(medidas.ancho_p2) - 1;
-  const rutaImg = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';
+  const rutaImg = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/';
   const esMagnetico = (SelOpcion.form2?.opcion || 'op1') === 'op1';
   const esDoble = config.numPuertas === 2;
 
@@ -1474,18 +1687,43 @@ function calcularPerfilesMarco(config, medidas) {
 }
 
 function calcularEmbellecedores(tipoElemento,modeloEmb,medidas,config){if(!modeloEmb||modeloEmb==='Sin embellecedor'){return[]}const embellecedores=[];const conjuntos=parseInt(medidas.conjuntos)||1;const esFijo=tipoElemento.includes('fijo');let anchoBase,altoBase;if(esFijo){const tipoBastidor=SelOpcion.form4?.opcion||'0';const altoReal=parseFloat(medidas.alto)-2;const anchoFijoReal=parseFloat(medidas[`ancho_${tipoElemento}`])-1;const holguraFijo=2;if(tipoBastidor==='0'){altoBase=altoReal-19-19-holguraFijo;anchoBase=anchoFijoReal-8-8-holguraFijo}else{altoBase=altoReal-8-8-holguraFijo;anchoBase=anchoFijoReal-8-8-holguraFijo}}else{const numPuerta=tipoElemento==='puerta1'?1:2;const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;altoBase=altoReal-11-20;anchoBase=anchoPuerta-44}switch(modeloEmb){case'Modelo A':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:2*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo B':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:4*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo C':embellecedores.push({tipo:'Pletina 13x3mm',cantidad:6*conjuntos,medida:Math.round(anchoBase-24)});break;case'Modelo D':embellecedores.push({tipo:'Pletina 13x3mm - Vertical',cantidad:2*conjuntos,medida:Math.round(altoBase-70)});embellecedores.push({tipo:'Pletina 13x3mm - Horizontal',cantidad:12*conjuntos,medida:Math.floor((anchoBase-24-13)/2)});break}return embellecedores}
-function calcularVidrios(tipoElemento,medidas,config){const vidrios=[];const conjuntos=parseInt(medidas.conjuntos)||1;const esFijo=tipoElemento.includes('fijo');if(esFijo){const tipoBastidor=SelOpcion.form4?.opcion||'0';const altoReal=parseFloat(medidas.alto)-2;const anchoFijoReal=parseFloat(medidas[`ancho_${tipoElemento}`])-1;const holguraFijo=2;let altoFijo,anchoFijo;if(tipoBastidor==='0'){altoFijo=altoReal-19-19-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}else{altoFijo=altoReal-8-8-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoFijo-58),ancho:Math.round(anchoFijo-10)})}else{const numPuerta=tipoElemento==='puerta1'?1:2;const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoPuerta-58),ancho:Math.round(anchoPuertaReal-10)})}return vidrios}
+function calcularVidrios(tipoElemento,medidas,config){const vidrios=[];const conjuntos=parseInt(medidas.conjuntos)||1;const esFijo=tipoElemento.includes('fijo');if(esFijo){const tipoBastidor=SelOpcion.form4?.opcion||'0';const altoReal=parseFloat(medidas.alto)-2;const anchoFijoReal=parseFloat(medidas[`ancho_${tipoElemento}`])-1;const holguraFijo=2;let altoFijo,anchoFijo;if(tipoBastidor==='0'){altoFijo=altoReal-19-19-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}else{altoFijo=altoReal-8-8-holguraFijo;anchoFijo=anchoFijoReal-8-8-holguraFijo}vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoFijo-58),ancho:Math.round(anchoFijo-12)})}else{const numPuerta=tipoElemento==='puerta1'?1:2;const altoReal=parseFloat(medidas.alto)-2;const anchoPuerta=parseFloat(medidas[`ancho_p${numPuerta}`])-1;const altoPuerta=altoReal-11-20;const anchoPuertaReal=anchoPuerta-44;vidrios.push({tipo:'Vidrio templado 4mm',cantidad:1*conjuntos,alto:Math.round(altoPuerta-58),ancho:Math.round(anchoPuertaReal-12)})}return vidrios}
 
 
-function ocultarInformes(){document.querySelectorAll('.pagina-informe').forEach(p=>p.classList.remove('active'));document.getElementById('botones-accion-informes').style.display='none';document.getElementById('form6').classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-function limpiarTodo(){if(confirm('¿Estás seguro? Se perderán todos los datos introducidos.')){location.reload()}}
+function ocultarInformes(){document.querySelectorAll('.pagina-informe').forEach(p=>p.classList.remove('active'));document.getElementById('botones-accion-informes').classList.remove('visible');document.body.classList.remove('informes-activos');document.getElementById('form6').classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function limpiarTodo() {
+  confirmar('¿Estás seguro? Se perderán todos los datos introducidos.', _ejecutarLimpiarTodo); return;
+}
+function _ejecutarLimpiarTodo() {
+
+  Object.keys(SelOpcion).forEach(k => delete SelOpcion[k]);
+
+  document.querySelectorAll('.formulario').forEach(form => {
+    form.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(el => { el.checked = false; });
+    form.querySelectorAll('input[type="text"], input[type="number"], input[type="email"], textarea').forEach(el => { el.value = ''; });
+    form.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
+    form.querySelectorAll('.opcion.seleccionado, .radio-card-f15.seleccionado').forEach(el => { el.classList.remove('seleccionado'); });
+  });
+
+  resetearConfiguracionesIndividuales();
+
+  document.querySelectorAll('.formulario').forEach(f => f.classList.remove('active'));
+  document.querySelectorAll('.pagina-informe').forEach(p => p.classList.remove('active'));
+  document.getElementById('form1').classList.add('active');
+
+  const botonesInforme = document.getElementById('botones-accion-informes');
+  if (botonesInforme) botonesInforme.classList.remove('visible');
+  document.body.classList.remove('informes-activos');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // CÓDIGO DE PRECIOS - VERSION MEJORADA CON LOGGING
 // CÓDIGO DE PRECIOS - VERSION FINAL
 
-const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/CodigoPrecio.csv';
-const URL_ARTICULOS = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ArticulosPAmont.csv';
-const URL_ELEMENTOS = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ElementosPrecio.csv';
+const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/CodigoPrecio.csv';
+const URL_ARTICULOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/ArticulosPAmont.csv';
+const URL_ELEMENTOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/ElementosPrecio.csv';
 
 let tablasPrecios = {};
 let tablasPreciosCargadas = false;
@@ -1768,6 +2006,15 @@ async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
   document.getElementById('marco-resumen-config').textContent = textoResumen;
   document.getElementById('marco-paginacion').textContent = `Pág ${indice + 1} / ${totalPaginas}`;
 
+  // Medidas del hueco (alto × suma de anchos de todos los elementos)
+  const altoHueco = parseFloat(datosComunes.alto) || 0;
+  const anchoP1 = parseFloat(SelOpcion.form6?.AnchoPuerta1) || 0;
+  const anchoP2 = parseFloat(SelOpcion.form6?.AnchoPuerta2) || 0;
+  const anchoF1 = parseFloat(SelOpcion.form6?.AnchoFijo1) || 0;
+  const anchoF2 = parseFloat(SelOpcion.form6?.AnchoFijo2) || 0;
+  const anchoTotalHueco = anchoP1 + anchoP2 + anchoF1 + anchoF2;
+  document.getElementById('marco-medidas-hueco').textContent = `Hueco: ${altoHueco} × ${anchoTotalHueco} mm`;
+
   const esDoble = config.numPuertas === 2;
   const manoF15  = SelOpcion.form15?.mano || 'Derecha';
   const textoCierre = (SelOpcion.form2?.opcion || 'op1') === 'op1' ? 'Cierre Magnético' : 'Cierre Cerradura';
@@ -1775,6 +2022,22 @@ async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
   const marcoSubtitulo = document.getElementById('marco-subtitulo');
   if (marcoSubtitulo) marcoSubtitulo.textContent = `MARCO  –  ${manoTexto}  –  ${textoCierre}`;
   document.getElementById('marco-acabado').textContent = datosComunes.acabado;
+
+  // Rellenar títulos: HF es del MARCO (componente), HP es del BLOQUE PUERTA (conjunto: puertas+marco+embellecedores)
+  const elMarcoFabT = document.getElementById('marco-bloque-fab-titulo');
+  const elMarcoPedT = document.getElementById('marco-bloque-ped-titulo');
+  if (elMarcoFabT) elMarcoFabT.textContent = 'HOJA DE FABRICACIÓN · MARCO';
+  if (elMarcoPedT) elMarcoPedT.textContent = 'HOJA DE PEDIDO - CÓDIGOS Y PRECIOS · BLOQUE PUERTA';
+
+  // Medidas del BLOQUE PUERTA: idéntico formato al de página puerta1
+  const elMarcoMedidasElem = document.getElementById('marco-medidas-elemento');
+  if (elMarcoMedidasElem) {
+    if (config.numPuertas === 2) {
+      elMarcoMedidasElem.textContent = `${altoHueco} × ${anchoP1} + ${anchoP2} mm`;
+    } else {
+      elMarcoMedidasElem.textContent = `${altoHueco} × ${anchoP1} mm`;
+    }
+  }
 
   // Medidas marco
   const medidas = {
@@ -1886,6 +2149,28 @@ async function generarPaginaElementoConPrecios(tipoElemento, datosComunes, confi
   }
   document.getElementById(`${tipoElemento}-resumen-config`).textContent = textoResumen;
   document.getElementById(`${tipoElemento}-paginacion`).textContent = `Pág ${indice + 1} / ${total}`;
+
+  // Medidas del hueco (alto × suma de anchos)
+  const altoHueco = parseFloat(datosComunes.alto) || 0;
+  const anchoP1 = parseFloat(SelOpcion.form6?.AnchoPuerta1) || 0;
+  const anchoP2 = parseFloat(SelOpcion.form6?.AnchoPuerta2) || 0;
+  const anchoF1 = parseFloat(SelOpcion.form6?.AnchoFijo1) || 0;
+  const anchoF2 = parseFloat(SelOpcion.form6?.AnchoFijo2) || 0;
+  const anchoTotalHueco = anchoP1 + anchoP2 + anchoF1 + anchoF2;
+  const elMedidasHueco = document.getElementById(`${tipoElemento}-medidas-hueco`);
+  if (elMedidasHueco) elMedidasHueco.textContent = `Hueco: ${altoHueco} × ${anchoTotalHueco} mm`;
+
+  // Medidas del elemento concreto (alto × ancho)
+  // Para BLOQUE PUERTA: si es doble, mostrar 'alto × P1 + P2 mm' (idéntico en página puerta1 y marco)
+  let textoMedidasElem = '';
+  if (tipoElemento === 'fijo1') textoMedidasElem = `${altoHueco} × ${anchoF1} mm`;
+  else if (tipoElemento === 'fijo2') textoMedidasElem = `${altoHueco} × ${anchoF2} mm`;
+  else if (tipoElemento === 'puerta1' || tipoElemento === 'puerta2') {
+    if (config.numPuertas === 2) textoMedidasElem = `${altoHueco} × ${anchoP1} + ${anchoP2} mm`;
+    else textoMedidasElem = `${altoHueco} × ${anchoP1} mm`;
+  }
+  const elMedidasElem = document.getElementById(`${tipoElemento}-medidas-elemento`);
+  if (elMedidasElem && textoMedidasElem) elMedidasElem.textContent = textoMedidasElem;
   
   const esFijo = tipoElemento.includes('fijo');
   if (esFijo) {
@@ -1893,7 +2178,7 @@ async function generarPaginaElementoConPrecios(tipoElemento, datosComunes, confi
     const bastidorSeleccionado = configuracionesIndividuales[nombreCampoBastidor] || 'Sin especificar';
     const nombreCampoEmbFijo = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
     const embFijo = configuracionesIndividuales[nombreCampoEmbFijo] || 'Sin embellecedor';
-    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = tipoElemento.toUpperCase().replace(/(\d)/, ' $1');
+    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = `BLOQUE ${tipoElemento.toUpperCase().replace(/(\d)/, ' $1')}`;
     document.getElementById(`${tipoElemento}-detalle-config`).textContent = `Bastidor ${bastidorSeleccionado}  -  Embellecedor ${embFijo}`;
   } else {
     const nombreCampoEmb = `embellecedor${tipoElemento.charAt(0).toUpperCase() + tipoElemento.slice(1)}`;
@@ -1905,8 +2190,8 @@ async function generarPaginaElementoConPrecios(tipoElemento, datosComunes, confi
     } else {
       manoTexto = manoF15 === 'Derecha' ? 'Mano Derecha' : 'Mano Izquierda';
     }
-    // Bloque título: genérico PUERTA / PUERTAS, sin número ni embellecedor
-    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = config.numPuertas === 2 ? 'PUERTAS' : 'PUERTA';
+    // Bloque título: BLOQUE PUERTA (engloba puertas y, en página marco, también marco)
+    document.querySelector(`#pagina-${tipoElemento} .elemento-principal`).textContent = 'BLOQUE PUERTA';
     document.getElementById(`${tipoElemento}-detalle-config`).textContent = '';
     // Sub-título fabricación: mano + embellecedor (siempre visible)
     const subtP1fab = document.getElementById('puerta1-subtitulo');
@@ -1918,6 +2203,15 @@ async function generarPaginaElementoConPrecios(tipoElemento, datosComunes, confi
   
   document.getElementById(`${tipoElemento}-acabado`).textContent = datosComunes.acabado;
   document.getElementById(`${tipoElemento}-color-vidrio`).textContent = datosComunes.colorVidrio;
+
+  // Rellenar títulos de "HOJA DE..." con el nombre del elemento N3 concreto
+  const nombreN3 = esFijo
+    ? tipoElemento.toUpperCase().replace(/(\d)/, ' $1')
+    : (config.numPuertas === 2 ? 'PUERTAS' : 'PUERTA');
+  const elFabT = document.getElementById(`${tipoElemento}-bloque-fab-titulo`);
+  const elPedT = document.getElementById(`${tipoElemento}-bloque-ped-titulo`);
+  if (elFabT) elFabT.textContent = `HOJA DE FABRICACIÓN · ${nombreN3}`;
+  if (elPedT) elPedT.textContent = `HOJA DE PEDIDO - CÓDIGOS Y PRECIOS · ${nombreN3}`;
   
   const medidas = { alto: datosComunes.alto, conjuntos: datosComunes.conjuntos };
   
@@ -2054,10 +2348,10 @@ async function generarInformesConPrecios() {
   document.querySelectorAll('.pagina-informe').forEach(p => p.classList.remove('active'));
   
   const opcionForm1 = SelOpcion.form1?.opcion;
-  if (!opcionForm1) { alert('Error: No se encontró la configuración seleccionada'); return; }
+  if (!opcionForm1) { aviso('Error: No se encontró la configuración seleccionada.'); return; }
   
   const config = mapaOpciones[opcionForm1];
-  if (!config) { alert('Error: Configuración no válida'); return; }
+  if (!config) { aviso('Error: Configuración no válida.'); return; }
   
   const datosComunes = {
     cliente:     SelOpcion.form6?.cliente         || '',
@@ -2110,7 +2404,8 @@ async function generarInformesConPrecios() {
     }
   }
   
-  document.getElementById('botones-accion-informes').style.display = 'flex';
+  document.getElementById('botones-accion-informes').classList.add('visible');
+  document.body.classList.add('informes-activos');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   
   console.log('Informes generados correctamente con precios. Orden:', composicion);
@@ -2125,7 +2420,7 @@ async function generarInformesConPrecios() {
     posicionFijo: 'izquierda'
   };
 
-  const RutaImgF15 = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/';
+  const RutaImgF15 = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/';
 
   const configOpsF15 = {
     op1: { editarMano: true,  editarPosicion: false },
@@ -2281,12 +2576,82 @@ async function generarInformesConPrecios() {
     renderControlesF15();
   }
 
+
+  // ── SISTEMA DE MODAL AVISO ───────────────────────────────────────
+  function _crearModalDOM() {
+    if (document.getElementById('_modal-aviso')) return;
+    const overlay = document.createElement('div');
+    overlay.id = '_modal-aviso';
+    overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center;';
+    overlay.innerHTML = `
+      <div style="background:#F4F0E8;border-radius:10px;overflow:hidden;width:340px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
+        <div style="background:#2D3A4B;padding:13px 20px;">
+          <p style="margin:0;font-size:11px;font-weight:500;color:#ffffff;letter-spacing:0.5px;text-transform:uppercase;font-family:'Jost',sans-serif;">Adinor · PA Abatible</p>
+        </div>
+        <div style="padding:22px 22px 18px;background:#F4F0E8;">
+          <p id="_modal-msg" style="margin:0 0 20px;font-size:14px;color:#2D3A4B;line-height:1.6;font-family:'Jost',sans-serif;font-weight:300;"></p>
+          <div id="_modal-btns" style="display:flex;justify-content:flex-end;gap:10px;"></div>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+  }
+
+  function aviso(mensaje) {
+    _crearModalDOM();
+    const overlay = document.getElementById('_modal-aviso');
+    document.getElementById('_modal-msg').textContent = mensaje;
+    const btns = document.getElementById('_modal-btns');
+    btns.innerHTML = '';
+    const btnAceptar = document.createElement('button');
+    btnAceptar.textContent = 'Aceptar';
+    btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
+    btnAceptar.onclick = () => { overlay.style.display = 'none'; };
+    btns.appendChild(btnAceptar);
+    overlay.style.display = 'flex';
+    btnAceptar.focus();
+  }
+
+  function confirmar(mensaje, callbackSi) {
+    _crearModalDOM();
+    const overlay = document.getElementById('_modal-aviso');
+    document.getElementById('_modal-msg').textContent = mensaje;
+    const btns = document.getElementById('_modal-btns');
+    btns.innerHTML = '';
+    const btnCancelar = document.createElement('button');
+    btnCancelar.textContent = 'Cancelar';
+    btnCancelar.style.cssText = 'background:transparent;color:#2D3A4B;border:0.5px solid #2D3A4B;border-radius:6px;padding:8px 20px;font-size:13px;font-family:inherit;cursor:pointer;';
+    btnCancelar.onclick = () => { overlay.style.display = 'none'; };
+    const btnAceptar = document.createElement('button');
+    btnAceptar.textContent = 'Aceptar';
+    btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
+    btnAceptar.onclick = () => { overlay.style.display = 'none'; callbackSi(); };
+    btns.appendChild(btnCancelar);
+    btns.appendChild(btnAceptar);
+    overlay.style.display = 'flex';
+    btnCancelar.focus();
+  }
+
   </script>
 
 <!-- Librerías PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!--script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+<script src="js/jspdf.umd.min.js"></script>
 <script src="js/SalidaPDF-Abatible.js"></script>
 
+<script>
+  // Bloquear Ctrl+P / Cmd+P
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+      e.preventDefault();
+      e.stopPropagation();
+      aviso('La impresión no está disponible. Utiliza el botón PDF para generar el documento.');
+    }
+  });
+  // Bloquear desde menu del navegador (CSS ya muestra pagina en blanco)
+  window.addEventListener('beforeprint', function(e) {
+    e.stopImmediatePropagation();
+  });
+</script>
 </body>
-</html>
+</html>  
