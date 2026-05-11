@@ -5,6 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  
+  <!-- Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
+  <script>
+    window.ADINOR_CONFIG = {
+      tituloModal: 'Adinor · PA Abatible',
+      regresarASubMenuPA: true
+    };
+  </script>
+  <script>
+    document.write(
+      location.hostname.endsWith('github.io')
+        ? '<script src="https://jdurba.github.io/General/ConfigTodos.js?v=1"><\/script>'
+        : '<script src="../ConfigTodos.js?v=1"><\/script>'
+    );
+  </script>
+  <!-- FIN  Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
+
   <script>
     // ⚙️ CONFIGURACIÓN GLOBAL — Cambiar aquí si se cambia el host
     const RutaImagen = "https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/";
@@ -373,18 +390,7 @@
 
     /* CSS INFORMES */
     .pagina-informe{display:none;width:210mm;min-height:297mm;padding:15mm;box-sizing:border-box;background:white!important;margin:20px auto;page-break-after:always}
-    @media print{
-      body * { display: none !important; }
-      body::after {
-        display: block !important;
-        content: "La impresion no esta disponible. Utiliza el boton PDF para generar el documento.";
-        font-size: 18px;
-        color: #2D3A4B;
-        text-align: center;
-        margin-top: 40mm;
-        padding: 0 20mm;
-      }
-    }
+
     .pagina-informe.active{display:block}
     .informe-header{margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a2b6f}
     .informe-header-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
@@ -642,7 +648,7 @@
 
     <div class="acciones">
       <span style="align-self:center; margin-right:8px; color:var(--ink-light); font-size:0.9rem; font-style:italic;">Seleccionar al menos una opción antes de continuar</span>
-      <button type="button" onclick="volverAlInicio()" class="btn">⪡ Atrás</button>
+      <button type="button" onclick="volverAlMenu()" class="btn">⪡ Atrás</button>
       <button type="button" onclick="if(validarFormulario(1)) { cambiarFormulario(1,15); }" class="btn">Siguiente ⪢</button>
     </div>
     <div class="version-tag">V.02</div>
@@ -1046,21 +1052,6 @@
   } else if (flujoSeleccionado === '5') {
     console.log('✅ Puerta Abatible - Elemento independiente');
   }
-
-
-  function volverAlMenu() {
-    localStorage.setItem('regresarASubMenuPA', '1');
-    //window.location.href = '../index.html';
-        window.location.href = location.hostname.endsWith('github.io')
-      ? 'https://jdurba.github.io/General/index.html'
-      : '../index.html';
-  }
-  window.volverAlMenu = volverAlMenu;
-  
-
-
-  // Alias para compatibilidad con llamadas previas
-  function volverAlInicio() { volverAlMenu(); }
 
 
   function cambiarFormulario(actual, destino) {
@@ -2583,81 +2574,12 @@ async function generarInformesConPrecios() {
   }
 
 
-  // ── SISTEMA DE MODAL AVISO ───────────────────────────────────────
-  function _crearModalDOM() {
-    if (document.getElementById('_modal-aviso')) return;
-    const overlay = document.createElement('div');
-    overlay.id = '_modal-aviso';
-    overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center;';
-    overlay.innerHTML = `
-      <div style="background:#F4F0E8;border-radius:10px;overflow:hidden;width:340px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
-        <div style="background:#2D3A4B;padding:13px 20px;">
-          <p style="margin:0;font-size:11px;font-weight:500;color:#ffffff;letter-spacing:0.5px;text-transform:uppercase;font-family:'Jost',sans-serif;">Adinor · PA Abatible</p>
-        </div>
-        <div style="padding:22px 22px 18px;background:#F4F0E8;">
-          <p id="_modal-msg" style="margin:0 0 20px;font-size:14px;color:#2D3A4B;line-height:1.6;font-family:'Jost',sans-serif;font-weight:300;"></p>
-          <div id="_modal-btns" style="display:flex;justify-content:flex-end;gap:10px;"></div>
-        </div>
-      </div>`;
-    document.body.appendChild(overlay);
-  }
-
-  function aviso(mensaje) {
-    _crearModalDOM();
-    const overlay = document.getElementById('_modal-aviso');
-    document.getElementById('_modal-msg').textContent = mensaje;
-    const btns = document.getElementById('_modal-btns');
-    btns.innerHTML = '';
-    const btnAceptar = document.createElement('button');
-    btnAceptar.textContent = 'Aceptar';
-    btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
-    btnAceptar.onclick = () => { overlay.style.display = 'none'; };
-    btns.appendChild(btnAceptar);
-    overlay.style.display = 'flex';
-    btnAceptar.focus();
-  }
-
-  function confirmar(mensaje, callbackSi) {
-    _crearModalDOM();
-    const overlay = document.getElementById('_modal-aviso');
-    document.getElementById('_modal-msg').textContent = mensaje;
-    const btns = document.getElementById('_modal-btns');
-    btns.innerHTML = '';
-    const btnCancelar = document.createElement('button');
-    btnCancelar.textContent = 'Cancelar';
-    btnCancelar.style.cssText = 'background:transparent;color:#2D3A4B;border:0.5px solid #2D3A4B;border-radius:6px;padding:8px 20px;font-size:13px;font-family:inherit;cursor:pointer;';
-    btnCancelar.onclick = () => { overlay.style.display = 'none'; };
-    const btnAceptar = document.createElement('button');
-    btnAceptar.textContent = 'Aceptar';
-    btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
-    btnAceptar.onclick = () => { overlay.style.display = 'none'; callbackSi(); };
-    btns.appendChild(btnCancelar);
-    btns.appendChild(btnAceptar);
-    overlay.style.display = 'flex';
-    btnCancelar.focus();
-  }
-
   </script>
 
-<!-- Librerías PDF -->
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
-<script src="js/jspdf.umd.min.js"></script>
-<script src="js/SalidaPDF-Abatible.js"></script>
+<!-- Librerías PDF , ahora son locales, no se usa html2canvas -->
+<script src="js/jspdf.umd.min.js?v=2"></script>
+<script src="js/SalidaPDF-Abatible.js?v=2"></script>
 
-<script>
-  // Bloquear Ctrl+P / Cmd+P
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-      e.preventDefault();
-      e.stopPropagation();
-      aviso('La impresión no está disponible. Utiliza el botón PDF para generar el documento.');
-    }
-  });
-  // Bloquear desde menu del navegador (CSS ya muestra pagina en blanco)
-  window.addEventListener('beforeprint', function(e) {
-    e.stopImmediatePropagation();
-  });
-</script>
+
 </body>
 </html>  

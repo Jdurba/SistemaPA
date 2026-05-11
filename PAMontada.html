@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Adinor · PA Vidrio Montado</title>
+
+  <!-- Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
+  <script>
+    window.ADINOR_CONFIG = {
+      tituloModal: 'Adinor · PA Montado',
+      regresarASubMenuPA: true
+    };
+  </script>
+  <script>
+    document.write(
+      location.hostname.endsWith('github.io')
+        ? '<script src="https://jdurba.github.io/General/ConfigTodos.js?v=1"><\/script>'
+        : '<script src="../ConfigTodos.js?v=1"><\/script>'
+    );
+  </script>
+
+   <!-- FIN  Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
+
+
+
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Cormorant:ital,wght@0,300;1,300&family=Montserrat&display=swap" rel="stylesheet" />
 
   <style>
@@ -620,20 +640,6 @@
 /* Oculta botón en el PDF generado */
 .no-pdf {
   display: none !important;
-}
-
-/* Bloquear impresión nativa: el informe solo debe salir vía botón PDF */
-@media print {
-  body * { display: none !important; }
-  body::after {
-    display: block !important;
-    content: "La impresion no esta disponible. Utiliza el boton PDF para generar el documento.";
-    font-size: 18px;
-    color: #2D3A4B;
-    text-align: center;
-    margin-top: 40mm;
-    padding: 0 20mm;
-  }
 }
 
 /* Forza fondos y colores */
@@ -1252,8 +1258,8 @@
 <!-- ========================================================= -->
 <!-- ✅ PARTE 3: SCRIPTS (EN ESTE ORDEN EXACTO) -->
 <!-- ========================================================= -->
-<script src="js/jspdf.umd.min.js"></script>
-<script src="js/SalidaPDF.js"></script>
+<script src="js/jspdf.umd.min.js?v=2"></script>
+<script src="js/SalidaPDF.js?V=2"></script>
 
 
 <script type="module">
@@ -1322,20 +1328,6 @@
       console.warn('No se pudo precargar el flujo desde localStorage:', e);
     }
   })();
-
-  // ── Volver al submenú PA del index ──
-  function volverAlMenu() {
-    localStorage.setItem('regresarASubMenuPA', '1');
-    //window.location.href = '../index.html';   Cambi al subir a GitHub
-    window.location.href = location.hostname.endsWith('github.io')
-      ? 'https://jdurba.github.io/General/index.html'
-      : '../index.html';
-  }
-  window.volverAlMenu = volverAlMenu;
-
-
-
-  window.volverAlMenu = volverAlMenu;
 
 
 //   MAPEOS PARA LA FUNCION
@@ -2971,65 +2963,6 @@ function cerrarHojaPedido() {
   activarPrimerFormDelFlujo();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-
-// ── SISTEMA DE MODAL AVISO ───────────────────────────────────────
-function _crearModalDOM() {
-  if (document.getElementById('_modal-aviso')) return;
-  const overlay = document.createElement('div');
-  overlay.id = '_modal-aviso';
-  overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center;';
-  overlay.innerHTML = `
-    <div style="background:#F4F0E8;border-radius:10px;overflow:hidden;width:340px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
-      <div style="background:#2D3A4B;padding:13px 20px;">
-        <p style="margin:0;font-size:11px;font-weight:500;color:#ffffff;letter-spacing:0.5px;text-transform:uppercase;font-family:'Jost',sans-serif;">Adinor · PA Montado</p>
-      </div>
-      <div style="padding:22px 22px 18px;background:#F4F0E8;">
-        <p id="_modal-msg" style="margin:0 0 20px;font-size:14px;color:#2D3A4B;line-height:1.6;font-family:'Jost',sans-serif;font-weight:300;"></p>
-        <div id="_modal-btns" style="display:flex;justify-content:flex-end;gap:10px;"></div>
-      </div>
-    </div>`;
-  document.body.appendChild(overlay);
-}
-
-function aviso(mensaje) {
-  _crearModalDOM();
-  const overlay = document.getElementById('_modal-aviso');
-  document.getElementById('_modal-msg').textContent = mensaje;
-  const btns = document.getElementById('_modal-btns');
-  btns.innerHTML = '';
-  const btnAceptar = document.createElement('button');
-  btnAceptar.textContent = 'Aceptar';
-  btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
-  btnAceptar.onclick = () => { overlay.style.display = 'none'; };
-  btns.appendChild(btnAceptar);
-  overlay.style.display = 'flex';
-  btnAceptar.focus();
-}
-
-function confirmar(mensaje, callbackSi) {
-  _crearModalDOM();
-  const overlay = document.getElementById('_modal-aviso');
-  document.getElementById('_modal-msg').textContent = mensaje;
-  const btns = document.getElementById('_modal-btns');
-  btns.innerHTML = '';
-  const btnCancelar = document.createElement('button');
-  btnCancelar.textContent = 'Cancelar';
-  btnCancelar.style.cssText = 'background:transparent;color:#2D3A4B;border:0.5px solid #2D3A4B;border-radius:6px;padding:8px 20px;font-size:13px;font-family:inherit;cursor:pointer;';
-  btnCancelar.onclick = () => { overlay.style.display = 'none'; };
-  const btnAceptar = document.createElement('button');
-  btnAceptar.textContent = 'Aceptar';
-  btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
-  btnAceptar.onclick = () => { overlay.style.display = 'none'; callbackSi(); };
-  btns.appendChild(btnCancelar);
-  btns.appendChild(btnAceptar);
-  overlay.style.display = 'flex';
-  btnCancelar.focus();
-}
-
-// Exponer al ámbito global para que scripts externos (no-module) puedan usarlas
-window.aviso = aviso;
-window.confirmar = confirmar;
 
 
 // Función para iniciar la app SOLO cuando las tablas estén listas
