@@ -1,267 +1,463 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Adinor PA Vidrio montado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Adinor · PA Vidrio Montado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Cormorant:ital,wght@0,300;1,300&family=Montserrat&display=swap" rel="stylesheet" />
+
   <style>
+    :root {
+      /* Paleta base */
+      --bg:        #E5E5E3;
+      --ink:       #111111;
+      --ink-mid:   #555550;
+      --ink-light: #727270;
+      --rule:      rgba(0,0,0,0.11);
+
+      /* Header */
+      --header-dark:   #2D3A4B;
+      --header-ink:    #FFFFFF;
+      --header-accent: #6B7FB8;
+
+      /* Cards seleccionables */
+      --card-bg-idle:      #FFFFFF;
+      --card-bg-hover:     #F0F0EE;
+      --card-bg-selected:  #D4D4D3;
+      --card-bd-idle:      rgba(0,0,0,0.18);
+      --card-bd-hover:     #3a3a3a;
+      --card-bd-selected:  #111111;
+
+      --radio: 6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body { height: 100%; margin: 0; }
+
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--ink);
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Montserrat', sans-serif;
+    /* ── HEADER ── */
+    .cfg-header {
+      display: flex;
+      align-items: center;
+      background: var(--header-dark);
+      padding: 0 28px;
+      height: 72px;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .cfg-header-logo { height: 58px; width: auto; flex-shrink: 0; }
+    .cfg-header-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--header-ink);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0;
     }
 
-    .formulario {
-      display: none;
-    }
-    .formulario.active {
-      display: block;
-    }
+    /* ── CONTENIDO ── */
+    .cfg-content { padding: 32px 40px; }
 
     h2 {
-      font-size: 30px;
-      color: #1a2b6f;
-      margin-bottom: 30px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin: 0 0 28px;
+      letter-spacing: 0.02em;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 8px 0 0;
+      text-align: center;
+      color: var(--ink-mid);
     }
 
-    form {
-      margin-left: 30px;
-    }
-    
+    .formulario { display: none; }
+    .formulario.active { display: block; }
 
+    .form { width: 100%; max-width: none; margin: 0 auto; }
+
+    /* ── GRID GENERAL ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      margin-left: 180px;
+      margin-right: 180px;
+    }
+    #form2 .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #form3 .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-left: 70px; margin-right: 70px; }
+    #form4 .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #form5 .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    /* ── FORM1: estructura especial con dos bloques (frentes / independientes) ── */
+    .contenedor-marcos {
+      display: flex;
+      gap: 24px;
+      align-items: stretch;
+      margin: 0 60px;
+    }
+    .grupo-opciones {
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radio);
+      padding: 18px 20px 22px;
+      background: rgba(255,255,255,0.35);
+    }
+    .grupo-opciones legend {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink-mid);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0 10px;
+    }
+    .grupo-opciones:first-child { flex: 3; }
+    .grupo-opciones:last-child  { flex: 1; min-width: 240px; }
+    .grupo-opciones .opciones-frente {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .grupo-opciones .opcion-suelta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .grupo-opciones .Sub-opcion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* ── CARDS ── */
+    .card { display: block; cursor: pointer; }
+    .card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .visual {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 8px;
+      padding: 12px;
+      border: 2px solid var(--card-bd-idle);
+      border-radius: var(--radio);
+      background: var(--card-bg-idle);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .visual:hover {
+      border-color: var(--card-bd-hover);
+      background: var(--card-bg-hover);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10),
+                  0 1px 4px  rgba(0,0,0,0.08);
+    }
+    .card input:checked + .visual {
+      border-color: var(--card-bd-selected);
+      background: var(--card-bg-selected);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18),
+                  0 2px 8px  rgba(0,0,0,0.12),
+                  0 0 0 1px var(--card-bd-selected) inset;
+    }
+    .card input:checked + .visual:hover {
+      background: var(--card-bg-selected);
+      border-color: var(--card-bd-selected);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.20),
+                  0 3px 10px  rgba(0,0,0,0.13),
+                  0 0 0 1px var(--card-bd-selected) inset;
+    }
+    .card input:focus-visible + .visual {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.18);
+    }
+
+    /* Imágenes en cards */
+    .visual img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      object-fit: contain;
+      aspect-ratio: 4/3;
+      justify-self: center;
+    }
+    #form1 .visual img { max-width: 180px; }
+    #form2 .visual img { max-width: 220px; }
+    #form3 .visual img {
+      max-width: 100%;
+      aspect-ratio: auto;
+      height: 170px;
+    }
+    #form4 .visual img { max-width: 180px; }
+    #form5 .visual img {
+      max-width: 110px;
+      aspect-ratio: 1/2;
+      height: 220px;
+    }
+    .visual p { margin: 0; font-size: 0.9rem; color: var(--ink-mid); }
+
+    /* ── FORM3: lista de radios textuales (sin imágenes) ── */
+    #form3 .grupo-radios { margin: 0 100px; }
+    #form3 .grupo-radios > p {
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      margin: 18px 0 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    #form3 .grupo-radios > p:first-of-type { margin-top: 0; }
+    #form3 .opcion-radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      border: 1.5px solid var(--card-bd-idle);
+      border-radius: var(--radio);
+      background: var(--card-bg-idle);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      font-size: 0.95rem;
+    }
+    #form3 .opcion-radio:hover {
+      border-color: var(--card-bd-hover);
+      background: var(--card-bg-hover);
+    }
+    #form3 .opcion-radio input[type="radio"] {
+      margin: 0;
+      accent-color: var(--ink);
+    }
+    #form3 .opcion-radio input[type="radio"]:checked ~ * { font-weight: 500; }
+    #form3 .opcion-radio:has(input:checked) {
+      border-color: var(--card-bd-selected);
+      background: var(--card-bg-selected);
+    }
+
+    /* ── FORM6: medidas (campos texto/número/select) ── */
+    /* Layout principal: imagen a la izquierda + contenido a la derecha */
+    #form6 .form6-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    #form6 .form6-imagen {
+      position: sticky;
+      top: 90px; /* bajo el header sticky (72px) + margen */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    #form6 .form6-imagen img {
+      width: 100%;
+      max-width: 312px;
+      height: auto;
+      object-fit: contain;
+      aspect-ratio: 4/3;
+    }
+    #form6 .form6-imagen-titulo {
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+    }
+    #form6 .form6-imagen-bloque {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 10px;
+      border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    }
+    #form6 .form6-imagen-bloque.sin-separador { border-top: none; padding-top: 0; }
+    #form6 .form6-imagen-guia {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 300;
+      text-align: center;
+      margin: 0;
+    }
+    #form6 .form6-imagen-frase {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-align: center;
+      line-height: 1.4;
+      margin: 0;
+      padding: 0 4px;
+    }
+    #form6 .form6-imagen-tecnico {
+      font-size: 0.9rem;
+      color: var(--ink);
+      font-weight: 400;
+      text-align: center;
+      margin: 0;
+    }
+    #form6 .form6-contenido { min-width: 0; }
+
+    #form6 .form6-grid {
+      display: grid;
+      grid-template-columns: 200px 200px 200px;
+      gap: 50px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    #form6 .form6-grid-cliente {
+      display: grid;
+      grid-template-columns: 450px 200px;
+      gap: 50px;
+      justify-content: center;
+      margin: 24px 0 18px;
+    }
+    #form6 .form6-comentarios {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    #form6 .form6-conjuntos {
+      display: grid;
+      grid-template-columns: 200px 450px;
+      gap: 50px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    #form6 label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--ink-mid);
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+    #form6 input[type="number"],
+    #form6 input[type="text"],
+    #form6 select,
+    #form6 textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      margin-top: 4px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid var(--card-bd-idle);
+      border-radius: 4px;
+      transition: border-color 0.2s ease;
+    }
+    #form6 input:focus-visible,
+    #form6 select:focus-visible,
+    #form6 textarea:focus-visible {
+      outline: none;
+      border-color: var(--card-bd-selected);
+    }
+    #form6 textarea { resize: vertical; }
+    #form6 .form6-comentarios label { width: 700px; }
+
+    select#AcabadoAluminio,
+    select#ColorVidrio { background-color: #ffffff !important; }
+
+    /* ── SEPARADOR DE SECCIÓN ── */
+    .seccion-sep {
+      border: none;
+      border-top: 1.5px solid rgba(0,0,0,0.45);
+      margin: 24px 0 20px;
+    }
+
+    /* ── ETIQUETA DE VERSIÓN ── */
+    .version-tag {
+      margin-top: 24px;
+      color: var(--ink-light);
+      font-size: 0.75rem;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    /* ── ACCIONES ── */
+    .acciones {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 36px;
+    }
+    .hint-accion {
+      align-self: center;
+      margin-right: 8px;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* ── BOTONES ── */
     .btn {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px 24px;
       border: none;
       border-radius: 4px;
-      font-size: 1em;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95em;
+      font-weight: 400;
       cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
+      transition: background 0.22s ease, transform 0.22s ease;
       min-width: 120px;
       text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: #4a4a4a;
+      color: #ffffff;
+    }
+    .btn:hover {
+      background: #111111;
+      transform: translateX(2px);
+    }
+    .btn:disabled,
+    .btn[disabled] {
+      background: #b8b8b6;
+      color: #ffffff;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .botones-formulario {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-
-    
-    #form1 .opciones-imagenes, #form2 .opciones-imagenes, #form4 .opciones-imagenes, #form5 .opciones-imagenes {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    #form1 .opcion, #form2 .opcion, #form4 .opcion, #form5 .opcion {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* ------   Opciones de formulario 1   ------ */
-
-    /* Estilos de los marcos verdes */
-    .grupo-opciones {
-      border: 2px solid #4CAF50;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .grupo-opciones legend {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #4CAF50;
-      padding: 0 20px;
-    }
-
-    /* Contenedor principal con proporción 4:6 */
-    .contenedor-marcos {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      width: calc(100% - 130px); /* 100% menos 130px de margen total */
-      margin: 0 auto; /* Centra horizontalmente */
-      max-width: 100%; /* Evita problemas en pantallas pequeñas */
-    }
-
-    /* Proporción 6 partes - Primero el ancho grande, luego el flex */
-    .grupo-opciones:first-child {
-      min-width: 350px; /* Ancho mínimo para el bloque grande */
-      flex: 4; /* Ocupa 4 partes */
-    }
-
-    .grupo-opciones:last-child {
-      min-width: 250px; /* Ancho mínimo para el bloque pequeño */
-      flex: 2; /* Ocupa 2 partes */
-    }
-
-    /* Resto de estilos sin cambios... */
-    .grupo-opciones img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .grupo-opciones .opciones-imagenes {
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .grupo-opciones .opcion {
-      flex: 1;
-      min-width: 200px;
-      text-align: center;
-    }
-
-    .Sub-opcion {
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-      margin-top: 18px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .Sub-opcion .opcion {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 7px;
-      min-width: auto;
-      flex: none;
-    }
-
-    .grupo-opciones .opcion p {
-      margin-bottom: 8px;
-    }
-
-    .Sub-opcion .opcion p {
-      margin: 0;
-    }
-
-    select#AcabadoAluminio,
-    select#ColorVidrio {
-    background-color: #ffffff !important; /* o el color que quieras */
-    }
-
-
-
-    /* Media Query ÚNICA y CORREGIDA */
+    /* Móvil */
     @media (max-width: 768px) {
-      .contenedor-marcos {
-        flex-direction: column;
-      }
-      
-      /* Resetea proporciones en móvil */
-      .grupo-opciones:first-child,
-      .grupo-opciones:last-child {
-        flex: none;
-        width: 100%;
-        min-width: auto; /* Resetea el min-width en móvil */
-      }
-      
-      .grupo-opciones .opcion {
-        min-width: 100%;
-      }
-      
-      .Sub-opcion {
-        flex-direction: column;
-      }
-      
-      .Sub-opcion .opcion {
-        flex-direction: row;
-        justify-content: flex-start;
-      }
-    }
-
-
-    /*------------Fin Form 1-----------------------------*/
-    /*--------------------------------------------------*/
-
-
-    #form1 .opcion img {
-      width: 230px;
-      height: 180px;
-      object-fit: contain;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    #form2 .opcion img {
-      width: 270px;
-      height: 200px;
-      object-fit: cover;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    #form4 .opcion img {
-      width: 200px;
-      height: 180px;
-      object-fit: contain;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    #form5 .opcion img {
-      width: 110px;
-      height: 220px;
-      object-fit: contain;  /* Contein se ajusta a cuadro que tengamos es un zoom mas ajustado */
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    #form1 .selector, #form2 .selector {
-      margin-top: 20px;
-    }
-
-    #form1 .opcion input[type="radio"], #form2 .opcion input[type="radio"], #form3 .opcion input[type="radio"], #form4 .opcion input[type="radio"]{
-      margin-top: 10px;
-    }
-
-    #form3 p {
-      font-weight: bold;
-      margin-top: 15px;
-      margin-bottom: 5px;
-    }
-
-    #form3 label {
-      display: block;
-      margin-left: 40px;
-      margin-bottom: 5px;
-      line-height: 1.2;
-    }
-
-    #form6 label {
-      margin-left: 5px;
-      display: block;
-    }
-
-    #form6 select,
-    #form6 input[type="number"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 5px;
-    }
-
-    #form6 .columna {
-      width: 200px;
+      .cfg-content { padding: 20px; }
+      .grid { margin-left: 0; margin-right: 0; grid-template-columns: 1fr; gap: 18px; }
+      #form5 .grid { grid-template-columns: repeat(2, 1fr); }
+      .contenedor-marcos { flex-direction: column; margin: 0; }
+      .grupo-opciones .opciones-frente { grid-template-columns: 1fr; }
+      #form3 .grupo-radios { margin: 0; }
+      #form6 .form6-grid,
+      #form6 .form6-grid-cliente,
+      #form6 .form6-conjuntos { grid-template-columns: 1fr; gap: 14px; }
+      #form6 .form6-comentarios label { width: 100%; }
+      #form6 .form6-layout { grid-template-columns: 1fr; gap: 20px; }
+      #form6 .form6-imagen { position: static; }
+      #form6 .form6-imagen img { max-width: 180px; }
     }
 
     /* ================================== */
@@ -279,19 +475,31 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-
-    .informe-header {
-        border-bottom: none;
-        padding-bottom: 5px;
-        margin-bottom: 10px;  /* Más espacio antes de "MEDIDAS DE PUERTA" */
+    /* ============================================================
+       BARRA FIJA DE BOTONES DEL INFORME (banda header)
+    ============================================================ */
+    #botones-accion-informes{display:none;position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--header-dark);padding:0 28px;height:72px;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
+    #botones-accion-informes.visible{display:flex;align-items:center;gap:10px}
+    #botones-accion-informes .barra-logo{height:58px;width:auto;flex-shrink:0;margin-right:auto}
+    #botones-accion-informes button.btn{
+      min-width:115px;
+      padding:7px 15px;
+      font-size:0.85em;
+      background:var(--header-accent);
+      color:#fff;
     }
-
-
-    .informe-header h1 {   /* el titulo del informe*/ 
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #2a2a2a;
+    #botones-accion-informes button.btn:hover{
+      background:#5a6ea8;
+      transform:translateX(2px);
     }
+    body.informes-activos .cfg-header{display:none}
+    body.informes-activos{padding-top:78px}
+
+
+    .informe-header{margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1a2b6f}
+    .informe-header-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+    .informe-header-logo{height:44px;width:auto;flex-shrink:0}
+    .informe-header h1{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;margin:0;color:#1a2b6f;text-align:center;letter-spacing:0.5px;flex:1;text-transform:uppercase;line-height:1.2}
 
     /* Campos de cabecera en línea horizontal */
     .info-basica {
@@ -303,7 +511,7 @@
 
     .campo-informe {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 10px;
       min-width: 0; /* permite que los campos se reduzcan si es necesario */
     }
@@ -323,6 +531,14 @@
       border-radius: 3px;
       font-size: 12px;
       min-width: 0; /* evita que imponga un ancho mínimo */
+    }
+
+    .campo-informe span {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 2px 4px;
+      font-size: 12px;
+      border-bottom: 1px solid #999;
     }
 
   
@@ -395,16 +611,6 @@
       text-align: Right;
       padding-right: 18px;
     }
-    /* Botones del informe */
-
-    .botones-informe {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 2px solid #eee;
-    }
 
 
 /* ================================== */
@@ -416,10 +622,17 @@
   display: none !important;
 }
 
-/* Solo ocultar botones DENTRO del PDF generado */
+/* Bloquear impresión nativa: el informe solo debe salir vía botón PDF */
 @media print {
-  .btn {
-    display: none !important;
+  body * { display: none !important; }
+  body::after {
+    display: block !important;
+    content: "La impresion no esta disponible. Utiliza el boton PDF para generar el documento.";
+    font-size: 18px;
+    color: #2D3A4B;
+    text-align: center;
+    margin-top: 40mm;
+    padding: 0 20mm;
   }
 }
 
@@ -451,295 +664,362 @@
 </head>
 <body>
 
+<!-- HEADER ESTÁNDAR -->
+<header class="cfg-header">
+  <img class="cfg-header-logo"
+       src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png"
+       alt="Adinor">
+  <h1 class="cfg-header-title">PA Vidrio Montado</h1>
+</header>
 
-  <!-- Formulario 1 -->
-  <form id="form1" class="formulario active">
-    <h2>Configurador Sistema PA montado con vidrio</h2>
-    <br>
-    
-    <div class="contenedor-marcos">
-      <!-- Marco 1: Frentes completos -->
-      <fieldset class="grupo-opciones">
-        <legend>Frentes completos - Instalación en hueco</legend>
-        <div class="opciones-imagenes">
-
-          <label class="opcion">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PuertaCorredera.png" alt="Opción 1" width="300"><br><br>
-            <p>Puerta corredera</p>
-            <input type="radio" name="imagen" value="1" required>
-          </label>
-
-          <label class="opcion">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PuertaAbatible.png" alt="Opción 2" width="300"><br><br>
-            <p>Puerta Abatible</p>
-            <input type="radio" name="imagen" value="2">
-          </label>
-
-          <label class="opcion">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Murete.png" alt="Opción 5" width="300"><br><br>
-            <p>Sobremurete</p>
-            <input type="radio" name="imagen" value="5">
-          </label>
-
-        </div>
-      </fieldset>
-      
-      <!-- Marco 2: Elementos independientes -->
-      <fieldset class="grupo-opciones">
-        <legend>Elementos independientes</legend>
-        <div class="opciones-imagenes">
-          <label class="opcion">
-            <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/ElementoSuelto.png" alt="Opción 3" width="300"><br><br>
-            <div class="Sub-opcion">
-              
-              <div class="opcion"> 
-                <p>Puerta corredera</p>
-                <input type="radio" name="imagen" value="3">
-              </div>
-            
-              <div class="opcion">  
-                <p>Fijo</p>
-                <input type="radio" name="imagen" value="4">
-              </div>
-
-            </div>
-          </label>
-        </div>
-      </fieldset>
-    </div>
-    
-    <br>
-    <p>Seleccionar una opción antes de continuar</p>
-
-    <div class="botones-formulario">
-      <button type="button" onclick="limpiarDatos()" class="btn">🔄 Nuevo</button>
-      <button type="button" onclick="siguienteFormulario(1)" class="btn">Siguiente</button>
-    </div>
-    <br>
-    <p>V.02</p>
-  </form>
-
-
+<div class="cfg-content">
 
   <!-- Formulario 2 -->
   <form id="form2" class="formulario">
     <h2>Guías Sky</h2>
-    <div class="opciones-imagenes">
-      <label class="opcion">
-        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK112.png" alt="Opción 1" width="150"><br><br>
-        <p>Montaje a pared</p>
+    <div class="grid">
+      <label class="card">
         <input type="radio" name="guia" value="SK112" required>
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK112.png" alt="Montaje a pared">
+          <h3>Montaje a pared</h3>
+        </div>
       </label>
-      <label class="opcion">
-        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK111.png" alt="Opción 2" width="150"><br><br>
-        <p>Montaje a techo</p>
+      <label class="card">
         <input type="radio" name="guia" value="SK111">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK111.png" alt="Montaje a techo">
+          <h3>Montaje a techo</h3>
+        </div>
       </label>
-      <label class="opcion">
-        <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/SK119.png" alt="Opción 3" width="150"><br><br>
-        <p>Montaje guía empotrada</p>
+      <label class="card">
         <input type="radio" name="guia" value="SK119">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK119.png" alt="Guía empotrada">
+          <h3>Montaje guía empotrada</h3>
+        </div>
       </label>
     </div>
-    <br>
-    <p>Seleccionar una opción antes de continuar</p>
-    
-    <div class="botones-formulario"> 
-      <button type="button" onclick="anteriorFormulario(2)" class="btn">Atrás</button>
-      <button type="button" onclick="siguienteFormulario(2)" class="btn">Siguiente</button>
+
+    <div class="acciones">
+      <span class="hint-accion">Seleccionar una opción antes de continuar</span>
+      <button type="button" onclick="anteriorFormulario(2)" class="btn">⪡ Atrás</button>
+      <button type="button" onclick="siguienteFormulario(2)" class="btn">Siguiente ⪢</button>
     </div>
+    <div class="version-tag">V.03</div>
   </form>
 
 
 
 
   <!-- Formulario 3 -->
+  <!-- NOTA: las rutas de las imágenes están hardcodeadas a propósito.
+       No se puede usar una constante JS en atributos src="" estáticos
+       sin hidratación en runtime. Si cambias el host, hay que reemplazar
+       en este bloque y en los form2/form4/form5. -->
   <form id="form3" class="formulario">
     <h2>Combinación de puertas</h2>
-    <p>1 elementos</p>
-    <label><input type="radio" name="opcion" value="1puerta" required> 1 puerta</label>
-    <label><input type="radio" name="opcion" value="1puerta-casoneto"> 1 puerta casoneto</label>
-    <p>2 elementos</p>
-    <label><input type="radio" name="opcion" value="2puertas"> 2 puertas</label>
-    <label><input type="radio" name="opcion" value="1puerta-1fijo"> 1 puerta y 1 fijo</label>
-    <p>3 elementos</p>
-    <label><input type="radio" name="opcion" value="3puertas"> 3 puertas con arrastres</label>
-    <label><input type="radio" name="opcion" value="2puertas-1fijo"> 2 puertas y 1 fijo</label>
-    <label><input type="radio" name="opcion" value="1puerta-2fijos"> 1 puerta y 2 fijos</label>
-    <p>4 elementos</p>
-    <label><input type="radio" name="opcion" value="2puertas-2fijos"> 2 puertas 2 fijos</label>
-    <label><input type="radio" name="opcion" value="3puertas-1fijo"> 3 puertas y 1 fijo</label>
-    <label><input type="radio" name="opcion" value="4puertas"> 4 puertas con arrastres</label>
-    <br>
-    <br>
-    <p>Seleccionar una opción antes de continuar</p>
-    <div class="botones-formulario">
-      <button type="button" onclick="anteriorFormulario(3)" class="btn">Atrás</button>
-      <button type="button" onclick="siguienteFormulario(3)" class="btn">Siguiente</button>
+
+    <div class="grid">
+      <label class="card">
+        <input type="radio" name="opcion" value="1puerta" required>
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta.webp" alt="1 puerta">
+          <h3>1 puerta</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="1puerta-casoneto">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1PuertaCasso.webp" alt="1 puerta con casoneto">
+          <h3>1 puerta con casoneto</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="2puertas">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puertas.webp" alt="2 puertas">
+          <h3>2 puertas</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="1puerta-1fijo">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta1Fijo.webp" alt="1 puerta y 1 fijo">
+          <h3>1 puerta y 1 fijo</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="3puertas">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr3Puertas.webp" alt="3 puertas con arrastres">
+          <h3>3 puertas con arrastres</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="2puertas-1fijo">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puertas1Fijo.webp" alt="2 puertas y 1 fijo">
+          <h3>2 puertas y 1 fijo</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="1puerta-2fijos">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta2Fijos.webp" alt="1 puerta y 2 fijos">
+          <h3>1 puerta y 2 fijos</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="2puertas-2fijos">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puerta2Fijos.webp" alt="2 puertas y 2 fijos">
+          <h3>2 puertas y 2 fijos</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="3puertas-1fijo">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr3Puertas1Fijo.webp" alt="3 puertas y 1 fijo">
+          <h3>3 puertas y 1 fijo</h3>
+        </div>
+      </label>
+      <label class="card">
+        <input type="radio" name="opcion" value="4puertas">
+        <div class="visual">
+          <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr4Puertas.webp" alt="4 puertas con arrastres">
+          <h3>4 puertas con arrastres</h3>
+        </div>
+      </label>
     </div>
-    </form>
+
+    <div class="acciones">
+      <span class="hint-accion">Seleccionar una opción antes de continuar</span>
+      <button type="button" onclick="anteriorFormulario(3)" class="btn">⪡ Atrás</button>
+      <button type="button" onclick="siguienteFormulario(3)" class="btn">Siguiente ⪢</button>
+    </div>
+  </form>
 
 
   <!-- Formulario 4 -->
-
 <form id="form4" class="formulario">
   <h2>Tipología de Fijo</h2>
-  <div class="opciones-imagenes">
-    <label class="opcion" id="opcion-3paredes">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3.png" alt="3 paredes" width="150">
-      <p>3 paredes</p>
+  <div class="grid">
+    <label class="card" id="opcion-3paredes">
       <input type="radio" name="imagen" value="0" required>
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/FijoPared3.png" alt="3 paredes">
+        <h3>3 paredes</h3>
+      </div>
     </label>
-    <label class="opcion" id="opcion-3paredesU">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared3U.png" alt="3 paredes U" width="150">
-      <p>3 paredes U</p>
+    <label class="card" id="opcion-3paredesU">
       <input type="radio" name="imagen" value="A">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/FijoPared3U.png" alt="3 paredes U">
+        <h3>3 paredes U</h3>
+      </div>
     </label>
-    <label class="opcion" id="opcion-4paredes">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/FijoPared4.png" alt="4 paredes" width="150">
-      <p>4 paredes</p>
+    <label class="card" id="opcion-4paredes">
       <input type="radio" name="imagen" value="B">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/FijoPared4.png" alt="4 paredes">
+        <h3>4 paredes</h3>
+      </div>
     </label>
   </div>
-  <br>
-  <p>Seleccionar una opción antes de continuar</p>
 
-  <div class="botones-formulario">
-    <button type="button" onclick="anteriorFormulario(4)" class="btn">Atrás</button>
-    <button type="button" onclick="siguienteFormulario(4)" class="btn">Siguiente</button>
+  <div class="acciones">
+    <span class="hint-accion">Seleccionar una opción antes de continuar</span>
+    <button type="button" onclick="anteriorFormulario(4)" class="btn">⪡ Atrás</button>
+    <button type="button" onclick="siguienteFormulario(4)" class="btn">Siguiente ⪢</button>
   </div>
+  <div class="version-tag">V.03</div>
 </form>
 
 
   <!-- Formulario 5    DIVISIONES   -->
 <form id="form5" class="formulario">
-  <h2>Divisiones Adhesivas 13x3</h2>
-  <div class="opciones-imagenes">
-    <label class="opcion">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_0.png" alt="Sin Img" width="150"><br>
-      <p>Sin embellecedor</p>
+  <h2>Divisiones Adhesivas 13×3</h2>
+  <div class="grid">
+    <label class="card">
       <input type="radio" name="NumDiv" value="0" required>
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_0.png" alt="Sin embellecedor">
+        <h3>Sin embellecedor</h3>
+      </div>
     </label>
-    <label class="opcion">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_1.png" alt="Sin Img" width="150"><br>
-      <p>Modelo A</p>
+    <label class="card">
       <input type="radio" name="NumDiv" value="2">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_1.png" alt="Modelo A">
+        <h3>Modelo A</h3>
+      </div>
     </label>
-    <label class="opcion">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_2.png" alt="Sin Img" width="150"><br>
-      <p>Modelo B</p>
+    <label class="card">
       <input type="radio" name="NumDiv" value="4">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_2.png" alt="Modelo B">
+        <h3>Modelo B</h3>
+      </div>
     </label>
-    <label class="opcion">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3.png" alt="Sin Img" width="150"><br>
-      <p>Modelo C</p>
+    <label class="card">
       <input type="radio" name="NumDiv" value="6">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_3.png" alt="Modelo C">
+        <h3>Modelo C</h3>
+      </div>
     </label>
-    <label class="opcion">
-      <img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Divisiones_3_Plus.png" alt="Sin Img" width="150"><br>
-      <p>Modelo D</p>
+    <label class="card">
       <input type="radio" name="NumDiv" value="D">
+      <div class="visual">
+        <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Divisiones_3_Plus.png" alt="Modelo D">
+        <h3>Modelo D</h3>
+      </div>
     </label>
   </div>
-  <br>
-  <p>Seleccionar una opción antes de continuar</p>
 
-  <div class="botones-formulario">
-    <button type="button" onclick="anteriorFormulario(5)" class="btn">Atrás</button>
-    <button type="button" onclick="siguienteFormulario(5)" class="btn">Siguiente</button>
+  <div class="acciones">
+    <span class="hint-accion">Seleccionar una opción antes de continuar</span>
+    <button type="button" onclick="anteriorFormulario(5)" class="btn">⪡ Atrás</button>
+    <button type="button" onclick="siguienteFormulario(5)" class="btn">Siguiente ⪢</button>
   </div>
+  <div class="version-tag">V.03</div>
 </form>
 
   <!-- Formulario 6 -->
-<!-- Formulario 6 -->
 <form id="form6" class="formulario">
   <h2>Medidas de Instalación</h2>
-  
-  <!-- Primera fila: Alto, Acabado y Color (3 columnas) -->
-  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 5px;">
-    <div style="width: 200px;">
-      <label for="Alto">Alto de hueco<br>
-        <input type="number" id="Alto" name="Alto" required min="1" style="width: 100%; box-sizing: border-box; padding: 8px;">
-      </label>
-    </div>
-    <div style="width: 200px;">
-      <label for="AcabadoAluminio">Acabado Aluminio<br>
-        <select id="AcabadoAluminio" name="AcabadoAluminio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
-          <option value="Blanco mate 9003">Blanco mate 9003</option>
-          <option value="Negro mate texturado">Negro mate texturado</option>
-          <option value="Acero corten">Acero corten</option>
-          <option value="Chapa roble barnizada">Chapa roble barnizada</option>
-          <option value="Chapa nogal barnizada">Chapa nogal barnizada</option>
-          <option value="Acabado Especial">Acabado Especial</option>
-        </select><br><br>
-      </label>
-    </div>
-    <div style="width: 200px;">
-      <label for="ColorVidrio">Color de vidrio<br>
-        <select id="ColorVidrio" name="ColorVidrio" required style="width: 100%; box-sizing: border-box; padding: 8px;">
-          <option value="TRANSPARENTE">Transparente</option>
-          <option value="MATE">Mate</option>
-          <option value="BRONCE">Bronce</option>
-          <option value="GRIS">Gris</option>
-          <option value="GRIS OSCURO">Gris oscuro</option>
-          <option value="ESPECIAL">Especial</option>
-        </select><br>
-      </label>
-    </div>
-  </div>
-  
-  <!-- Segunda fila: Solo Ancho (1 columna a la izquierda) -->
-  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 10px">
-    <div style="width: 200px;">
-      <label for="Ancho">Ancho de hueco<br>
-        <input type="number" id="Ancho" name="Ancho" required min="1" style="width: 100%; box-sizing: border-box; padding: 8px;"><br><br>
-      </label>
-    </div>
-    <div style="width: 200px;"></div> <!-- Espacio vacío a la derecha -->
-    <div style="width: 200px;"></div> <!-- Espacio vacío a la derecha-->
-  </div>
-  <!-- Tercera fila: Cliente y Nº Pedido -->
-  <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px; margin-top: 30px;">    <!-- Margin-top es la distacia a la linea anterior    -->
-    <label style="width: 450px;"> <!-- 200 + 50 + 200 = 450px para ocupar 2 columnas -->
-      Cliente<br>
-      <input type="text" name="cliente" required style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
-    </label>
-    <label style="width: 200px;">
-      Nº Pedido<br>
-      <input type="text" name="numPedido" required style="width: 100%; box-sizing: border-box; padding: 8px; height: 30px; font-size: 16px;">
-    </label>
-  </div>
-  
-    <!-- Cuarta fila: Comentarios (línea completa) -->
-    <div style="display: flex; justify-content: center;">
-      <label style="width: 700px;"> <!-- 200×3 + 50×2 = 700px -->
-        Comentarios<br>
-        <textarea name="comentarios" rows="2" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px; resize: vertical; font-family: inherit;"></textarea>
-      </label>
-    </div>
-    <br><br>
-    <div style="display: flex; gap: 50px; justify-content: center; margin-bottom: 20px;">
-  <label style="width: 200px;">
-    Nº de conjuntos a fabricar<br>
-    <input type="number" name="conjuntos" required min="1" value="1" style="width: 100%; box-sizing: border-box; padding: 8px; font-size: 16px;">
-  </label>
-  <div style="width: 450px;"></div> <!-- espacio vacío -->
-</div>
- <br>
-    <p>Seleccionar una opción antes de continuar</p>
-    <div class="botones-formulario" style="margin-top: 40px;">
-      <button type="button" onclick="anteriorFormulario(6)" class="btn">Atrás</button>
-      <button type="button" onclick="finalizarFlujo()" class="btn">Siguiente</button>
-    </div>
 
-  </form>
+  <div class="form6-layout">
+
+    <!-- Columna izquierda: imagen representativa del flujo/opción -->
+    <aside class="form6-imagen">
+      <img id="form6-img" src="" alt="">
+
+      <!-- Bloque 1: Título de la imagen (form3) -->
+      <div class="form6-imagen-bloque" id="form6-bloque-titulo">
+        <p class="form6-imagen-titulo" id="form6-img-titulo"></p>
+      </div>
+
+      <!-- Bloque 2: Alto (guía form2) -->
+      <div class="form6-imagen-bloque" id="form6-bloque-alto">
+        <p class="form6-imagen-titulo" id="form6-img-titulo-guia"></p>
+        <p class="form6-imagen-guia" id="form6-img-guia"></p>
+      </div>
+
+      <!-- Bloque 3: Ancho (frase opción form3) -->
+      <div class="form6-imagen-bloque" id="form6-bloque-ancho">
+        <p class="form6-imagen-frase" id="form6-img-frase"></p>
+      </div>
+
+      <!-- Bloque 4: Selecciones técnicas (form4 + form5) -->
+      <div class="form6-imagen-bloque" id="form6-bloque-tecnico">
+        <p class="form6-imagen-tecnico" id="form6-img-bastidor"></p>
+        <p class="form6-imagen-tecnico" id="form6-img-embellecedor"></p>
+      </div>
+    </aside>
+
+    <!-- Columna derecha: contenido original -->
+    <div class="form6-contenido">
+
+  <!-- Fila 1: Alto · Acabado · Color -->
+  <div class="form6-grid">
+    <div>
+      <label for="Alto">Alto de hueco</label>
+      <input type="number" id="Alto" name="Alto" required min="1">
+    </div>
+    <div>
+      <label for="AcabadoAluminio">Acabado Aluminio</label>
+      <select id="AcabadoAluminio" name="AcabadoAluminio" required>
+        <option value="Blanco mate 9003">Blanco mate 9003</option>
+        <option value="Negro mate texturado">Negro mate texturado</option>
+        <option value="Acero corten">Acero corten</option>
+        <option value="Chapa roble barnizada">Chapa roble barnizada</option>
+        <option value="Chapa nogal barnizada">Chapa nogal barnizada</option>
+        <option value="Acabado Especial">Acabado Especial</option>
+      </select>
+    </div>
+    <div>
+      <label for="ColorVidrio">Color de vidrio</label>
+      <select id="ColorVidrio" name="ColorVidrio" required>
+        <option value="TRANSPARENTE">Transparente</option>
+        <option value="MATE">Mate</option>
+        <option value="BRONCE">Bronce</option>
+        <option value="GRIS">Gris</option>
+        <option value="GRIS OSCURO">Gris oscuro</option>
+        <option value="ESPECIAL">Especial</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Fila 2: Ancho (1 columna) -->
+  <div class="form6-grid">
+    <div>
+      <label for="Ancho">Ancho de hueco</label>
+      <input type="number" id="Ancho" name="Ancho" required min="1">
+    </div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Fila 3: Cliente · Nº Pedido -->
+  <div class="form6-grid-cliente">
+    <label>
+      Cliente
+      <input type="text" name="cliente">
+    </label>
+    <label>
+      Nº Pedido
+      <input type="text" name="numPedido">
+    </label>
+  </div>
+
+  <!-- Fila 4: Comentarios -->
+  <div class="form6-comentarios">
+    <label>
+      Comentarios
+      <textarea name="comentarios" rows="2"></textarea>
+    </label>
+  </div>
+
+  <!-- Fila 5: Nº de conjuntos -->
+  <div class="form6-conjuntos">
+    <label>
+      Nº de conjuntos a fabricar
+      <input type="number" name="conjuntos" required min="1">
+    </label>
+    <div></div>
+  </div>
+
+    </div><!-- /.form6-contenido -->
+  </div><!-- /.form6-layout -->
+
+  <div class="acciones" style="margin-top: 30px;">
+    <span class="hint-accion">Cumplimentar todos los campos antes de continuar</span>
+    <button type="button" onclick="anteriorFormulario(6)" class="btn">⪡ Atrás</button>
+    <button type="button" onclick="finalizarFlujo()" class="btn">Generar informe ⪢</button>
+  </div>
+</form>
 
   <!-- -->
   <!-- &&&&&&&&&&&&&&&&&&&&&     INFORME 1  &&&&&&&&&&&&&&&&&&&&&&& -->
+
+  <!-- BARRA FIJA DE BOTONES DEL INFORME (header) -->
+  <div id="botones-accion-informes">
+    <img class="barra-logo" src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png" alt="Adinor">
+    <button id="btn-volver" onclick="cerrarInforme()" class="btn">⪡ Atrás</button>
+    <button id="btn-descargar-pdf" class="btn">📄 PDF con precios</button>
+    <button id="btn-pdf-sin" class="btn">📄 PDF sin precios</button>
+    <button id="btn-nueva-config" onclick="limpiarDatos()" class="btn">Nueva Configuración</button>
+  </div>
+
   <!-- CONTENEDOR DEL INFORME -->
   <div id="informe-container">
     <div class="informe-header">
-      <h1>PA CORREDERA VIDRIO - HOJA FABRICACION</h1>
+      <div class="informe-header-top">
+        <img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+        <h1>PA Corredera Vidrio · Hoja Fabricación</h1>
+      </div>
       <div class="info-basica">
         <div class="campo-informe">
           <label>Cliente</label>
@@ -866,7 +1146,10 @@
 <div id="hoja-pedido-container" style="display:none; max-width:900px; margin:40px auto; padding:40px; background:white; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,.1);">
 
 <div class="informe-header">
-  <h1>PA CORREDERA VIDRIO - HOJA DE PEDIDO</h1>
+  <div class="informe-header-top">
+    <img class="informe-header-logo" src="https://jdurba.github.io/General/img/LOGO_2025_Negro.svg" alt="Logo">
+    <h1>PA Corredera Vidrio · Hoja de Pedido</h1>
+  </div>
   <div class="info-basica">
     <div class="campo-informe"><label>Cliente</label><span id="hp-cliente" class="span-dato"></span></div>
     <div class="campo-informe"><label>Nº Pedido</label><span id="hp-num-pedido" class="span-dato"></span></div>
@@ -956,12 +1239,6 @@
   </table>
 </div>
 
-<div class="botones-informe">
-  <!-- <button type="button" onclick="volverAlInicio()" class="btn">← Volver al Inicio</button>   -->
-   <button type="button" onclick="volverAlInicio()" class="btn">← Volver al Inicio</button>
-   <button id="btn-descargar-pdf" class="btn">📄 Descargar PDF</button>
-</div>
-
 </div>
 
 
@@ -970,12 +1247,13 @@
 <!-- *********************************************************************************-->
 <!-- *********************************************************************************-->
 
+</div><!-- /.cfg-content -->
+
 <!-- ========================================================= -->
 <!-- ✅ PARTE 3: SCRIPTS (EN ESTE ORDEN EXACTO) -->
 <!-- ========================================================= -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/SalidaPDF.js"></script> <!-- TU ARCHIVO -->
+<script src="js/jspdf.umd.min.js"></script>
+<script src="js/SalidaPDF.js"></script>
 
 
 <script type="module">
@@ -987,6 +1265,70 @@
 
   // 1️⃣ DECLARAR PRIMERO las variables globales que se usan en todo el archivo
   let datosFormularios = {};  // ← USA let, NO const, y declárala ANTES
+
+  // ── Recibir flujo desde index.html (si lo hay) ──
+  // El index escribe localStorage.flujoSeleccionado ('1', '3' o '4' para este configurador)
+  // y datosFormularios.form1.imagen. Se precarga aquí para que la app arranque ya posicionada.
+  // ── Recibir flujo desde index.html ──
+  // El index escribe localStorage.flujoSeleccionado ('1', '3' o '4' para este configurador)
+  // y, opcionalmente, datosFormularios.form1.imagen. Aquí completamos todo el setup que
+  // antes hacía Form1: cargar datos previos, aplicar valores por defecto del flujo y
+  // activar el primer formulario que corresponde al flujo recibido.
+  // Mapa flujo → primer formulario visible (mismo orden que las rutas de calcularDestino):
+  //   Flujo 1 (Puerta corredera, frente completo) → Form2
+  //   Flujo 3 (Puerta corredera, elemento independiente) → Form5
+  //   Flujo 4 (Fijo independiente) → Form4
+  const PRIMER_FORM_POR_FLUJO = { '1': 2, '3': 5, '4': 4 };
+
+  (function precargarDesdeIndex() {
+    try {
+      const flujoIni = localStorage.getItem('flujoSeleccionado');
+      const datosIni = JSON.parse(localStorage.getItem('datosFormularios') || '{}');
+      if (datosIni && typeof datosIni === 'object') datosFormularios = datosIni;
+
+      // Garantizar que form1.imagen contiene el flujoId (todo el JS lo lee de ahí)
+      if (flujoIni && ['1','3','4'].includes(flujoIni)) {
+        if (!datosFormularios.form1) datosFormularios.form1 = {};
+        datosFormularios.form1.imagen = flujoIni;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const flujoId = datosFormularios.form1?.imagen;
+        if (!flujoId || !PRIMER_FORM_POR_FLUJO[flujoId]) {
+          console.warn('Flujo no recibido o no soportado en PAMontada:', flujoId);
+          return;
+        }
+
+        // Aplicar valores por defecto del flujo (lo que antes hacía siguienteFormulario(1))
+        try {
+          if (typeof FLUJOS !== 'undefined' && FLUJOS[flujoId]?.valoresPorDefecto) {
+            guardarValoresPorDefecto(FLUJOS[flujoId].valoresPorDefecto, true);
+          }
+        } catch (e) { console.warn('No se aplicaron valores por defecto:', e); }
+
+        // Configurar Form6 según el flujo (etiquetas Alto/Ancho)
+        try { configurarForm6SegunFlujo(flujoId); } catch (e) {}
+
+        // Activar el primer formulario del flujo
+        const primerForm = PRIMER_FORM_POR_FLUJO[flujoId];
+        document.querySelectorAll('.formulario.active').forEach(f => f.classList.remove('active'));
+        const formEl = document.getElementById(`form${primerForm}`);
+        if (formEl) formEl.classList.add('active');
+
+        // Si el primer form es Form4, aplicar el filtro de tipologías
+        if (primerForm === 4) aplicarFiltroForm4SegunFlujo();
+      });
+    } catch (e) {
+      console.warn('No se pudo precargar el flujo desde localStorage:', e);
+    }
+  })();
+
+  // ── Volver al submenú PA del index ──
+  function volverAlMenu() {
+    localStorage.setItem('regresarASubMenuPA', '1');
+    window.location.href = '../index.html';
+  }
+  window.volverAlMenu = volverAlMenu;
 
 
 //   MAPEOS PARA LA FUNCION
@@ -1023,6 +1365,130 @@
     };
 
 // ==========================================
+// MAPA DE IMÁGENES PARA FORM6 (vista previa)
+// ==========================================
+// Las claves coinciden con datosFormularios.form3.opcion
+// Rutas hardcodeadas: las imágenes del HTML estático usan la misma ruta
+// y no se centraliza por simplicidad (ver nota en form3).
+const IMG_FORM6 = {
+  // Flujo 1: opciones de form3
+  '1puerta':         'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta.webp',
+  '1puerta-casoneto':'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1PuertaCasso.webp',
+  '2puertas':        'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puertas.webp',
+  '1puerta-1fijo':   'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta1Fijo.webp',
+  '3puertas':        'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr3Puertas.webp',
+  '2puertas-1fijo':  'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puertas1Fijo.webp',
+  '1puerta-2fijos':  'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr1Puerta2Fijos.webp',
+  '2puertas-2fijos': 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr2Puerta2Fijos.webp',
+  '3puertas-1fijo':  'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr3Puertas1Fijo.webp',
+  '4puertas':        'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Corr4Puertas.webp',
+  // Flujos 3 y 4: imágenes propias (form3 nunca se ve, se asigna por defecto)
+  'PuertaUnica':     'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/CorrSueltoPuerta.webp',
+  'FijoUnico':       'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/CorrSueltoFijo.webp'
+};
+
+// Texto descriptivo de la guía (Form2). Solo aplica en flujo 1.
+const TEXTO_GUIA = {
+  'SK112': 'Medida alto de hueco es desde la guía al suelo',
+  'SK111': 'Medida alto de hueco techo a suelo la guía incluida',
+  'SK119': 'Medida alto de hueco es desde la guía al suelo'
+};
+
+// Frase descriptiva bajo la imagen, según la opción de form3.
+const FRASE_REPARTO = 'El ancho de los elementos es igual para todos, es el resultado de dividir el ancho de hueco entre número de elementos.';
+const FRASES_FORM6 = {
+  '1puerta':         'El ancho de la puerta es 24 mm mayor que el ancho de hueco',
+  '1puerta-casoneto':'El ancho de la puerta es 12 mm mayor que el ancho de hueco',
+  '2puertas':        FRASE_REPARTO,
+  '1puerta-1fijo':   FRASE_REPARTO,
+  '3puertas':        FRASE_REPARTO,
+  '2puertas-1fijo':  FRASE_REPARTO,
+  '1puerta-2fijos':  FRASE_REPARTO,
+  '2puertas-2fijos': FRASE_REPARTO,
+  '3puertas-1fijo':  FRASE_REPARTO,
+  '4puertas':        FRASE_REPARTO,
+  'PuertaUnica':     'La puerta se fabricará con las medidas indicadas.',
+  'FijoUnico':       'El fijo se fabricará con las medidas indicadas.'
+};
+
+function actualizarImagenForm6() {
+  const img            = document.getElementById('form6-img');
+  const titulo         = document.getElementById('form6-img-titulo');
+  const tituloGuia     = document.getElementById('form6-img-titulo-guia');
+  const guia           = document.getElementById('form6-img-guia');
+  const frase          = document.getElementById('form6-img-frase');
+  const bastidor       = document.getElementById('form6-img-bastidor');
+  const embellecedor   = document.getElementById('form6-img-embellecedor');
+  const bloqueTitulo   = document.getElementById('form6-bloque-titulo');
+  const bloqueAlto     = document.getElementById('form6-bloque-alto');
+  const bloqueAncho    = document.getElementById('form6-bloque-ancho');
+  const bloqueTecnico  = document.getElementById('form6-bloque-tecnico');
+  if (!img || !titulo || !tituloGuia || !guia || !frase || !bastidor || !embellecedor) return;
+
+  const opcion   = datosFormularios.form3?.opcion;
+  const flujoId  = datosFormularios.form1?.imagen;
+  const src      = IMG_FORM6[opcion];
+
+  // Helper: extrae el <h3> del card seleccionado
+  const tituloDeCard = (formSel, valor) => {
+    if (!valor) return '';
+    const input = document.querySelector(`${formSel} input[value="${valor}"]`);
+    return input?.closest('label')?.querySelector('h3')?.textContent?.trim() || '';
+  };
+
+  // Imagen
+  if (src) {
+    img.src = src;
+    img.alt = opcion;
+    img.style.display = '';
+  } else {
+    img.removeAttribute('src');
+    img.style.display = 'none';
+  }
+
+  // Bloque 1: TÍTULO IMAGEN (form3)
+  const textoTitulo = tituloDeCard('#form3', opcion)
+                      || (opcion === 'PuertaUnica' ? 'Puerta independiente'
+                          : opcion === 'FijoUnico' ? 'Fijo independiente'
+                          : '');
+  titulo.textContent = textoTitulo;
+  bloqueTitulo.style.display = textoTitulo ? '' : 'none';
+
+  // Bloque 2: ALTO (guía form2) — solo flujo 1
+  if (flujoId === '1') {
+    const guiaSel = datosFormularios.form2?.guia;
+    tituloGuia.textContent = tituloDeCard('#form2', guiaSel);
+    guia.textContent = TEXTO_GUIA[guiaSel] || '';
+    bloqueAlto.style.display = (tituloGuia.textContent || guia.textContent) ? '' : 'none';
+  } else {
+    tituloGuia.textContent = '';
+    guia.textContent = '';
+    bloqueAlto.style.display = 'none';
+  }
+
+  // Bloque 3: ANCHO (frase opción form3)
+  const fraseTexto = FRASES_FORM6[opcion] || '';
+  frase.textContent = fraseTexto;
+  bloqueAncho.style.display = fraseTexto ? '' : 'none';
+
+  // Bloque 4: SELECCIONES TÉCNICAS (form4 + form5)
+  // Usamos directamente los textos ya extraídos al guardar (textoSeleccionado / division.texto)
+  const txtBastidor     = datosFormularios.form4?.textoSeleccionado || '';
+  const txtEmbellecedor = datosFormularios.form5?.division?.texto    || '';
+  bastidor.textContent     = txtBastidor     ? `Bastidor: ${txtBastidor}`         : '';
+  embellecedor.textContent = txtEmbellecedor ? `Embellecedor: ${txtEmbellecedor}` : '';
+  bastidor.style.display     = bastidor.textContent ? '' : 'none';
+  embellecedor.style.display = embellecedor.textContent ? '' : 'none';
+  bloqueTecnico.style.display = (bastidor.textContent || embellecedor.textContent) ? '' : 'none';
+
+  // Quitar separador al primer bloque visible
+  const bloques = [bloqueTitulo, bloqueAlto, bloqueAncho, bloqueTecnico];
+  bloques.forEach(b => b.classList.remove('sin-separador'));
+  const primerVisible = bloques.find(b => b.style.display !== 'none');
+  if (primerVisible) primerVisible.classList.add('sin-separador');
+}
+
+// ==========================================
 // SISTEMA DE FLUJOS DE NAVEGACIÓN
 // ==========================================
 
@@ -1032,16 +1498,6 @@ const FLUJOS = {
     requiereFijo: true,   // Tiene bifurcación en Form3
     valoresPorDefecto: {} // No usa valores por defecto (todo manual)
   },
-  
-  '2': { // Mensaje común para los bloqueados
-      rutaBase: [1],
-      valoresPorDefecto: {}
-  },
-
-  '5': { // Mensaje común para los bloqueados
-      rutaBase: [1],
-      valoresPorDefecto: {}
-  }, 
 
   '3': { // Elemento independiente → PUERTA ÚNICA
     rutaBase: [1, 5, 6], // Salta directo a Form6
@@ -1062,9 +1518,6 @@ const FLUJOS = {
   }
 };
 
-let flujoActual = null; // Rastrea el flujo activo
-
-
 
 function calcularDestino(flujoId, formActual, direccion) {
   // Tabla de rutas (solo navegación, sin valores por defecto)
@@ -1077,7 +1530,7 @@ function calcularDestino(flujoId, formActual, direccion) {
     '4': { avance: {1:4, 4:5, 5:6}, retroceso: {6:5, 5:4, 4:1} }
   };
   const ruta = rutas[flujoId];
-  if (!ruta) return null; // Flujo no definido o bloqueado (2)
+  if (!ruta) return null; // Flujo no definido
 
   // Manejo de la BIFURCACIÓN CRÍTICA en Form3 (flujo 1)
   if (flujoId === '1' && formActual === 3 && direccion === 'avance') {
@@ -1166,50 +1619,32 @@ function guardarValoresPorDefecto(valoresPorDefecto, forzar = false) {
 }
 
 
-
 function configurarForm6SegunFlujo(valorForm1) {
-  const labelAlto = document.querySelector('#form6 label[for="Alto"]');
+  const labelAlto  = document.querySelector('#form6 label[for="Alto"]');
   const labelAncho = document.querySelector('#form6 label[for="Ancho"]');
-  
   if (!labelAlto || !labelAncho) return;
-  
-  const inputAlto = document.getElementById('Alto');
-  const inputAncho = document.getElementById('Ancho');
-  
-  // ✅ DETECTAR CAMBIO DE FLUJO usando la variable global existente
-  const cambioFlujo = flujoActual !== null && flujoActual !== valorForm1;
-  
-  // ✅ Preservar valores solo si NO hay cambio de flujo
-  const valorAlto = cambioFlujo ? '' : (inputAlto?.value || '');
-  const valorAncho = cambioFlujo ? '' : (inputAncho?.value || '');
-  
-  let textoAlto, textoAncho, color;
-  
-  switch(valorForm1) {
+
+  let textoAlto, textoAncho;
+  switch (valorForm1) {
     case '3': // Puerta única
-      textoAlto = 'Alto de la puerta (mm)';
+      textoAlto  = 'Alto de la puerta (mm)';
       textoAncho = 'Ancho de la puerta (mm)';
-      color = 'blue';
       break;
     case '4': // Fijo único
-      textoAlto = 'Alto del fijo (mm)';
+      textoAlto  = 'Alto del fijo (mm)';
       textoAncho = 'Ancho del fijo (mm)';
-      color = 'green';
       break;
-    default: // Flujo normal (1)
-      textoAlto = 'Alto de hueco (mm)';
+    default:  // Flujo 1
+      textoAlto  = 'Alto de hueco (mm)';
       textoAncho = 'Ancho de hueco (mm)';
-      color = 'black';
   }
-  
-  const estiloColor = color ? ` style="color: ${color}"` : '';
-  
-  labelAlto.innerHTML = `<span${estiloColor}>${textoAlto}</span><br>
-    <input type="number" id="Alto" name="Alto" required min="1" value="${valorAlto}" style="width: 100%; box-sizing: border-box; padding: 8px;">`;
-  
-  labelAncho.innerHTML = `<span${estiloColor}>${textoAncho}</span><br>
-    <input type="number" id="Ancho" name="Ancho" required min="1" value="${valorAncho}" style="width: 100%; box-sizing: border-box; padding: 8px;"><br><br>`;
+
+  // Solo actualizamos el TEXTO del label, sin tocar el input (que es hermano)
+  labelAlto.textContent  = textoAlto;
+  labelAncho.textContent = textoAncho;
 }
+
+
 
 
     // Función segura para establecer textContent
@@ -1246,7 +1681,9 @@ function guardarDatosFormulario(numForm) {
         if (!selected) return;
 
         const value = selected.value; // '0', 'A' o 'B'
-        const labelText = selected.parentElement.querySelector('p').textContent.trim();
+        const label = selected.closest('label');
+        const textoEl = label?.querySelector('h3, p');
+        const labelText = (textoEl?.textContent || '').trim();
         const codigoBastidor = CODIGOS_BASTIDOR[value];
         
         datosFormularios.form4 = {
@@ -1265,7 +1702,9 @@ function guardarDatosFormulario(numForm) {
         if (!selected) return;
 
         const value = selected.value; // "0", "2", "4", "6", "D"
-        const labelText = selected.parentElement.querySelector('p').textContent.trim();
+        const label = selected.closest('label');
+        const textoEl = label?.querySelector('h3, p');
+        const labelText = (textoEl?.textContent || '').trim();
         const codigoEmb = CODIGOS_EMBELLECEDOR[value];    // Transformar a código de embellecedor
   
         datosFormularios.form5 = {
@@ -1352,7 +1791,7 @@ function finalizarFlujo() {
     
   } catch (error) {
     console.error('💥 ERROR en finalizarFlujo():', error.message);
-    alert(`Error al finalizar: ${error.message}`);
+    aviso(`Error al finalizar: ${error.message}`);
   }
 }
 
@@ -1361,16 +1800,18 @@ function anteriorFormulario(actual) {
     const formActual = document.getElementById(`form${actual}`);
     const flujoId = datosFormularios.form1?.imagen;
     const destino = calcularDestino(flujoId, actual, 'retroceso');
-    
-    if (!destino) {
-      console.warn(`No hay destino hacia atrás desde Form${actual}`);
+
+    // El Form1 ya no existe (su rol lo cumple el menú del index).
+    // Si el retroceso apunta a Form1 o no hay destino, volvemos al menú.
+    if (!destino || destino === 1) {
+      volverAlMenu();
       return;
     }
-    
+
     // ✅ SOLO NAVEGAR (sin tocar datosFormularios)
     formActual.classList.remove('active');
     document.getElementById(`form${destino}`).classList.add('active');
-    
+
     if (destino === 4) aplicarFiltroForm4SegunFlujo();
   } catch (error) {
     console.error('💥 ERROR en anteriorFormulario():', error.message);
@@ -1385,61 +1826,7 @@ function siguienteFormulario(actual) {
     guardarDatosFormulario(actual);
     
     const flujoId = datosFormularios.form1?.imagen;
-    
 
-    // ✅ AL SALIR DE FORM1: Limpiar y aplicar valores por defecto
-    if (actual === 1) {
-      const flujo = FLUJOS[flujoId];
-      
-      // ✅ SI CAMBIÓ EL FLUJO: Limpiar formularios saltados
-      if (flujoActual !== flujoId) {
-        console.log(`🔄 Cambio de flujo detectado: ${flujoActual} → ${flujoId}`);
-        
-        // ✅ LIMPIAR FORMULARIOS SALTADOS
-        if (flujo.saltados && flujo.saltados.length > 0) {
-          flujo.saltados.forEach(numForm => {
-            const formKey = `form${numForm}`;
-            delete datosFormularios[formKey];
-            console.log(`🗑️  ${formKey} eliminado (formulario saltado)`);
-          });
-        }
-        
-        // ✅ APLICAR VALORES POR DEFECTO
-        if (flujo.valoresPorDefecto && Object.keys(flujo.valoresPorDefecto).length > 0) {
-          guardarValoresPorDefecto(flujo.valoresPorDefecto, true);
-          console.log(`✅ Valores por defecto aplicados para flujo ${flujoId}`);
-        }
-      }
-      
-          // ✅ REDIRECCIÓN A 'PAMontAbatible.html para opciones 2
-    if (flujoId === '2') {
-      // Guardar el flujoId en localStorage para que pruebabotones.html lo recupere
-      localStorage.setItem('flujoSeleccionado', flujoId);
-      
-      // Guardar todos los datos del formulario por si los necesitas
-      localStorage.setItem('datosFormularios', JSON.stringify(datosFormularios));
-
-      alert('⚠️ En fase de desarrollo. NO VALIDO para pedidos. Mensaje especialmente dirigido a Guillemo Espinosa');
-      
-      // Redirigir a pruebabotones.html
-      window.location.href = 'PAMontAbatible.html';
-      return;
-    }
-
-          // ✅ De momento nada
-    if (flujoId === '5') {
-
-      alert('⚠️ Murete En fase de desarrollo. No valido para pedidos.');
-
-      return;
-    }
-
-
-      // ✅ Configurar Form6 y actualizar flujo actual
-      configurarForm6SegunFlujo(flujoId);
-      flujoActual = flujoId;
-    }
-    
     const destino = calcularDestino(flujoId, actual, 'avance');
     
     if (!destino) {
@@ -1451,91 +1838,75 @@ function siguienteFormulario(actual) {
     document.getElementById(`form${destino}`).classList.add('active');
     
     if (destino === 4) aplicarFiltroForm4SegunFlujo();
+    if (destino === 6) actualizarImagenForm6();
     
   } catch (error) {
     console.error(error.message);
-    alert(error.message);
+    aviso(error.message);
   }
 }
 
 
 function limpiarDatos() {
-  // ========== 1️⃣ RESET COMPLETO DEL OBJETO DE DATOS ==========
+  // ========== 1️⃣ PRESERVAR EL FLUJO (viene del index, no se re-elige aquí) ==========
+  const flujoId = datosFormularios.form1?.imagen || localStorage.getItem('flujoSeleccionado');
+
+  // ========== 2️⃣ RESETEAR DATOS DE FORMS 2-6 (form1 se mantiene con el flujo) ==========
   datosFormularios = {
-    form1: {}, // ← CRÍTICO: limpia también la selección de flujo inicial
-    form2: {},
-    form3: {},
-    form4: {},
-    form5: {},
-    form6: {}
+    form1: flujoId ? { imagen: flujoId } : {},
+    form2: {}, form3: {}, form4: {}, form5: {}, form6: {}
   };
-  
-  // ========== 2️⃣ RESET DE VARIABLES GLOBALES ==========
+
+  // ========== 3️⃣ RESET DE VARIABLES GLOBALES ==========
   window.ultimosDatosInforme = null;
-  window.flujoActual = null; // Si usas variable para tracking del flujo
-  
-  // ========== 3️⃣ LIMPIEZA VISUAL DE FORMULARIOS ==========
-  
-  // --- Form1: Resetear radios/checkboxes principales ---
-  const flujoRadios = document.querySelectorAll('input[name="flujo"]');
-  flujoRadios.forEach(radio => radio.checked = false);
-  
-  // Añade aquí otros campos de form1 si los tienen
-  // Ej: document.getElementById('campo-form1').value = '';
-  
-  // --- Forms 1-6: Resetear todos los inputs ---
-  for (let i = 1; i <= 6; i++) {
+
+  // ========== 4️⃣ LIMPIEZA VISUAL DE FORMULARIOS ==========
+  for (let i = 2; i <= 6; i++) {
     const formElement = document.getElementById(`form${i}`);
     if (formElement) {
-      // Resetear inputs de texto, número, email
       formElement.querySelectorAll('input[type="text"], input[type="number"], input[type="email"], textarea').forEach(input => {
         input.value = '';
       });
-      
-      // Resetear selects
-      formElement.querySelectorAll('select').forEach(select => {
-        select.selectedIndex = 0; // Volver a primera opción
-      });
-      
-      // Resetear radios y checkboxes
+      formElement.querySelectorAll('select').forEach(select => { select.selectedIndex = 0; });
       formElement.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
         input.checked = false;
       });
     }
   }
-  
-  // ========== 4️⃣ OCULTAR INFORMES Y CONTENEDORES ==========
+
+  // ========== 5️⃣ OCULTAR INFORMES Y BLOQUES ==========
   document.getElementById('informe-container').style.display = 'none';
   document.getElementById('hoja-pedido-container').style.display = 'none';
-  
-  // ========== 5️⃣ OCULTAR BLOQUES CONDICIONALES ==========
-  // Lista de todos los bloques que pueden aparecer
-  const bloques = [
-    'bloque-puerta',
-    'bloque-fijo',
-    'hp-bloque-puerta',
-    'hp-bloque-fijo',
-    // Añade aquí cualquier otro bloque visual condicional
-  ];
-  
-  bloques.forEach(id => {
-    const elemento = document.getElementById(id);
-    if (elemento) elemento.classList.remove('active');
+  document.getElementById('botones-accion-informes').classList.remove('visible');
+  document.body.classList.remove('informes-activos');
+  ['bloque-puerta','bloque-fijo','hp-bloque-puerta','hp-bloque-fijo'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
   });
-  
-  // ========== 6️⃣ VOLVER A FORM1 LIMPIO ==========
-  // Ocultar todos los formularios
-  for (let i = 1; i <= 6; i++) {
-    document.getElementById(`form${i}`).classList.remove('active');
+
+  // ========== 6️⃣ REAPLICAR VALORES POR DEFECTO DEL FLUJO Y VOLVER AL PRIMER FORM ==========
+  if (flujoId && typeof FLUJOS !== 'undefined' && FLUJOS[flujoId]?.valoresPorDefecto) {
+    guardarValoresPorDefecto(FLUJOS[flujoId].valoresPorDefecto, true);
   }
-  
-  // Mostrar solo form1
-  document.getElementById('form1').classList.add('active');
-  
-  // Scroll arriba
+  activarPrimerFormDelFlujo();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  
-  console.log('✅ Todos los datos han sido reseteados. Estado inicial limpio.');
+
+  console.log('✅ Datos reseteados. Flujo preservado:', flujoId);
+}
+
+// ── Activa el primer formulario del flujo actual ──
+// Centraliza la lógica antes dispersa en 4 sitios que activaban Form1 (que ya no existe).
+function activarPrimerFormDelFlujo() {
+  const flujoId = datosFormularios.form1?.imagen;
+  const primerForm = PRIMER_FORM_POR_FLUJO[flujoId];
+  if (!primerForm) {
+    console.warn('No se puede activar primer form: flujo no válido', flujoId);
+    return;
+  }
+  document.querySelectorAll('.formulario.active').forEach(f => f.classList.remove('active'));
+  const formEl = document.getElementById(`form${primerForm}`);
+  if (formEl) formEl.classList.add('active');
+  if (primerForm === 4) aplicarFiltroForm4SegunFlujo();
 }
 
 function validarFormulario(form, numForm) {
@@ -1545,18 +1916,31 @@ function validarFormulario(form, numForm) {
   if (primerRadio) {
     const radioSeleccionado = form.querySelector(`input[name="${primerRadio.name}"]:checked`);
     if (!radioSeleccionado) {
-      alert('Por favor, selecciona una opción antes de continuar');
+      aviso('Por favor, selecciona una opción antes de continuar');
       return false;
     }
   }
 
-  // 2️⃣ Validar Form6 (rangos de medidas)
+  // 2️⃣ Validar Form6 (rangos de medidas + conjuntos obligatorio + selects)
   if (numForm === 6) {
+    const acabado = form.querySelector('#AcabadoAluminio')?.value;
+    const vidrio  = form.querySelector('#ColorVidrio')?.value;
+    if (!acabado || !vidrio) {
+      aviso('Selecciona el acabado de aluminio y el color de vidrio');
+      return false;
+    }
+
     const alto = parseInt(form.querySelector('#Alto')?.value);
     const ancho = parseInt(form.querySelector('#Ancho')?.value);
     
     if (!alto || !ancho || alto <= 0 || alto > 3000 || ancho <= 0 || ancho > 6000) {
-      alert('Revisar las medidas (rango válido: 1-3000 mm alto, 1-6000 mm ancho)');
+      aviso('Revisar las medidas (rango válido: 1-3000 mm alto, 1-6000 mm ancho)');
+      return false;
+    }
+
+    const conjuntos = parseInt(form.querySelector('input[name="conjuntos"]')?.value);
+    if (!conjuntos || conjuntos < 1) {
+      aviso('Indica el número de conjuntos a fabricar (mínimo 1)');
       return false;
     }
   }
@@ -1685,8 +2069,8 @@ function realizarCalculos() {
 
     // 3️⃣ DATOS COMUNES
     const guia = datosFormularios.form2?.guia || 'SinGuia';
-    const cliente = datosFormularios.form6?.cliente?.trim() || 'Cliente';
-    const numPedido = datosFormularios.form6?.numPedido?.trim() || 'Sxx000';
+    const cliente = datosFormularios.form6?.cliente?.trim() || '';
+    const numPedido = datosFormularios.form6?.numPedido?.trim() || '';
     const alto = parseInt(datosFormularios.form6?.Alto);
     const ancho = parseInt(datosFormularios.form6?.Ancho);
     const acabado = datosFormularios.form6?.AcabadoAluminio || 'Blanco mate 9003';
@@ -1822,30 +2206,30 @@ function realizarCalculos() {
     
   } catch (error) {
     console.error('💥 ERROR FATAL en realizarCalculos():', error);
-    alert('Error en cálculos: ' + error.message);
+    aviso('Error en cálculos: ' + error.message);
     return null;
   }
 }
 
 // Funciones para iconos de perfiles (imágenes jpg desde GitHub)
 function IconoVert(size = 40) {
-  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/VERTICAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+  return `<img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/VERTICAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
 }
 
 function IconoHoriz(size = 40) {
-  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/HORIZONTAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+  return `<img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/HORIZONTAL.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
 }
 
 function IconoBasePAFB(size = 40) {
-  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFB.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+  return `<img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PAFB.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
 }
 
 function IconoClipPAFC(size = 40) {
-  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFC.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+  return `<img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PAFC.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
 }
 
 function IconoPAFU(size = 40) {
-  return `<img src="https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/PAFU.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
+  return `<img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PAFU.jpg" width="${size}" height="${size}" crossorigin="anonymous" style="object-fit:contain;">`;
 }
 
 
@@ -1858,7 +2242,7 @@ function generarMensajeOpcion(opcion, tipoFijo, textoDivision, conjuntos) {
     console.log('textoDivision:', textoDivision);
     console.log('conjuntos:', conjuntos);
 
-    const comentarios = {
+    const etiquetasOpcion = {
         'PuertaUnica': "PUERTA INDEPENDIENTE",
         'FijoUnico' : "FIJO INDEPENDIENTE",
         '1puerta': '1 PUERTA',
@@ -1879,7 +2263,7 @@ function generarMensajeOpcion(opcion, tipoFijo, textoDivision, conjuntos) {
         'B': ' - 4 PAREDES'
     };
     
-    let mensaje = comentarios[opcion] || 'CONFIGURACIÓN PERSONALIZADA';
+    let mensaje = etiquetasOpcion[opcion] || 'CONFIGURACIÓN PERSONALIZADA';
     
     // Si tiene fijo, añadir el tipo
     if (tipoFijo && tiposFijo[tipoFijo]) {
@@ -1887,7 +2271,7 @@ function generarMensajeOpcion(opcion, tipoFijo, textoDivision, conjuntos) {
     }
     
     // Añadir texto de divisiones si existe, aunque siempre existe.
-    mensaje += ` - ${textoDivision || 'Sin embellecedor PEPE'}`;
+    mensaje += ` - ${textoDivision || 'Sin embellecedor'}`;
 
 
     // === Etiqueta dinámica para la última parte ===
@@ -2520,7 +2904,7 @@ function mostrarInformesCompletos(d) {
   
   if (!d) {
     console.error('💥 No hay datos para mostrar');
-    alert('Error: No se recibieron datos del cálculo');
+    aviso('Error: No se recibieron datos del cálculo');
     return;
   }
 
@@ -2547,7 +2931,11 @@ function mostrarInformesCompletos(d) {
   // 4️⃣ MOSTRAR CONTENEDORES Y SCROLL
   setSafeDisplay('informe-container', true);
   setSafeDisplay('hoja-pedido-container', true);
-  
+
+  // Mostrar barra fija de botones del informe (banda header)
+  document.getElementById('botones-accion-informes').classList.add('visible');
+  document.body.classList.add('informes-activos');
+
   const informeContainer = document.getElementById('informe-container');
   if (informeContainer) {
     informeContainer.scrollIntoView({ behavior: 'smooth' });
@@ -2556,50 +2944,85 @@ function mostrarInformesCompletos(d) {
 }
 
 
-function volverAlInicio() {
-  // Ocultar informes
-  document.getElementById('informe-container').style.display = 'none';
-  document.getElementById('hoja-pedido-container').style.display = 'none';
-
-   // Limpiar datos de los formularios
-  for (let i = 2; i <= 6; i++) {
-    datosFormularios[`form${i}`] = {};
-  }
-  
-  // Limpiar últimos datos de informe
-  window.ultimosDatosInforme = null;
-
-  // Ocultar bloques
-  document.getElementById('bloque-puerta').classList.remove('active');
-  document.getElementById('bloque-fijo').classList.remove('active');
-  document.getElementById('hp-bloque-puerta').classList.remove('active');
-  document.getElementById('hp-bloque-fijo').classList.remove('active');
-  
-  // Volver al form1
-  document.getElementById('form1').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
 function cerrarInforme() {
   document.getElementById('informe-container').style.display = 'none';
-  document.getElementById('form1').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
-function volverInforme1() {
   document.getElementById('hoja-pedido-container').style.display = 'none';
-  document.getElementById('informe-container').style.display = 'block';
-  document.getElementById('informe-container').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('botones-accion-informes').classList.remove('visible');
+  document.body.classList.remove('informes-activos');
+  // Volver a Form6 (no al primer form del flujo) — desde el informe se regresa al último paso editado
+  document.querySelectorAll('.formulario').forEach(f => f.classList.remove('active'));
+  document.getElementById('form6').classList.add('active');
+  actualizarImagenForm6();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 
 function cerrarHojaPedido() {
   document.getElementById('hoja-pedido-container').style.display = 'none';
-  document.getElementById('form1').classList.add('active');
+  document.getElementById('botones-accion-informes').classList.remove('visible');
+  document.body.classList.remove('informes-activos');
+  activarPrimerFormDelFlujo();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
+// ── SISTEMA DE MODAL AVISO ───────────────────────────────────────
+function _crearModalDOM() {
+  if (document.getElementById('_modal-aviso')) return;
+  const overlay = document.createElement('div');
+  overlay.id = '_modal-aviso';
+  overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center;';
+  overlay.innerHTML = `
+    <div style="background:#F4F0E8;border-radius:10px;overflow:hidden;width:340px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.25);">
+      <div style="background:#2D3A4B;padding:13px 20px;">
+        <p style="margin:0;font-size:11px;font-weight:500;color:#ffffff;letter-spacing:0.5px;text-transform:uppercase;font-family:'Jost',sans-serif;">Adinor · PA Montado</p>
+      </div>
+      <div style="padding:22px 22px 18px;background:#F4F0E8;">
+        <p id="_modal-msg" style="margin:0 0 20px;font-size:14px;color:#2D3A4B;line-height:1.6;font-family:'Jost',sans-serif;font-weight:300;"></p>
+        <div id="_modal-btns" style="display:flex;justify-content:flex-end;gap:10px;"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function aviso(mensaje) {
+  _crearModalDOM();
+  const overlay = document.getElementById('_modal-aviso');
+  document.getElementById('_modal-msg').textContent = mensaje;
+  const btns = document.getElementById('_modal-btns');
+  btns.innerHTML = '';
+  const btnAceptar = document.createElement('button');
+  btnAceptar.textContent = 'Aceptar';
+  btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
+  btnAceptar.onclick = () => { overlay.style.display = 'none'; };
+  btns.appendChild(btnAceptar);
+  overlay.style.display = 'flex';
+  btnAceptar.focus();
+}
+
+function confirmar(mensaje, callbackSi) {
+  _crearModalDOM();
+  const overlay = document.getElementById('_modal-aviso');
+  document.getElementById('_modal-msg').textContent = mensaje;
+  const btns = document.getElementById('_modal-btns');
+  btns.innerHTML = '';
+  const btnCancelar = document.createElement('button');
+  btnCancelar.textContent = 'Cancelar';
+  btnCancelar.style.cssText = 'background:transparent;color:#2D3A4B;border:0.5px solid #2D3A4B;border-radius:6px;padding:8px 20px;font-size:13px;font-family:inherit;cursor:pointer;';
+  btnCancelar.onclick = () => { overlay.style.display = 'none'; };
+  const btnAceptar = document.createElement('button');
+  btnAceptar.textContent = 'Aceptar';
+  btnAceptar.style.cssText = 'background:#6B7FB8;color:#fff;border:none;border-radius:6px;padding:8px 26px;font-size:13px;font-family:inherit;cursor:pointer;';
+  btnAceptar.onclick = () => { overlay.style.display = 'none'; callbackSi(); };
+  btns.appendChild(btnCancelar);
+  btns.appendChild(btnAceptar);
+  overlay.style.display = 'flex';
+  btnCancelar.focus();
+}
+
+// Exponer al ámbito global para que scripts externos (no-module) puedan usarlas
+window.aviso = aviso;
+window.confirmar = confirmar;
 
 
 // Función para iniciar la app SOLO cuando las tablas estén listas
@@ -2611,7 +3034,7 @@ async function iniciarAplicacion() {
     console.log('✅ Tablas cargadas. Aplicación lista.');
   } catch (error) {
     console.error('❌ FALLO CRÍTICO al cargar tablas:', error);
-    alert('ERROR: No se pueden cargar los precios. La aplicación no funcionará.');
+    aviso('ERROR: No se pueden cargar los precios. La aplicación no funcionará.');
   }
 }
 
@@ -2630,7 +3053,6 @@ async function iniciarAplicacion() {
 // - configurarForm6SegunFlujo
 // - realizarCalculos
 // - mostrarInformesCompletos
-// - volverAlInicio
 // - cerrarInforme
 // ============================================================================
 
@@ -2655,7 +3077,7 @@ window.calcularDestino = function(...args) {
 
 window.siguienteFormulario = function(actual) {
   if (!tablasCargadas) {
-    alert('⏳ Espera, las tablas de precios aún no se han cargado. Intenta de nuevo en unos segundos.');
+    aviso('⏳ Espera, las tablas de precios aún no se han cargado. Intenta de nuevo en unos segundos.');
     return;
   }
   return siguienteOriginal.call(this, actual);
@@ -2673,15 +3095,15 @@ window.limpiarDatos = limpiarDatos;
 
 window.finalizarFlujo = function() {
   if (!tablasCargadas) {
-    alert('⏳ Las tablas aún no están cargadas. No se puede finalizar.');
+    aviso('⏳ Las tablas aún no están cargadas. No se puede finalizar.');
     return;
   }
   return finalizarOriginal.call(this);
 };
 
 // Funciones que no necesitan control de tablas (UI pura)
-window.volverAlInicio = volverAlInicio;
 window.cerrarInforme = cerrarInforme;
+window.cerrarHojaPedido = cerrarHojaPedido;
 window.configurarForm6SegunFlujo = configurarForm6SegunFlujo; // Si la usas fuera
 
 console.log('✅ Todas las funciones expuestas al global correctamente');
@@ -2691,6 +3113,21 @@ console.log('✅ Todas las funciones expuestas al global correctamente');
 // ============================================================================
 iniciarAplicacion();
 
+</script>
+
+<script>
+  // Bloquear Ctrl+P / Cmd+P
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+      e.preventDefault();
+      e.stopPropagation();
+      aviso('La impresión no está disponible. Utiliza el botón PDF para generar el documento.');
+    }
+  });
+  // Bloquear desde menu del navegador (CSS ya muestra pagina en blanco)
+  window.addEventListener('beforeprint', function(e) {
+    e.stopImmediatePropagation();
+  });
 </script>
 
  </body>
