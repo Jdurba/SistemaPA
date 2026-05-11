@@ -1326,8 +1326,15 @@
   // ── Volver al submenú PA del index ──
   function volverAlMenu() {
     localStorage.setItem('regresarASubMenuPA', '1');
-    window.location.href = '../index.html';
+    //window.location.href = '../index.html';   Cambi al subir a GitHub
+    window.location.href = location.hostname.endsWith('github.io')
+      ? 'https://jdurba.github.io/SistemaPA/index.html'
+      : '../index.html';
   }
+  window.volverAlMenu = volverAlMenu;
+
+
+
   window.volverAlMenu = volverAlMenu;
 
 
