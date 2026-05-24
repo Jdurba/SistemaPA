@@ -1718,9 +1718,9 @@ function _ejecutarLimpiarTodo() {
 // CÓDIGO DE PRECIOS - VERSION MEJORADA CON LOGGING
 // CÓDIGO DE PRECIOS - VERSION FINAL
 
-const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/CodigoPrecio.csv';
-const URL_ARTICULOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/ArticulosPAmont.csv';
-const URL_ELEMENTOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/Archivos/ElementosPrecio.csv';
+const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/CodigoPrecio.csv';
+const URL_ARTICULOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/ArticulosPAmont.csv';
+const URL_ELEMENTOS = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/ElementosPrecio.csv';
 
 let tablasPrecios = {};
 let tablasPreciosCargadas = false;
@@ -1743,11 +1743,16 @@ async function cargarTablasPrecios() {
   if (tablasPreciosCargadas) return true;
   
   console.log('🔄 Cargando tablas de precios...');
+  const fetchCSV = async (url) => {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status} en ${url}`);
+    return csvToObj(await r.text());
+  };
   try {
     const [cp, art, el] = await Promise.all([
-      fetch(URL_CODIGO_PRECIO).then(r => r.text()).then(csvToObj),
-      fetch(URL_ARTICULOS).then(r => r.text()).then(csvToObj),
-      fetch(URL_ELEMENTOS).then(r => r.text()).then(csvToObj)
+      fetchCSV(URL_CODIGO_PRECIO),
+      fetchCSV(URL_ARTICULOS),
+      fetchCSV(URL_ELEMENTOS)
     ]);
     tablasPrecios.codPrecio = cp;
     tablasPrecios.articulos = art;
@@ -1808,9 +1813,21 @@ function ajustarMedidasPrecios(tipo, altoIn, anchoIn) {
   return { altoTabla, anchoTabla: escala[escala.length - 1] };
 }
 
+function parsePrecio(str) {
+  if (str == null) return 0;
+  const s = String(str).trim();
+  if (!s) return 0;
+  // Si hay coma, es decimal español: puntos son miles
+  if (s.includes(',')) {
+    return parseFloat(s.replace(/\./g, '').replace(',', '.')) || 0;
+  }
+  // Sin coma: parseFloat directo (entero o decimal anglosajón)
+  return parseFloat(s) || 0;
+}
+
 function buscarDenominacionYPrecio(codigo) {
   const rowP = tablasPrecios.codPrecio.find(r => r.Codigo === codigo);
-  const precio = rowP ? parseFloat(rowP.Precio.replace(',', '.')) : 0;
+  const precio = rowP ? parsePrecio(rowP.Precio) : 0;
   const rowA = tablasPrecios.articulos.find(r => r.CODIGO === codigo);
   const denom = rowA ? rowA.DENOMINACION : codigo;
   return { codigo, denominacion: denom, precio };
@@ -1844,8 +1861,7 @@ function buscarPuertaPrecio(tipo, color, vidrio, altoTabla, anchoTabla) {
   }
   
   const precStr = rowEl[nomCol] || '0';
-  const precioLimpio = precStr.replace(/\./g, '').replace(',', '.');
-  const precio = parseFloat(precioLimpio);
+  const precio = parsePrecio(precStr);
   return { codigo, denominacion: denom, precio };
 }
 
