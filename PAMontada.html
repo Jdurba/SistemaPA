@@ -2188,12 +2188,14 @@ function realizarCalculos() {
       // PRECIOS PUERTA
       puertaCodigo: preciosPuerta.puerta.codigo,
       puertaPrecioUnit: preciosPuerta.puerta.precio,
+      puertaConsultar: preciosPuerta.puerta.consultar || false,
       embPuertaCodigo: preciosPuerta.emb.codigo,
       embPuertaPrecioUnit: preciosPuerta.emb.precio,
       
       // PRECIOS FIJO
       fijoCodigo: preciosFijo.puerta.codigo,
       fijoPrecioUnit: preciosFijo.puerta.precio,
+      fijoConsultar: preciosFijo.puerta.consultar || false,
       embFijoCodigo: preciosFijo.emb.codigo,
       embFijoPrecioUnit: preciosFijo.emb.precio,
       bastidorCodigo: preciosFijo.bast.codigo,
@@ -2577,6 +2579,7 @@ function generarBloquePuerta(datos) {
     // 🔹 DATOS COMERCIALES (Para informe resumen)
     puertaCodigo: datos.puertaCodigo,
     puertaPrecioUnit: datos.puertaPrecioUnit,
+    puertaConsultar: datos.puertaConsultar,
     embPuertaCodigo: datos.embPuertaCodigo,
     embPuertaPrecioUnit: datos.embPuertaPrecioUnit
   };
@@ -2630,6 +2633,7 @@ function generarBloqueFijo(datos) {
     // 🔹 DATOS COMERCIALES (Para informe resumen)
     fijoCodigo: datos.fijoCodigo,
     fijoPrecioUnit: datos.fijoPrecioUnit,
+    fijoConsultar: datos.fijoConsultar,
     embFijoCodigo: datos.embFijoCodigo,
     embFijoPrecioUnit: datos.embFijoPrecioUnit,
     bastidorCodigo: datos.bastidorCodigo,
@@ -2827,7 +2831,7 @@ function renderizarInformeComercial(bloques) {
     setSafeTextContent('hp-cod-puerta', puerta.puertaCodigo);
     setSafeTextContent('hp-tipo-puerta', puerta.tipo);
     setSafeTextContent('hp-cant-puerta', puerta.cantidad * puerta.Conjuntos);
-    setSafeTextContent('hp-precio-puerta', formatearNumero(puerta.puertaPrecioUnit, 2));
+    setSafeTextContent('hp-precio-puerta', puerta.puertaConsultar ? 'Consultar' : formatearNumero(puerta.puertaPrecioUnit, 3));
     setSafeTextContent('hp-acabado-puerta', puerta.acabado);
     setSafeTextContent('hp-color-puerta', puerta.colorVidrio);
     setSafeTextContent('hp-alto-puerta', formatearNumero(puerta.alto) + ' mm');
@@ -2843,7 +2847,7 @@ function renderizarInformeComercial(bloques) {
       setSafeTextContent('hp-cod-emb-puerta', puerta.embPuertaCodigo);
       setSafeTextContent('hp-Embellecedor-puerta', puerta.textoDivision);
       setSafeTextContent('hp-cant-emb-puerta', puerta.cantidad * puerta.Conjuntos);
-      setSafeTextContent('hp-precio-emb-puerta', formatearNumero(puerta.embPuertaPrecioUnit, 2));
+      setSafeTextContent('hp-precio-emb-puerta', formatearNumero(puerta.embPuertaPrecioUnit, 3));
     } else {
       // Ocultar TODAS las celdas de esa fila
       Array.from(cells).forEach(cell => cell.style.display = 'none');
@@ -2861,7 +2865,7 @@ function renderizarInformeComercial(bloques) {
     setSafeTextContent('hp-cod-fijo', fijo.fijoCodigo);  
     setSafeTextContent('hp-tipo-fijo', fijo.tipo);
     setSafeTextContent('hp-cant-fijo', fijo.cantidad * fijo.Conjuntos);
-    setSafeTextContent('hp-precio-fijo', formatearNumero(fijo.fijoPrecioUnit, 2));
+    setSafeTextContent('hp-precio-fijo', fijo.fijoConsultar ? 'Consultar' : formatearNumero(fijo.fijoPrecioUnit, 3));
     setSafeTextContent('hp-acabado-fijo', fijo.acabado);
     setSafeTextContent('hp-color-fijo', fijo.colorVidrio);
     setSafeTextContent('hp-alto-fijo', formatearNumero(fijo.alto) + ' mm');
@@ -2869,7 +2873,7 @@ function renderizarInformeComercial(bloques) {
     setSafeTextContent('hp-cod-bastidor-fijo', fijo.bastidorCodigo);
     setSafeTextContent('hp-bastidor-fijo', fijo.textoTipoFijo);
     setSafeTextContent('hp-cant-bastidores', fijo.cantidad * fijo.Conjuntos);
-    setSafeTextContent('hp-precio-bastidor-fijo', formatearNumero(fijo.bastidorPrecioUnit, 2));
+    setSafeTextContent('hp-precio-bastidor-fijo', formatearNumero(fijo.bastidorPrecioUnit, 3));
   
     // ✅ FIX: Ocultar/Mostrar CADA CELDA del embellecedor
     const filaEmbFijo = document.getElementById('fila-emb-fijo');
@@ -2880,7 +2884,7 @@ function renderizarInformeComercial(bloques) {
         setSafeTextContent('hp-cod-emb-fijo', fijo.embFijoCodigo);
         setSafeTextContent('hp-Embellecedor-fijo', fijo.textoDivision);
         setSafeTextContent('hp-cant-emb-fijo', fijo.cantidad * fijo.Conjuntos);
-        setSafeTextContent('hp-precio-emb-fijo', formatearNumero(fijo.embFijoPrecioUnit, 2));
+        setSafeTextContent('hp-precio-emb-fijo', formatearNumero(fijo.embFijoPrecioUnit, 3));
       } else {
         Array.from(cells).forEach(cell => cell.style.display = 'none');
       }
