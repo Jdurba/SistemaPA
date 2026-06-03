@@ -3,9 +3,9 @@
 // Entrada: {tipo, color, vidrio, altura, ancho, modeloEmb, bastidor}
 // Salida:  {puerta:{codigo,denominacion,precio,obsPuerta}, emb:{...}, bast:{...}, total}
 
-const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/CodigoPrecio.csv';
-const URL_ARTICULOS     = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ArticulosPAmont.csv';
-const URL_ELEMENTOS     = 'https://raw.githubusercontent.com/Jdurba/ImagenesPA/main/Archivos/ElementosPrecio.csv';
+const URL_CODIGO_PRECIO = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/CodigoPrecio.csv';
+const URL_ARTICULOS     = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/ArticulosPAmont.csv';
+const URL_ELEMENTOS     = 'https://raw.githubusercontent.com/Jdurba/SistemaPA/main/Archivos/ElementosPrecio.csv';
 
 let tablas = {}; // privado dentro del módulo
 
@@ -22,10 +22,11 @@ function csvToObj(text, delim = ';') {
 
 // Cargamos UNA vez las tres tablas
 export async function cargarTablas() {
+  const v = '?v=' + Date.now(); // cache-busting: evita versión cacheada de raw.githubusercontent
   const [cp, art, el] = await Promise.all([
-    fetch(URL_CODIGO_PRECIO).then(r => r.text()).then(csvToObj),
-    fetch(URL_ARTICULOS).then(r => r.text()).then(csvToObj),
-    fetch(URL_ELEMENTOS).then(r => r.text()).then(csvToObj)
+    fetch(URL_CODIGO_PRECIO + v).then(r => r.text()).then(csvToObj),
+    fetch(URL_ARTICULOS + v).then(r => r.text()).then(csvToObj),
+    fetch(URL_ELEMENTOS + v).then(r => r.text()).then(csvToObj)
   ]);
   tablas.codPrecio = cp;
   tablas.articulos = art;
@@ -98,6 +99,12 @@ function buscarPuerta(tipo, color, vidrio, altoTabla, anchoTabla) {
   const rowArt = tablas.articulos.find(r => r.CODIGO === codigo);
   const denom = rowArt ? rowArt.DENOMINACION : codigo;
 
+  // Vidrio ESPECIAL ('00'): no hay precio en tabla → marcar para "Consultar".
+  // precio:0 mantiene cálculos/totales neutros; el flag viaja a la presentación.
+  if (vidrio === '00') {
+    return { codigo, denominacion: denom, precio: 0, consultar: true };
+  }
+
   const COL_VIDRIOS = {
     '01': 'TRANSPARENTE',
     '02': 'MATE',
@@ -110,7 +117,7 @@ function buscarPuerta(tipo, color, vidrio, altoTabla, anchoTabla) {
 
   const rowEl = tablas.elementos.find(
     r =>
-      r.TIPO === tipo &&
+      parseInt(r.TIPO, 10) === parseInt(tipo, 10) &&
       r.ALTOTABLA == altoTabla &&
       r.COLOR === color &&
       r.ANCHOTABLA == anchoTabla
