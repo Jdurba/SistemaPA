@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Adinor · PA Vidrio Montado</title>
+  <title>Adinor · PA Corredera Vidrio Montado</title>
 
   <!-- Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
   <script>
@@ -17,7 +17,7 @@
     document.write(
       location.hostname.endsWith('github.io')
         ? '<script src="https://jdurba.github.io/General/ConfigTodos.js?v=1"><\/script>'
-        : '<script src="../ConfigTodos.js?v=1"><\/script>'
+        : '<script src="../General/ConfigTodos.js?v=1"><\/script>'
     );
   </script>
 
@@ -221,6 +221,8 @@
     }
     #form1 .visual img { max-width: 180px; }
     #form2 .visual img { max-width: 220px; }
+        .card-off { opacity: 0.35; filter: grayscale(1); pointer-events: none; }
+    #form2 .card-desc { margin: 10px 6px 0; font-size: 14px; font-weight: 400; color: var(--ink-mid); line-height: 1.5; text-align: center; }
     #form3 .visual img {
       max-width: 100%;
       aspect-ratio: auto;
@@ -675,7 +677,7 @@
   <img class="cfg-header-logo"
        src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png"
        alt="Adinor">
-  <h1 class="cfg-header-title">PA Vidrio Montado</h1>
+  <h1 class="cfg-header-title">PA Corredera Vidrio Montado</h1>
 </header>
 
 <div class="cfg-content">
@@ -689,6 +691,7 @@
         <div class="visual">
           <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK112.png" alt="Montaje a pared">
           <h3>Montaje a pared</h3>
+          <p class="card-desc">La altura de Hueco se considera desde la parte inferior de la guía al suelo.</p>
         </div>
       </label>
       <label class="card">
@@ -696,6 +699,7 @@
         <div class="visual">
           <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK111.png" alt="Montaje a techo">
           <h3>Montaje a techo</h3>
+          <p class="card-desc">La altura de Hueco se considera desde el techo al suelo, incluida la altura de la guía.</p>
         </div>
       </label>
       <label class="card">
@@ -703,6 +707,7 @@
         <div class="visual">
           <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/SK119.png" alt="Guía empotrada">
           <h3>Montaje guía empotrada</h3>
+          <p class="card-desc">La altura de Hueco se considera desde la parte inferior de la guía al suelo.</p>
         </div>
       </label>
     </div>
@@ -1284,7 +1289,7 @@
   //   Flujo 1 (Puerta corredera, frente completo) → Form2
   //   Flujo 3 (Puerta corredera, elemento independiente) → Form5
   //   Flujo 4 (Fijo independiente) → Form4
-  const PRIMER_FORM_POR_FLUJO = { '1': 2, '3': 5, '4': 4 };
+  const PRIMER_FORM_POR_FLUJO = { '1': 3, '3': 5, '4': 4 };
 
   (function precargarDesdeIndex() {
     try {
@@ -1517,6 +1522,44 @@ const FLUJOS = {
   }
 };
 
+// Guías (Form2) permitidas según la opción elegida en Form3
+const GUIAS_POR_OPCION = {
+  '1puerta':           ['SK112'],
+  '1puerta-casoneto':  ['SK111'],
+  '2puertas':          ['SK111', 'SK119'],
+  '1puerta-1fijo':     ['SK111', 'SK119'],
+  '3puertas':          ['SK111', 'SK119'],
+  '2puertas-1fijo':    ['SK111', 'SK119'],
+  '1puerta-2fijos':    ['SK111', 'SK119'],
+  '2puertas-2fijos':   ['SK111', 'SK119'],
+  '3puertas-1fijo':    ['SK111', 'SK119'],
+  '4puertas':          ['SK111', 'SK119']
+};
+
+// Apaga los cards de Form2 cuya guía no es válida para la opción de Form3
+function aplicarFiltroGuias() {
+  const opcion = datosFormularios.form3?.opcion;
+  const permitidas = GUIAS_POR_OPCION[opcion] || ['SK112', 'SK111', 'SK119'];
+  document.querySelectorAll('#form2 input[name="guia"]').forEach(input => {
+    const valida = permitidas.includes(input.value);
+    input.disabled = !valida;
+    input.closest('.card')?.classList.toggle('card-off', !valida);
+    if (!valida && input.checked) {
+      input.checked = false;
+      if (datosFormularios.form2) delete datosFormularios.form2.guia;
+    }
+  });
+  // Autoselección cuando solo queda una guía válida (mismo criterio que bastidores)
+  if (permitidas.length === 1) {
+    const unica = document.querySelector(`#form2 input[name="guia"][value="${permitidas[0]}"]`);
+    if (unica && !unica.checked) {
+      unica.checked = true;
+      if (!datosFormularios.form2) datosFormularios.form2 = {};
+      datosFormularios.form2.guia = permitidas[0];
+    }
+  }
+}
+
 
 function calcularDestino(flujoId, formActual, direccion) {
   // Tabla de rutas (solo navegación, sin valores por defecto)
@@ -1524,15 +1567,16 @@ function calcularDestino(flujoId, formActual, direccion) {
   // ========== 2️⃣ TABLA DE RUTAS ==========
 
   const rutas = {
-    '1': { avance: {1:2, 2:3, 4:5, 5:6}, retroceso: {6:5, 4:3, 3:2, 2:1} },
+    '1': { avance: {1:3, 3:2, 4:5, 5:6}, retroceso: {6:5, 4:2, 2:3, 3:1} },
     '3': { avance: { 1:5, 5:6 },  retroceso: { 6:5, 5:1 } },
     '4': { avance: {1:4, 4:5, 5:6}, retroceso: {6:5, 5:4, 4:1} }
   };
   const ruta = rutas[flujoId];
   if (!ruta) return null; // Flujo no definido
 
-  // Manejo de la BIFURCACIÓN CRÍTICA en Form3 (flujo 1)
-  if (flujoId === '1' && formActual === 3 && direccion === 'avance') {
+  // Manejo de la BIFURCACIÓN CRÍTICA al salir de Form2 (flujo 1).
+  // El orden visual es Form3 (opción) → Form2 (guías); la opción ya está guardada.
+  if (flujoId === '1' && formActual === 2 && direccion === 'avance') {
     const opcion = datosFormularios.form3?.opcion;
     return opcion?.includes('fijo') ? 4 : 5;
 
@@ -1540,7 +1584,7 @@ function calcularDestino(flujoId, formActual, direccion) {
   // ========== 4️⃣ RETROCESO DESDE FORM5 (flujo 1) ==========
   if (flujoId === '1' && formActual === 5 && direccion === 'retroceso') {
     const opcion = datosFormularios.form3?.opcion;
-    return opcion?.includes('fijo') ? 4 : 3;
+    return opcion?.includes('fijo') ? 4 : 2;
   }
 
  // ========== 5️⃣ DESTINO ESTÁNDAR ==========
@@ -1811,6 +1855,7 @@ function anteriorFormulario(actual) {
     formActual.classList.remove('active');
     document.getElementById(`form${destino}`).classList.add('active');
 
+    if (destino === 2) aplicarFiltroGuias();
     if (destino === 4) aplicarFiltroForm4SegunFlujo();
   } catch (error) {
     console.error('💥 ERROR en anteriorFormulario():', error.message);
@@ -1836,6 +1881,7 @@ function siguienteFormulario(actual) {
     formActual.classList.remove('active');
     document.getElementById(`form${destino}`).classList.add('active');
     
+    if (destino === 2) aplicarFiltroGuias();
     if (destino === 4) aplicarFiltroForm4SegunFlujo();
     if (destino === 6) actualizarImagenForm6();
     
@@ -3059,20 +3105,6 @@ iniciarAplicacion();
 
 </script>
 
-<script>
-  // Bloquear Ctrl+P / Cmd+P
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-      e.preventDefault();
-      e.stopPropagation();
-      aviso('La impresión no está disponible. Utiliza el botón PDF para generar el documento.');
-    }
-  });
-  // Bloquear desde menu del navegador (CSS ya muestra pagina en blanco)
-  window.addEventListener('beforeprint', function(e) {
-    e.stopImmediatePropagation();
-  });
-</script>
 
  </body>
 
