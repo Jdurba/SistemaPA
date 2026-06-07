@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Adinor · PA Corredera Vidrio Montado</title>
+  <title>Adinor · PA Vidrio Montado - Corredera</title>
 
   <!-- Configuración para todos HTML,  Mensajes y control de Impresion de página  -->
   <script>
@@ -585,6 +585,11 @@
 
     }
 
+    .bloque-titulo .titulo-medidas {
+      float: right;
+      font-weight: 600;
+    }
+
     .seccion-titulo {
       font-weight: bold;
       font-size: 12px;
@@ -677,7 +682,7 @@
   <img class="cfg-header-logo"
        src="https://jdurba.github.io/General/img/LogoAdinorBlanco.png"
        alt="Adinor">
-  <h1 class="cfg-header-title">PA Corredera Vidrio Montado</h1>
+  <h1 class="cfg-header-title">PA Vidrio Montado - Corredera</h1>
 </header>
 
 <div class="cfg-content">
@@ -814,7 +819,7 @@
 
   <!-- Formulario 4 -->
 <form id="form4" class="formulario">
-  <h2>Tipología de Fijo</h2>
+  <h2>Tipología de Bastidor para Fijo</h2>
   <div class="grid">
     <label class="card" id="opcion-3paredes">
       <input type="radio" name="imagen" value="0" required>
@@ -1058,7 +1063,7 @@
 
     <!-- BLOQUE PUERTA -->
     <div id="bloque-puerta" class="bloque-informe">
-      <div class="bloque-titulo">MEDIDAS DE PUERTA</div>
+      <div class="bloque-titulo">MEDIDAS DE PUERTA <span class="titulo-medidas" id="medidas-puerta"></span></div>
       
       <div class="seccion-titulo">Perfiles Acabado <span id="acabado-puerta"></span></div>
       <table class="tabla-informe">
@@ -1104,7 +1109,7 @@
 
     <!-- BLOQUE FIJO -->
     <div id="bloque-fijo" class="bloque-informe">
-      <div class="bloque-titulo">MEDIDAS DE FIJO</div>
+      <div class="bloque-titulo">MEDIDAS DE FIJO <span class="titulo-medidas" id="medidas-fijo"></span></div>
       
       <div class="seccion-titulo">Perfiles Acabado <span id="acabado-fijo"></span></div>
       <table class="tabla-informe">
@@ -1304,10 +1309,13 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        const flujoId = datosFormularios.form1?.imagen;
+        let flujoId = datosFormularios.form1?.imagen;
         if (!flujoId || !PRIMER_FORM_POR_FLUJO[flujoId]) {
-          console.warn('Flujo no recibido o no soportado en PAMontada:', flujoId);
-          return;
+          // Apertura directa (sin pasar por el índice): asumir flujo 1
+          console.warn('Flujo no recibido en PAMontada. Se asume flujo 1 (apertura directa).');
+          flujoId = '1';
+          if (!datosFormularios.form1) datosFormularios.form1 = {};
+          datosFormularios.form1.imagen = '1';
         }
 
         // Aplicar valores por defecto del flujo (lo que antes hacía siguienteFormulario(1))
@@ -2210,6 +2218,10 @@ function realizarCalculos() {
       Conjuntos: conjuntos,
       
       // Medidas
+      huecoAlto: alto,
+      huecoAncho: ancho,
+      bastidorAlto: alto - 2,
+      bastidorAncho: X,
       altoPuerta: Y,
       anchoPuerta: X,
       altoFijo: resultadoFijo.altoFijo,
@@ -2718,6 +2730,7 @@ function renderizarInformeTecnico(bloques) {
     // Datos básicos
     //setSafeTextContent('tipo-puerta', puerta.tipo);
     //setSafeTextContent('cant-puerta', puerta.cantidad);
+    setSafeTextContent('medidas-puerta', `Hueco: ${formatearNumero(bloques.huecoAlto)} x ${formatearNumero(bloques.huecoAncho)} mm · Puerta: ${formatearNumero(puerta.alto)} x ${formatearNumero(puerta.ancho)} mm`);
     setSafeTextContent('acabado-puerta', puerta.acabado);
     setSafeTextContent('color-vidrio-puerta', puerta.colorVidrio);
     //setSafeTextContent('alto-puerta', formatearNumero(puerta.alto) + ' mm');
@@ -2790,6 +2803,7 @@ function renderizarInformeTecnico(bloques) {
   
   if (fijo.visible) {
 
+    setSafeTextContent('medidas-fijo', `Hueco: ${formatearNumero(bloques.huecoAlto)} x ${formatearNumero(bloques.huecoAncho)} mm · Bastidor: ${formatearNumero(bloques.bastidorAlto)} x ${formatearNumero(bloques.bastidorAncho)} mm`);
     setSafeTextContent('acabado-fijo', fijo.acabado);
 
     // Tabla PERFILES (mismo patrón que puerta)
@@ -2969,6 +2983,10 @@ function mostrarInformesCompletos(d) {
     fecha: d.fecha,
     comentarios: d.comentarios,
     mensajeOpcion: d.mensajeOpcion,
+    huecoAlto: d.huecoAlto,
+    huecoAncho: d.huecoAncho,
+    bastidorAlto: d.bastidorAlto,
+    bastidorAncho: d.bastidorAncho,
     puerta: generarBloquePuerta(d),  // ← Paso 1
     fijo: generarBloqueFijo(d)       // ← Paso 2
   };
