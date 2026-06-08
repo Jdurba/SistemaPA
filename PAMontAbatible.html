@@ -289,6 +289,9 @@
     }
 
     /* ── ACCIONES ── */
+    .card-off { opacity: 0.35; filter: grayscale(1); pointer-events: none; }
+    .card-off.card-aviso { pointer-events: auto; cursor: not-allowed; }
+
     .acciones {
       display: flex;
       gap: 12px;
@@ -695,8 +698,8 @@
           </div>
         </label>
         <!-- 2 -->
-        <label class="card">
-          <input type="radio" name="opcion" value="op2">
+        <label class="card card-off card-aviso" onclick="event.preventDefault(); aviso('No disponible');">
+          <input type="radio" name="opcion" value="op2" disabled>
           <div class="visual">
             <img src="https://raw.githubusercontent.com/Jdurba/SistemaPA/main/img/PA_ABATIBLE_CER2.png">
             <h3>Cierre Cerradura</h3>
@@ -1853,8 +1856,9 @@ function buscarPuertaPrecio(tipo, color, vidrio, altoTabla, anchoTabla) {
   };
   const nomCol = COL_VIDRIOS[vidrio];
   
+  const tipoNum = parseInt(tipo, 10);  // CSV usa TIPO sin cero a la izquierda (1,2,5,6)
   const rowEl = tablasPrecios.elementos.find(r => 
-    r.TIPO === tipo && 
+    parseInt(r.TIPO, 10) === tipoNum && 
     r.ALTOTABLA == altoTabla && 
     r.COLOR === color && 
     r.ANCHOTABLA == anchoTabla
@@ -1946,7 +1950,7 @@ async function rellenarPreciosEnInforme(tipoElemento, config, datosComunes) {
     const conjuntos = parseInt(datosComunes.conjuntos);
     
     // Fila principal (Puerta o Fijo)
-    const tipoPrincipal = esFijo ? 'Fijo' : 'Puerta';
+    const tipoPrincipal = esFijo ? 'Fijo' : (config.numPuertas === 2 ? 'Puertas + Marco' : 'Puerta + Marco');
     const idCodPrincipal = esFijo ? `${tipoElemento}-cod-fijo` : `${tipoElemento}-cod-puerta`;
     const idTipoPrincipal = esFijo ? `${tipoElemento}-tipo-fijo` : `${tipoElemento}-tipo-puerta`;
     const idCantPrincipal = esFijo ? `${tipoElemento}-cant-fijo` : `${tipoElemento}-cant-puerta`;
@@ -1961,7 +1965,7 @@ async function rellenarPreciosEnInforme(tipoElemento, config, datosComunes) {
     if (elemCod) elemCod.textContent = resultado.puerta.codigo;
     if (elemTipo) elemTipo.textContent = resultado.puerta.denominacion;
     if (elemCant) elemCant.textContent = conjuntos;
-    if (elemPrecio) elemPrecio.textContent = resultado.puerta.precio.toFixed(2);
+    if (elemPrecio) elemPrecio.textContent = data.vidrio === '00' ? 'Consultar' : resultado.puerta.precio.toFixed(2);
     
     // Embellecedor
     const elemCodEmb = document.getElementById(`${tipoElemento}-cod-emb`);
@@ -2081,7 +2085,7 @@ async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
     document.getElementById('marco-alto-precio-d').textContent = datosComunes.alto;
     document.getElementById('marco-ancho1-precio').textContent = SelOpcion.form6?.AnchoPuerta1 || '';
     document.getElementById('marco-ancho2-precio').textContent = SelOpcion.form6?.AnchoPuerta2 || '';
-    document.getElementById('marco-label-puerta').textContent = 'Puerta Doble';
+    document.getElementById('marco-label-puerta').textContent = 'Puertas + Marco';
     document.getElementById('marco-label-emb1').textContent   = 'Embellecedor P1';
     document.getElementById('marco-fila-emb2').style.display  = '';
   } else {
@@ -2089,7 +2093,7 @@ async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
     document.getElementById('marco-fila-medidas-d').style.display = 'none';
     document.getElementById('marco-alto-precio').textContent   = datosComunes.alto;
     document.getElementById('marco-ancho-precio').textContent  = SelOpcion.form6?.AnchoPuerta1 || '';
-    document.getElementById('marco-label-puerta').textContent  = 'Puerta';
+    document.getElementById('marco-label-puerta').textContent  = 'Puerta + Marco';
     document.getElementById('marco-label-emb1').textContent    = 'Embellecedor';
     document.getElementById('marco-fila-emb2').style.display   = 'none';
   }
@@ -2117,7 +2121,7 @@ async function generarPaginaMarco(datosComunes, config, indice, totalPaginas) {
   document.getElementById('marco-cod-puerta').textContent    = puerta.codigo;
   document.getElementById('marco-tipo-puerta').textContent   = puerta.denominacion;
   document.getElementById('marco-cant-puerta').textContent   = conj;
-  document.getElementById('marco-precio-puerta').textContent = puerta.precio > 0 ? (puerta.precio * conj).toFixed(2) : '';
+  document.getElementById('marco-precio-puerta').textContent = vidrio === '00' ? 'Consultar' : (puerta.precio > 0 ? (puerta.precio * conj).toFixed(2) : '');
 
   function fillEmb(embText, codId, descId, cantId, precId) {
     const key = MAPA_EMBELLECEDORES[embText];
