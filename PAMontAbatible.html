@@ -659,7 +659,7 @@
       <button type="button" onclick="volverAlMenu()" class="btn">⪡ Atrás</button>
       <button type="button" onclick="if(validarFormulario(1)) { cambiarFormulario(1,15); }" class="btn">Siguiente ⪢</button>
     </div>
-    <div class="version-tag">V.02</div>
+    <div class="version-tag">V.04</div>
      <br><br>
 </form>
 
@@ -1658,6 +1658,11 @@ function guardarDatosFormulario(numeroFormulario) {
         }
       });
       
+      // Blindaje: 'op2' (Cierre Cerradura) no disponible — forzar siempre a 'op1'
+      if (numeroFormulario === 2 && SelOpcion.form2.opcion === 'op2') {
+        SelOpcion.form2.opcion = 'op1';
+      }
+
       console.log('Datos guardados del formulario', numeroFormulario, ':', SelOpcion[`form${numeroFormulario}`]);
       return true;
 }
