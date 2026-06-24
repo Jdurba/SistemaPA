@@ -12,6 +12,8 @@
       tituloModal: 'Adinor · PA Montado',
       regresarASubMenuPA: true
     };
+    // ⚙️ VERSIÓN — único lugar a cambiar; se propaga a forms, informe y PDF
+    window.VERSION_APP = "V.05";
   </script>
   <script>
     document.write(
@@ -212,8 +214,8 @@
 
     /* Imágenes en cards */
     .visual img {
-      width: 100%;
-      max-width: 200px;
+      width: 200%;
+      max-width: 240px;
       height: auto;
       object-fit: contain;
       aspect-ratio: 4/3;
@@ -722,7 +724,6 @@
       <button type="button" onclick="anteriorFormulario(2)" class="btn">⪡ Atrás</button>
       <button type="button" onclick="siguienteFormulario(2)" class="btn">Siguiente ⪢</button>
     </div>
-    <div class="version-tag">V.03</div>
   </form>
 
 
@@ -814,6 +815,7 @@
       <button type="button" onclick="anteriorFormulario(3)" class="btn">⪡ Atrás</button>
       <button type="button" onclick="siguienteFormulario(3)" class="btn">Siguiente ⪢</button>
     </div>
+    <div class="version-tag js-version"></div>
   </form>
 
 
@@ -849,7 +851,7 @@
     <button type="button" onclick="anteriorFormulario(4)" class="btn">⪡ Atrás</button>
     <button type="button" onclick="siguienteFormulario(4)" class="btn">Siguiente ⪢</button>
   </div>
-  <div class="version-tag">V.03</div>
+  <div class="version-tag js-version"></div>
 </form>
 
 
@@ -899,7 +901,7 @@
     <button type="button" onclick="anteriorFormulario(5)" class="btn">⪡ Atrás</button>
     <button type="button" onclick="siguienteFormulario(5)" class="btn">Siguiente ⪢</button>
   </div>
-  <div class="version-tag">V.03</div>
+  <div class="version-tag js-version"></div>
 </form>
 
   <!-- Formulario 6 -->
@@ -1054,6 +1056,7 @@
         <div class="campo-informe">
           <label>Comentarios</label>
           <span id="inf-comentarios"></span>
+          <span id="inf-version" style="flex:0 0 auto; border-bottom:none; color:#9a9a9a; font-size:10px; padding-left:10px;"></span>
         </div>
       </div>
     
@@ -1170,7 +1173,13 @@
     <div class="campo-informe"><label>Cliente</label><span id="hp-cliente" class="span-dato"></span></div>
     <div class="campo-informe"><label>Nº Pedido</label><span id="hp-num-pedido" class="span-dato"></span></div>
     <div class="campo-informe"><label>Fecha</label><span id="hp-fecha" class="span-dato"></span></div>
-    <div class="campo-informe"><label>Comentarios</label><span id="hp-Comentarios" class="span-dato"></span></div>
+  </div>
+  <div class="comentarios-informe">
+    <div class="campo-informe">
+      <label>Comentarios</label>
+      <span id="hp-Comentarios" class="span-dato"></span>
+      <span id="hp-version" style="flex:0 0 auto; border-bottom:none; color:#9a9a9a; font-size:10px; padding-left:10px;"></span>
+    </div>
   </div>
 </div>
 
@@ -1199,8 +1208,8 @@
         </tr>
         <tr><td></td><td class="texto-izq">Acabado</td><td class="texto-izq" id="hp-acabado-puerta"></td></tr>
         <tr><td></td><td class="texto-izq">Color Vidrio</td><td class="texto-izq" id="hp-color-puerta"></td></tr>
-        <tr><td></td><td class="texto-izq">Alto Puerta</td><td class="texto-Der" id="hp-alto-puerta"></td></tr>
-        <tr><td></td><td class="texto-izq">Ancho Puerta</td><td class="texto-Der" id="hp-ancho-puerta"></td></tr>
+        <tr><td></td><td class="texto-izq" colspan="2" id="hp-medidas-puerta"></td><td></td><td></td></tr>
+        <tr><td></td><td class="texto-izq" colspan="2" id="hp-medidas-vidrio-puerta"></td><td></td><td></td></tr>
         <tr id="fila-emb-puerta">   <!-- Para poder ocultar la linea   -->
             <td id="hp-cod-emb-puerta" class="texto-izq"></td>
             <td class="texto-izq">Embellecedor 13x3</td>
@@ -1235,8 +1244,8 @@
         </tr>
         <tr><td></td><td class="texto-izq">Acabado</td><td class="texto-izq" id="hp-acabado-fijo"></td></tr>
         <tr><td></td><td class="texto-izq">Color Vidrio</td><td class="texto-izq" id="hp-color-fijo"></td></tr>
-        <tr><td></td><td class="texto-izq">Alto Fijo</td><td class="texto-Der" id="hp-alto-fijo"></td></tr>
-        <tr><td></td><td class="texto-izq">Ancho Fijo</td><td class="texto-Der" id="hp-ancho-fijo"></td></tr>
+        <tr><td></td><td class="texto-izq" colspan="2" id="hp-medidas-fijo"></td><td></td><td></td></tr>
+        <tr><td></td><td class="texto-izq" colspan="2" id="hp-medidas-vidrio-fijo"></td><td></td><td></td></tr>
         <tr id="fila-emb-fijo">  <!-- Para poder ocultar la linea   -->
             <td id="hp-cod-emb-fijo" class="texto-izq"></td>
             <td class="texto-izq">Embellecedor 13x3</td>
@@ -1244,7 +1253,7 @@
             <td id="hp-cant-emb-fijo" class="texto-Der"></td>
             <td id="hp-precio-emb-fijo" class="texto-Der"></td>
         </tr>
-        <tr>
+        <tr id="fila-bastidor-fijo">
             <td id="hp-cod-bastidor-fijo" class="texto-izq"></td>
             <td class="texto-izq">Bastidor</td>
             <td id="hp-bastidor-fijo" class="texto-izq"></td>
@@ -1406,21 +1415,21 @@ const TEXTO_GUIA = {
   'SK119': 'Medida alto de hueco es desde la guía al suelo'
 };
 
-// Frase descriptiva bajo la imagen, según la opción de form3.
+// Configuración por opción de form3: frase descriptiva + ancho máximo de hueco (mm)
 const FRASE_REPARTO = 'El ancho de los elementos es igual para todos, es el resultado de dividir el ancho de hueco entre número de elementos.';
-const FRASES_FORM6 = {
-  '1puerta':         'El ancho de la puerta es 24 mm mayor que el ancho de hueco',
-  '1puerta-casoneto':'El ancho de la puerta es 12 mm mayor que el ancho de hueco',
-  '2puertas':        FRASE_REPARTO,
-  '1puerta-1fijo':   FRASE_REPARTO,
-  '3puertas':        FRASE_REPARTO,
-  '2puertas-1fijo':  FRASE_REPARTO,
-  '1puerta-2fijos':  FRASE_REPARTO,
-  '2puertas-2fijos': FRASE_REPARTO,
-  '3puertas-1fijo':  FRASE_REPARTO,
-  '4puertas':        FRASE_REPARTO,
-  'PuertaUnica':     'La puerta se fabricará con las medidas indicadas.',
-  'FijoUnico':       'El fijo se fabricará con las medidas indicadas.'
+const CONFIG_OPCIONES = {
+  '1puerta':         { frase: 'El ancho de la puerta es 24 mm mayor que el ancho de hueco', anchoMax: 1500 },
+  '1puerta-casoneto':{ frase: 'El ancho de la puerta es 12 mm mayor que el ancho de hueco', anchoMax: 1500 },
+  '2puertas':        { frase: FRASE_REPARTO,                                                 anchoMax: 2988 },
+  '1puerta-1fijo':   { frase: FRASE_REPARTO,                                                 anchoMax: 2988 },
+  '3puertas':        { frase: FRASE_REPARTO,                                                 anchoMax: 4476 },
+  '2puertas-1fijo':  { frase: FRASE_REPARTO,                                                 anchoMax: 4476 },
+  '1puerta-2fijos':  { frase: FRASE_REPARTO,                                                 anchoMax: 4476 },
+  '2puertas-2fijos': { frase: FRASE_REPARTO,                                                 anchoMax: 5976 },
+  '3puertas-1fijo':  { frase: FRASE_REPARTO,                                                 anchoMax: 5964 },
+  '4puertas':        { frase: FRASE_REPARTO,                                                 anchoMax: 5964 },
+  'PuertaUnica':     { frase: 'La puerta se fabricará con las medidas indicadas.',            anchoMax: 1500 },
+  'FijoUnico':       { frase: 'El fijo se fabricará con las medidas indicadas.',              anchoMax: 1500 },
 };
 
 function actualizarImagenForm6() {
@@ -1479,7 +1488,7 @@ function actualizarImagenForm6() {
   }
 
   // Bloque 3: ANCHO (frase opción form3)
-  const fraseTexto = FRASES_FORM6[opcion] || '';
+  const fraseTexto = CONFIG_OPCIONES[opcion]?.frase || '';
   frase.textContent = fraseTexto;
   bloqueAncho.style.display = fraseTexto ? '' : 'none';
 
@@ -1986,14 +1995,16 @@ function validarFormulario(form, numForm) {
     const alto = parseInt(form.querySelector('#Alto')?.value);
     const ancho = parseInt(form.querySelector('#Ancho')?.value);
     
-    if (!alto || !ancho || alto <= 0 || alto > 3000 || ancho <= 0 || ancho > 6000) {
-      aviso('Revisar las medidas (rango válido: 1-3000 mm alto, 1-6000 mm ancho)');
+    const opcion = datosFormularios.form3?.opcion;
+    const anchoMax = CONFIG_OPCIONES[opcion]?.anchoMax ?? 6000;
+    if (!alto || !ancho || alto <= 0 || alto > 3000 || ancho <= 0 || ancho > anchoMax) {
+      aviso('Revisar las medidas, rango válido:\n Hasta 3000 mm alto\nHasta ' + anchoMax + ' mm ancho');
       return false;
     }
 
     const conjuntos = parseInt(form.querySelector('input[name="conjuntos"]')?.value);
     if (!conjuntos || conjuntos < 1) {
-      aviso('Indica el número de conjuntos a fabricar (mínimo 1)');
+      aviso('Indica el número de conjuntos a fabricar\n (mínimo 1)');
       return false;
     }
   }
@@ -2718,6 +2729,7 @@ function renderizarInformeTecnico(bloques) {
   setSafeTextContent('inf-num-pedido', bloques.numPedido);
   setSafeTextContent('inf-fecha', bloques.fecha);
   setSafeTextContent('inf-comentarios', bloques.comentarios);
+  setSafeTextContent('inf-version', window.VERSION_APP || '');
   setSafeTextContent('mensaje-opcion', bloques.mensajeOpcion);
 
   // ──────────────────────────────────────────────────────────────────
@@ -2879,6 +2891,7 @@ function renderizarInformeComercial(bloques) {
   setSafeTextContent('hp-num-pedido', bloques.numPedido);
   setSafeTextContent('hp-fecha', bloques.fecha);
   setSafeTextContent('hp-Comentarios', bloques.comentarios);
+  setSafeTextContent('hp-version', window.VERSION_APP || '');
   setSafeTextContent('hp-Titulo', bloques.mensajeOpcion);
 
   // ──────────────────────────────────────────────────────────────────
@@ -2894,8 +2907,9 @@ function renderizarInformeComercial(bloques) {
     setSafeTextContent('hp-precio-puerta', puerta.puertaConsultar ? 'Consultar' : formatearNumero(puerta.puertaPrecioUnit, 3));
     setSafeTextContent('hp-acabado-puerta', puerta.acabado);
     setSafeTextContent('hp-color-puerta', puerta.colorVidrio);
-    setSafeTextContent('hp-alto-puerta', formatearNumero(puerta.alto) + ' mm');
-    setSafeTextContent('hp-ancho-puerta', formatearNumero(puerta.ancho) + ' mm');
+    setSafeTextContent('hp-medidas-puerta', 'Medidas Puerta: ' + formatearNumero(puerta.alto) + ' × ' + formatearNumero(puerta.ancho) + ' mm');
+    const cp = puerta.cristales?.[0];
+    setSafeTextContent('hp-medidas-vidrio-puerta', 'Medidas Vidrio: ' + (cp ? formatearNumero(cp.alto) + ' × ' + formatearNumero(cp.ancho) + ' mm' : '—'));
 
     // ✅ FIX: Ocultar/Mostrar CADA CELDA del embellecedor
   const filaEmbPuerta = document.getElementById('fila-emb-puerta');
@@ -2928,12 +2942,19 @@ function renderizarInformeComercial(bloques) {
     setSafeTextContent('hp-precio-fijo', fijo.fijoConsultar ? 'Consultar' : formatearNumero(fijo.fijoPrecioUnit, 3));
     setSafeTextContent('hp-acabado-fijo', fijo.acabado);
     setSafeTextContent('hp-color-fijo', fijo.colorVidrio);
-    setSafeTextContent('hp-alto-fijo', formatearNumero(fijo.alto) + ' mm');
-    setSafeTextContent('hp-ancho-fijo', formatearNumero(fijo.ancho) + ' mm');
+    setSafeTextContent('hp-medidas-fijo', 'Medidas Fijo: ' + formatearNumero(fijo.alto) + ' × ' + formatearNumero(fijo.ancho) + ' mm');
+    const cf = fijo.cristales?.[0];
+    setSafeTextContent('hp-medidas-vidrio-fijo', 'Medidas Vidrio: ' + (cf ? formatearNumero(cf.alto) + ' × ' + formatearNumero(cf.ancho) + ' mm' : '—'));
     setSafeTextContent('hp-cod-bastidor-fijo', fijo.bastidorCodigo);
     setSafeTextContent('hp-bastidor-fijo', fijo.textoTipoFijo);
     setSafeTextContent('hp-cant-bastidores', fijo.cantidad * fijo.Conjuntos);
     setSafeTextContent('hp-precio-bastidor-fijo', formatearNumero(fijo.bastidorPrecioUnit, 3));
+    const filaBastidorFijo = document.getElementById('fila-bastidor-fijo');
+    if (filaBastidorFijo) {
+      const cells = filaBastidorFijo.getElementsByTagName('td');
+      const mostrarBastidor = !!fijo.bastidorCodigo;
+      Array.from(cells).forEach(cell => cell.style.display = mostrarBastidor ? 'table-cell' : 'none');
+    }
   
     // ✅ FIX: Ocultar/Mostrar CADA CELDA del embellecedor
     const filaEmbFijo = document.getElementById('fila-emb-fijo');
@@ -3124,7 +3145,12 @@ iniciarAplicacion();
 </script>
 
 
- </body>
+ 
+<script>
+  // Mostrar la versión en las etiquetas de los formularios
+  document.querySelectorAll('.js-version').forEach(function(el){ el.textContent = window.VERSION_APP || ''; });
+</script>
+</body>
 
 
 
