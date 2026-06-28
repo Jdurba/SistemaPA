@@ -13,7 +13,7 @@
       regresarASubMenuPA: true
     };
     // ⚙️ VERSIÓN — único lugar a cambiar; se propaga a forms, informe y PDF
-    window.VERSION_APP = "V.05";
+    window.VERSION_APP = "V.06";
   </script>
   <script>
     document.write(
@@ -1494,7 +1494,8 @@ function actualizarImagenForm6() {
 
   // Bloque 4: SELECCIONES TÉCNICAS (form4 + form5)
   // Usamos directamente los textos ya extraídos al guardar (textoSeleccionado / division.texto)
-  const txtBastidor     = datosFormularios.form4?.textoSeleccionado || '';
+  const _tieneFijo = opcion && (opcion.includes('fijo') || opcion === 'FijoUnico');
+  const txtBastidor     = _tieneFijo ? (datosFormularios.form4?.textoSeleccionado || '') : '';
   const txtEmbellecedor = datosFormularios.form5?.division?.texto    || '';
   bastidor.textContent     = txtBastidor     ? `Bastidor: ${txtBastidor}`         : '';
   embellecedor.textContent = txtEmbellecedor ? `Embellecedor: ${txtEmbellecedor}` : '';
